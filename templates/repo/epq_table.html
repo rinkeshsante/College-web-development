@@ -1,0 +1,46 @@
+<!-- repo/epq_table.html------->
+
+{% extends '_base.html' %}
+<div></div>
+{% block title %}Equipnmqnt detail{% endblock title %}
+<div></div>
+{% block content %}
+
+<!-- DataTales Example -->
+<h6>
+  <a class="btn btn-success" href="{% url 'epq_create'%}">new</a> epq list -
+  {{total_soft}} entries
+</h6>
+
+<table border="1px black" width="100%" cellspacing="0">
+  <thead>
+    <tr>
+      <th scope="col">Code</th>
+      <th scope="col">Name</th>
+
+      <th scope="col">hard No.</th>
+      <th scope="col">More</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for epq in epq_list %}
+    <tr>
+      <td>{{epq.code}}</td>
+      <td>{{epq.name}}</td>
+      <td>{{epq.equipment_no}}</td>
+
+      <td>
+        <a
+          class="btn btn-outline-primary"
+          scope="row"
+          href="{% url 'epq_detail' epq.id %}"
+          >More</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

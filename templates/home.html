@@ -1,0 +1,9 @@
+<!-- pages/templates/home.html -->
+{% extends '_base.html' %}
+{% block title %}Home{% endblock title %}
+
+
+{% block content %}
+<h1>Homepage</h1>
+<h2><a href="{% url 'dashboard' %}">dashboard</a></h2>
+{% endblock content %}

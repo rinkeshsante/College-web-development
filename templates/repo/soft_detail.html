@@ -1,0 +1,49 @@
+<!-- template/repo/lab_detail.html -->
+{% extends '_base.html' %}
+{% block title %}Soft Detail{% endblock title %}
+
+
+{% block content %}
+
+
+
+<!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
+<h1 class="text-primary">Soft Detail</h1>
+<!-- make good info card/something-->
+<h2><a class="btn btn-secondary" href="{% url 'soft_table' %}">back</a></h2>
+
+
+<table class="table table-bordered">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Code</th>
+        <th scope="col">Name</th>
+        <th scope="col">Department</th>
+        <th scope="col">Lab No.</th>
+        <th scope="col">Intercom No.</th>
+        <th scope="col">Lab Incharge</th>
+        <th scope="col">Area</th>
+        <th scope="col">Capacity</th>
+      </tr>
+    </thead>
+    <tbody>
+        
+      <tr>
+        <th scope="row">{{soft.code}}</th>
+        <td>{{soft.name}}</td>
+        <td>{{soft.department}}</td>
+        <!-- <td>{{lab.lab_number}}</td>
+        <td>{{lab.intercom_no}}</td>
+        <td>{{lab.lab_incharge}}</td>
+        <td>{{lab.lab_area}}</td>
+        <td>{{lab.lab_capacity}}</td> -->
+      </tr>
+      
+    </tbody>
+</table>
+<td><a class="btn btn-info" href="{% url 'soft_update' soft.id %}">update</a> </td>
+<td><a class="btn btn-danger" href="{% url 'soft_delete' soft.id %}">Delete</a> </td>
+
+
+
+{% endblock content %}
