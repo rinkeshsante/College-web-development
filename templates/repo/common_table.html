@@ -1,0 +1,51 @@
+<!-- repo/common_table.html------->
+<!-- 
+we need
+ table_name 
+ create_url
+ total_data
+ header_list
+ data_list
+ detail_url
+-->
+
+{% extends '_base.html' %}
+<div></div>
+{% block title %}{{table_name}} detail{% endblock title %}
+<div></div>
+{% block content %}
+
+<!-- DataTales Example -->
+<h6>
+  <a class="btn btn-success" href="{{create_url}}">new</a> {{table_name}} list -
+  {{total_data}} entries
+</h6>
+
+<table border="1px black" width="100%" cellspacing="0">
+  <thead>
+    <tr>
+      {% for data_header in header_list %}
+      <th scope="col">{{data_header}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for data in data_list %}
+    <tr>
+      {% for data_header in header_list %}
+      <td>{{data}}</td>
+      {% endfor %}
+      <div></div>
+
+      <td>
+        <a class="btn btn-outline-primary" scope="row" href="{{detail_url}}"
+          >More</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}
