@@ -16,6 +16,8 @@ class Department(SafeDeleteModel):
         return self.name
 
 
+
+
 class Lab(SafeDeleteModel):
     code = models.CharField(max_length=10, unique=True)
     name = models.CharField(max_length=50)

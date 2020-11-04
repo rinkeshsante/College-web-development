@@ -9,11 +9,14 @@ from .views import (
 
     SoftwareCreateView, SoftwareDeleteView, SoftListView, SoftDetailView, SoftwareUpdateView,
 
+    getfile, getCSV
+
 )
 
 urlpatterns = [
     path('', DashBoardView, name='dashboard'),
     path('error/', Unauthorized, name='error'),
+    path('csv', getCSV),
 
     # lab
     path('lab/', LabListView, name='lab_table'),

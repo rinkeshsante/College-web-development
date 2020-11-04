@@ -55,7 +55,6 @@ admin.site.register(Equipment, EquipmentAdmin)
 admin.site.register(Software, SoftwareAdmin)
 admin.site.register(Computer, ComputerAdmin)
 admin.site.register(Purchase, PurchaseAdmin)
-# admin.site.register(ComputerSoftwareMapping)
 
 # admin.site.register(LabEquipmentMapping)
 # admin.site.register(LabFacultyMapping, LabFacultyMappingAdmin)
