@@ -1,0 +1,32 @@
+<!-- template/repo/epq/epq_detail.html -->
+{% extends '_base.html' %} {% block title %}comp Detail{% endblock title %}
+<div></div>
+{% load repo_extras %} {% block content %}
+
+<!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
+<h1 class="text-primary">comp Detail</h1>
+
+<!-- make good info card/something-->
+<h2><a class="btn btn-secondary" href="{% url 'comp_table' %}">back</a></h2>
+
+<table>
+  <tbody>
+    {% for name in attr_names %}
+    <tr>
+      <td>{{name}}</td>
+      <td>:{{comp|getValue:name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<td>
+  <a class="btn btn-info" href="{% url 'comp_update' comp.id %}">update</a>
+</td>
+<td>
+  <a class="btn btn-danger" href="{% url 'comp_delete' comp.id %}">Delete</a>
+</td>
+
+<hr />
+
+instadded soft {% endblock content %}

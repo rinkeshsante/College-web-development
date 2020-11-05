@@ -1,0 +1,68 @@
+<!-- template/repo/lab_detail.html -->
+{% extends '_base.html' %} {% block title %}Lab Detail{% endblock title %}
+<div></div>
+{% load repo_extras %} {% block content %}
+
+<!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
+<h1 class="text-primary">Lab Detail</h1>
+<!-- make good info card/something-->
+<h2><a class="btn btn-secondary" href="{% url 'lab_table' %}">back</a></h2>
+
+<table>
+  <tbody>
+    {% for name in attr_names %}
+    <tr>
+      <td>{{name}}</td>
+      <td>:{{lab|getValue:name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<td><a class="btn btn-info" href="{% url 'lab_update' lab.id %}">update</a></td>
+<td>
+  <a class="btn btn-danger" href="{% url 'lab_delete' lab.id %}">Delete</a>
+</td>
+
+<hr />
+
+<h3>Equipnments Present In Lab</h3>
+<table class="table table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">hi</th>
+      <th scope="col" colspan="7">
+        <h2><h2>epq list</h2></h2>
+      </th>
+    </tr>
+  </thead>
+
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Code</th>
+      <th scope="col">Name</th>
+      <th scope="col">Department</th>
+      <th scope="col">bill No.</th>
+      <th scope="col">epq No.</th>
+      <th scope="col">supplier</th>
+      <th scope="col">date</th>
+      <th scope="col">rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for epq in equipments %}
+    <tr>
+      <td><a class="btn btn-primary" scope="row" href="">{{epq.code}}</a></td>
+      <td>{{epq.name}}</td>
+      <td>{{epq.department}}</td>
+      <td>{{epq.bill_no}}</td>
+      <td>{{epq.equipment_no}}</td>
+      <td>{{epq.supplier}}</td>
+      <td>{{epq.date}}</td>
+      <td>{{epq.rate}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+computer list {% endblock content %}

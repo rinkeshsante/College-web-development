@@ -5,7 +5,12 @@
   >
     Dashboard
   </a>
-  <a href="#" class="list-group-item list-group-item-action"> Computer </a>
+  <a
+    href="{% url 'comp_table' %}"
+    class="list-group-item list-group-item-action"
+  >
+    Computer
+  </a>
   <a href="{% url 'epq_table' %}" class="list-group-item list-group-item-action"
     >Equipnments
   </a>
@@ -20,5 +25,11 @@
     class="list-group-item list-group-item-action"
   >
     Lab
+  </a>
+  <a
+    href="{% url 'purch_table' %}"
+    class="list-group-item list-group-item-action"
+  >
+    Purchase
   </a>
 </div>

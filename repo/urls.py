@@ -1,21 +1,21 @@
 from django.urls import path
 
 from .views import (
-    DashBoardView, Unauthorized,
-
+    DashBoardView,
+    Unauthorized, notFound,
     LabCreateView, LabUpdateView, LabDetailView, LabDeleteView, LabListView,
-
     EquipmentCreateView, EquipmentUpdateView, EquipmentDeleteView, EquipmentListView, EquipmentDetailView,
-
-    SoftwareCreateView, SoftwareDeleteView, SoftListView, SoftDetailView, SoftwareUpdateView,
-
-    getfile, getLabCSV
+    ComputerCreateView, ComputerDeleteView, ComputerDetailView, ComputerListView, ComputerUpdateView,
+    SoftwareCreateView, SoftwareDeleteView, SoftwareListView, SoftwareDetailView, SoftwareUpdateView,
+    PurchaseCreateView, PurchaseDeleteView, PurchaseDetailView, PurchaseUpdateView, PurchaseListView,
+    getfile, getLabCSV, getEquipmentCSV, getComputerCSV, getSoftwareCSV, getPurchaseCSV
 
 )
 
 urlpatterns = [
     path('', DashBoardView, name='dashboard'),
-    path('error/', Unauthorized, name='error'),
+    path('not_found/', notFound, name='not_found'),
+    path('not_allowed/', Unauthorized, name='not_allowed'),
 
 
     # lab
@@ -27,19 +27,36 @@ urlpatterns = [
     path('lab/delete/<int:num>/', LabDeleteView, name='lab_delete'),
 
     # epq
-    path('epq/', EquipmentListView, name='epq_table'),
-    path('epq/<int:num>/', EquipmentDetailView, name='epq_detail'),
+    path('equipment/', EquipmentListView, name='epq_table'),
+    path('equipment/csv', getEquipmentCSV, name='epq_csv'),
+    path('equipment/<int:num>/', EquipmentDetailView, name='epq_detail'),
     path('equipment/new/', EquipmentCreateView, name='epq_create'),
     path('equipment/update/<int:num>/', EquipmentUpdateView, name='epq_update'),
     path('equipment/delete/<int:num>/', EquipmentDeleteView, name='epq_delete'),
 
+    # comp
+    path('computer/', ComputerListView, name='comp_table'),
+    path('computer/csv', getComputerCSV, name='comp_csv'),
+    path('computer/<int:num>/', ComputerDetailView, name='comp_detail'),
+    path('computer/new/', ComputerCreateView, name='comp_create'),
+    path('computer/update/<int:num>/', ComputerUpdateView, name='comp_update'),
+    path('computer/delete/<int:num>/', ComputerDeleteView, name='comp_delete'),
+
     # soft
-    path('soft/', SoftListView, name='soft_table'),
-    path('soft/<int:num>/', SoftDetailView, name='soft_detail'),
+    path('software/', SoftwareListView, name='soft_table'),
+    path('software/csv', getSoftwareCSV, name='soft_csv'),
+    path('software/<int:num>/', SoftwareDetailView, name='soft_detail'),
     path('software/new/', SoftwareCreateView, name='soft_create'),
     path('software/update/<int:num>/', SoftwareUpdateView, name='soft_update'),
     path('software/delete/<int:num>/', SoftwareDeleteView, name='soft_delete'),
 
-    # CSMapping
+    # purch
+    path('purchase/', PurchaseListView, name='purch_table'),
+    path('purchase/csv', getPurchaseCSV, name='purch_csv'),
+    path('purchase/<int:num>/', PurchaseDetailView, name='purch_detail'),
+    path('purchase/new/', PurchaseCreateView, name='purch_create'),
+    path('purchase/update/<int:num>/', PurchaseUpdateView, name='purch_update'),
+    path('purchase/delete/<int:num>/', PurchaseDeleteView, name='purch_delete'),
+
 
 ]

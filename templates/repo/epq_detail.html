@@ -1,0 +1,29 @@
+<!-- template/repo/epq/epq_detail.html -->
+{% extends '_base.html' %} {% block title %}Epq Detail{% endblock title %}
+<div></div>
+{% load repo_extras %} {% block content %}
+
+<!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
+<h1 class="text-primary">epq Detail</h1>
+<!-- make good info card/something-->
+<h2><a class="btn btn-secondary" href="{% url 'epq_table' %}">back</a></h2>
+
+<table>
+  <tbody>
+    {% for name in attr_names %}
+    <tr>
+      <td>{{name}}</td>
+      <td>:{{epq|getValue:name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<td><a class="btn btn-info" href="{% url 'epq_update' epq.id %}">update</a></td>
+<td>
+  <a class="btn btn-danger" href="{% url 'epq_delete' epq.id %}">Delete</a>
+</td>
+
+<hr />
+
+{% endblock content %}

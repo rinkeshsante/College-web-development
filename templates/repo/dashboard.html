@@ -1,13 +1,16 @@
 <!-- template/repo/dashboard.html -->
-{% extends '_base.html' %} {% block title %}Dash Board{% endblock title %} {%
-load crispy_forms_tags %} {% block content %}
+{% extends '_base.html' %} {% block title %}Dash Board{% endblock title %}
+<div></div>
+{% load crispy_forms_tags %} {% block content %}
 
 <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
 
 <ul>
+  <li>dep name</li>
   <li>labs :{{total_lab}}</li>
   <li>soft :{{total_soft}}</li>
   <li>epq :{{total_epq}}</li>
+  <li>perchase no:</li>
   <li></li>
 </ul>
 
