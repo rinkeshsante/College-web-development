@@ -27,42 +27,16 @@
 <hr />
 
 <h3>Equipnments Present In Lab</h3>
-<table class="table table table-bordered">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">hi</th>
-      <th scope="col" colspan="7">
-        <h2><h2>epq list</h2></h2>
-      </th>
-    </tr>
-  </thead>
+<ul>
+  {% for epq in equipments %}
+  <li><a href="{% url 'epq_detail' epq.id %}"> {{epq}}</a></li>
+  {% endfor %}
+</ul>
 
-  <thead class="thead-light">
-    <tr>
-      <th scope="col">Code</th>
-      <th scope="col">Name</th>
-      <th scope="col">Department</th>
-      <th scope="col">bill No.</th>
-      <th scope="col">epq No.</th>
-      <th scope="col">supplier</th>
-      <th scope="col">date</th>
-      <th scope="col">rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for epq in equipments %}
-    <tr>
-      <td><a class="btn btn-primary" scope="row" href="">{{epq.code}}</a></td>
-      <td>{{epq.name}}</td>
-      <td>{{epq.department}}</td>
-      <td>{{epq.bill_no}}</td>
-      <td>{{epq.equipment_no}}</td>
-      <td>{{epq.supplier}}</td>
-      <td>{{epq.date}}</td>
-      <td>{{epq.rate}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-computer list {% endblock content %}
+<h3>Computers Present In Lab</h3>
+<ul>
+  {% for comp in computers %}
+  <li><a href="{% url 'comp_detail' comp.id %}"> {{comp}}</a></li>
+  {% endfor %}
+</ul>
+{% endblock content %}

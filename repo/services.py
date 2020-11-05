@@ -1,6 +1,7 @@
 
 from django.shortcuts import HttpResponse, redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
+from .models import UserDepartmentMapping
 
 import csv
 
@@ -11,17 +12,27 @@ def is_sub_admin(user):
     return user.groups.filter(name='sub_admin').exists()
 
 
-def is_teacher(user):
-    return user.groups.filter(name='teacher').exists()
-
-
 def get_user_dep(user):
-    return user.department()
+    try:
+        return UserDepartmentMapping.objects.get(id=user.id).department
+    except:
+        return -1
+
+
+def is_authorized(user):
+    dep = get_user_dep(user)
+
+    if dep == -1:
+        return False
+    else:
+        return True
+
 
 # --------------csv---------------------
 
 
 @login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
 def getfile(request, data, attr_names, filename='datafile.csv'):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename='+filename
@@ -40,6 +51,7 @@ def getfile(request, data, attr_names, filename='datafile.csv'):
 
 
 @login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
 def DataListView(request, Obj, attr_names, table_name, detail_url, create_url, csv_url):
     data_list = Obj.objects.order_by('-id')
     context = {'data_list': data_list,
@@ -48,11 +60,11 @@ def DataListView(request, Obj, attr_names, table_name, detail_url, create_url, c
                'create_url': create_url,
                'table_name': table_name,
                'csv_url': csv_url}
-    print(data_list, attr_names)
     return render(request, 'repo/common_table.html', context)
 
 
 @login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
 def DataCreateView(request, dataForm, redirect_url):
     form = dataForm()
     if request.method == 'POST':
@@ -66,7 +78,7 @@ def DataCreateView(request, dataForm, redirect_url):
 
 
 @login_required
-# @user_passes_test(is_sub_admin, login_url='error')
+@user_passes_test(is_authorized, login_url='not_allowed')
 def DataUpdateView(request, num, Obj, dataForm, redirect_url):
     obj = Obj.objects.get(id=num)
     form = dataForm(instance=obj)

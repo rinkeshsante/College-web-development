@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Lab, Equipment, Software, Computer, Purchase
+from .models import *
 
 
 class LabForm(ModelForm):
@@ -29,4 +29,10 @@ class ComputerForm(ModelForm):
 class PurchaseForm(ModelForm):
     class Meta:
         model = Purchase
+        fields = '__all__'
+
+
+class UserDepartmentMappingForm(ModelForm):
+    class Meta:
+        model = UserDepartmentMapping
         fields = '__all__'

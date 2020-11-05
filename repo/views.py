@@ -1,10 +1,11 @@
 from django import template
 from django.shortcuts import render, redirect, HttpResponse
-from .models import Lab, Equipment, Software, Computer, Purchase
+from .models import *
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import LabForm, EquipmentForm, SoftwareForm, ComputerForm, PurchaseForm
+from .forms import *
 
-from .services import getfile, is_sub_admin, is_teacher, DataCreateView, DataUpdateView, DataDeleteView, DataListView
+from .services import *
+from django.contrib.auth import get_user_model
 
 
 # ----------------dashboard ------------------------
@@ -16,12 +17,18 @@ def DashBoardView(request):
     total_lab = Lab.objects.count()
     total_epq = Equipment.objects.count()
     total_soft = Software.objects.count()
+    total_comp = Computer.objects.count()
+    total_purch = Purchase.objects.count()
 
+    dep = get_user_dep(request.user)
     context = {
         'total_lab': total_lab,
         'total_epq': total_epq,
         'total_soft': total_soft,
-        'unauth_user': 0
+        'total_comp': total_comp,
+        'total_purch': total_purch,
+        'user_dep': dep
+
     }
     return render(request, 'repo/dashboard.html', context)
 
@@ -47,7 +54,12 @@ lab_attr = ['id', 'code', 'name', 'lab_number',
 def LabDetailView(request, num=1):
     test_lab = Lab.objects.get(id=num)
     eqps = Equipment.objects.filter(lab=test_lab.id)
-    context = {'lab': test_lab, 'equipments': eqps, 'attr_names': lab_attr}
+    comps = Computer.objects.filter(lab=test_lab.id)
+    context = {
+        'lab': test_lab,
+        'equipments': eqps,
+        'computers': comps,
+        'attr_names': lab_attr}
     return render(request, 'repo/lab_detail.html', context)
 
 
@@ -83,8 +95,6 @@ epq_attr = ['id',  'name', 'equipment_no',
 @login_required
 def EquipmentDetailView(request, num=1):
     test_epq = Equipment.objects.get(id=num)
-    # eqps = Equipment.objects.filter(lab=test_lab.id)
-
     context = {'epq': test_epq, 'attr_names': epq_attr}
     return render(request, 'repo/epq_detail.html', context)
 
@@ -121,8 +131,6 @@ comp_attr = ['id',  'name', 'Computer_no',
 @login_required
 def ComputerDetailView(request, num=1):
     test_comp = Computer.objects.get(id=num)
-    # eqps = Equipment.objects.filter(lab=test_lab.id)
-
     context = {'comp': test_comp, 'attr_names': comp_attr}
     return render(request, 'repo/comp_detail.html', context)
 
@@ -155,6 +163,17 @@ soft_attr = ['id', 'name', 'software_no', 'code',
              'gi_no', 'Status', 'purchase', ]
 
 
+@login_required
+def SoftwareDetailView(request, num=1):
+    test_soft = Software.objects.get(id=num)
+    comps = Computer.objects.filter(installed_software=num).all()
+    context = {
+        'soft': test_soft,
+        'attr_names': soft_attr,
+        'installed_on': comps}
+    return render(request, 'repo/soft_detail.html', context)
+
+
 def SoftwareListView(request):
     return DataListView(request, Software, soft_attr,
                         table_name='Software Table', csv_url='soft_csv',
@@ -163,13 +182,6 @@ def SoftwareListView(request):
 
 def getSoftwareCSV(request):
     return getfile(request, Software.objects.all(), soft_attr, filename='Software.csv')
-
-
-@login_required
-def SoftwareDetailView(request, num=1):
-    test_soft = Software.objects.get(id=num)
-    context = {'soft': test_soft, 'attr_names': soft_attr}
-    return render(request, 'repo/soft_detail.html', context)
 
 
 def SoftwareCreateView(request):
@@ -218,3 +230,31 @@ def PurchaseUpdateView(request, num):
 
 def PurchaseDeleteView(request, num):
     return DataDeleteView(request, num, Purchase, 'soft_table')
+
+# ----------------user dep mapping---------------
+
+
+@login_required
+def UserDepartmentMappingCreateView(request, num):
+    form = UserDepartmentMappingForm(initial={
+        'user': num
+    })
+    if request.method == 'POST':
+        form = UserDepartmentMappingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+
+    context = {'form': form}
+    return render(request, 'repo/create.html', context)
+
+
+@login_required
+def UserDepartmentMappingUnauthList(request):
+    User = get_user_model()
+    # authorized_user = UserDepartmentMapping.objects.exclude(id__in = [x.id for x in request.user.usergallery_set()])
+    users = User.objects.exclude(
+        id__in=[x.id for x in UserDepartmentMapping.objects.all()])
+    print(users)
+    context = {}
+    return render(request, 'not_found.html', context)

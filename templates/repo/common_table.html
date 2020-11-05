@@ -27,6 +27,7 @@
             {% for name in attr_names %}
             <th scope="col">{{ name }}</th>
             {% endfor %}
+            <th>View / Edit</th>
           </tr>
         </thead>
 
@@ -41,7 +42,7 @@
                 class="btn btn-outline-primary"
                 scope="row"
                 href="{% url detail_url data_item.id %}"
-                >View / Edit</a
+                >More</a
               >
             </td>
           </tr>

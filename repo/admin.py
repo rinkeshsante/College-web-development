@@ -1,10 +1,6 @@
 from django.contrib import admin
 
-from.models import Lab, Department, Equipment, Software,  Computer, Purchase
-
-
-# class ComputerSoftwareInline(admin.TabularInline):
-#     model = ComputerSoftwareMapping
+from.models import *
 
 
 class ComputerInline(admin.TabularInline):
@@ -26,6 +22,10 @@ class LabAdmin(admin.ModelAdmin):
 
 class EquipmentAdmin(admin.ModelAdmin):
     list_display = ('name', 'gi_no', 'code', 'lab')
+
+
+class UserDepartmentMappingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'department')
 
 
 class ComputerAdmin(admin.ModelAdmin):
@@ -51,6 +51,7 @@ class PurchaseAdmin(admin.ModelAdmin):
 
 admin.site.register(Department)
 admin.site.register(Lab, LabAdmin)
+admin.site.register(UserDepartmentMapping, UserDepartmentMappingAdmin)
 admin.site.register(Equipment, EquipmentAdmin)
 admin.site.register(Software, SoftwareAdmin)
 admin.site.register(Computer, ComputerAdmin)

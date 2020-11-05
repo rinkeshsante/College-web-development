@@ -26,4 +26,12 @@
   <a class="btn btn-danger" href="{% url 'soft_delete' soft.id %}">Delete</a>
 </td>
 
-installed on list {% endblock content %}
+<h2>installed on Computers</h2>
+
+<ul>
+  {% for comp in installed_on %}
+  <li><a href="{% url 'comp_detail' comp.id %}">{{comp}}</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock content %}

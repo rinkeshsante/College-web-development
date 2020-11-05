@@ -26,7 +26,13 @@
 <td>
   <a class="btn btn-danger" href="{% url 'comp_delete' comp.id %}">Delete</a>
 </td>
-
 <hr />
 
-instadded soft {% endblock content %}
+<h2>Software installed</h2>
+
+<ul>
+  {% for soft in comp.installed_software.all %}
+  <li><a href="{% url 'soft_detail' soft.id %}">{{soft}}</a></li>
+  {% endfor %}
+</ul>
+{% endblock content %}

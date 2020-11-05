@@ -1,21 +1,18 @@
 from django.urls import path
 
-from .views import (
-    DashBoardView,
-    Unauthorized, notFound,
-    LabCreateView, LabUpdateView, LabDetailView, LabDeleteView, LabListView,
-    EquipmentCreateView, EquipmentUpdateView, EquipmentDeleteView, EquipmentListView, EquipmentDetailView,
-    ComputerCreateView, ComputerDeleteView, ComputerDetailView, ComputerListView, ComputerUpdateView,
-    SoftwareCreateView, SoftwareDeleteView, SoftwareListView, SoftwareDetailView, SoftwareUpdateView,
-    PurchaseCreateView, PurchaseDeleteView, PurchaseDetailView, PurchaseUpdateView, PurchaseListView,
-    getfile, getLabCSV, getEquipmentCSV, getComputerCSV, getSoftwareCSV, getPurchaseCSV
-
-)
+from .views import *
 
 urlpatterns = [
     path('', DashBoardView, name='dashboard'),
     path('not_found/', notFound, name='not_found'),
     path('not_allowed/', Unauthorized, name='not_allowed'),
+
+    # user dep
+    path('user_form/<int:num>/', UserDepartmentMappingCreateView,
+         name='user_dep_create'),
+    path('user_list/', UserDepartmentMappingUnauthList, name='user_unauth_lsi'),
+
+
 
 
     # lab

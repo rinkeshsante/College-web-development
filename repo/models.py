@@ -16,6 +16,17 @@ class Department(SafeDeleteModel):
         return self.name
 
 
+class UserDepartmentMapping(SafeDeleteModel):
+    id = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    department = models.ForeignKey(
+        'Department',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
 
 
 class Lab(SafeDeleteModel):
@@ -108,7 +119,7 @@ class Computer(SafeDeleteModel):
 
 class Software(SafeDeleteModel):
     name = models.CharField(max_length=100)
-    Licenced_Qty = models.IntegerField(null=True)
+    Licenced_Qty = models.IntegerField(null=True, blank=True)
     software_no = models.CharField(max_length=10, unique=True)
     code = models.CharField(max_length=30)
     gi_no = models.IntegerField(unique=True)
