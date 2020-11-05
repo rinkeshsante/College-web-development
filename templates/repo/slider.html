@@ -1,32 +1,24 @@
-<ul>
-  <li class="nav-item">
-    <a class="nav-link" href="tables.html">
-      <i class="fas fa-fw fa-table"></i>
-      <span>Teachers Tables</span></a
-    >
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'epq_table' %}">
-      <i class="fas fa-fw fa-table"></i>
-      <span>Hardware Tables</span></a
-    >
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'soft_table' %}">
-      <i class="fas fa-fw fa-table"></i>
-      <span>Software Tables</span></a
-    >
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="{% url 'lab_table' %}">
-      <i class="fas fa-fw fa-table"></i>
-      <span>Lab Tables</span></a
-    >
-  </li>
-  <li class="nav-item active">
-    <a class="nav-link" href="{% url 'dashboard' %}">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Dashboard</span></a
-    >
-  </li>
-</ul>
+<div class="list-groups">
+  <a
+    href="{% url 'dashboard' %}"
+    class="list-group-item list-group-item-action"
+  >
+    Dashboard
+  </a>
+  <a href="#" class="list-group-item list-group-item-action"> Computer </a>
+  <a href="{% url 'epq_table' %}" class="list-group-item list-group-item-action"
+    >Equipnments
+  </a>
+  <a
+    href="{% url 'soft_table' %}"
+    class="list-group-item list-group-item-action"
+  >
+    Software
+  </a>
+  <a
+    href="{% url 'lab_table' %}"
+    class="list-group-item list-group-item-action"
+  >
+    Lab
+  </a>
+</div>

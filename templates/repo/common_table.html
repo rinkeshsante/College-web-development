@@ -1,51 +1,55 @@
-<!-- repo/common_table.html------->
-<!-- 
-we need
- table_name 
- create_url
- total_data
- header_list
- data_list
- detail_url
--->
+<!-- labpage.html-->
 
-{% extends '_base.html' %}
 <div></div>
-{% block title %}{{table_name}} detail{% endblock title %}
+{% extends '_base.html' %} {% block title %}{{ table_name }}{% endblock title %}
 <div></div>
-{% block content %}
+{% load repo_extras %} {% block content %}
 
 <!-- DataTales Example -->
-<h6>
-  <a class="btn btn-success" href="{{create_url}}">new</a> {{table_name}} list -
-  {{total_data}} entries
-</h6>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">
+      <a class="btn btn-success" href="{% url create_url %}">new</a>
+      <a class="btn btn-success" href="{% url csv_url %}">csv</a>
+      {{ table_name }}
+    </h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
+        <thead>
+          <tr>
+            {% for name in attr_names %}
+            <th scope="col">{{ name }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
 
-<table border="1px black" width="100%" cellspacing="0">
-  <thead>
-    <tr>
-      {% for data_header in header_list %}
-      <th scope="col">{{data_header}}</th>
-      {% endfor %}
-    </tr>
-  </thead>
+        <tbody>
+          {% for data_item in data_list %}
+          <tr>
+            {% for attr_name in attr_names %}
+            <td>{{ data_item|getValue:attr_name }}</td>
+            {% endfor %}
+            <td>
+              <a
+                class="btn btn-outline-primary"
+                scope="row"
+                href="{% url detail_url data_item.id %}"
+                >View / Edit</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-  <tbody>
-    {% for data in data_list %}
-    <tr>
-      {% for data_header in header_list %}
-      <td>{{data}}</td>
-      {% endfor %}
-      <div></div>
-
-      <td>
-        <a class="btn btn-outline-primary" scope="row" href="{{detail_url}}"
-          >More</a
-        >
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-{% endblock content %}
+{% endblock %}

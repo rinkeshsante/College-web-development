@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 
 import csv
 
-# --------------group functions---------------------
+# -------------- user functions---------------------
 
 
 def is_sub_admin(user):
@@ -14,12 +14,17 @@ def is_sub_admin(user):
 def is_teacher(user):
     return user.groups.filter(name='teacher').exists()
 
+
+def get_user_dep(user):
+    return user.department()
+
 # --------------csv---------------------
 
 
-def getfile(request, data, attr_names):
+@login_required
+def getfile(request, data, attr_names, filename='datafile.csv'):
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="lab.csv"'
+    response['Content-Disposition'] = 'attachment; filename='+filename
 
     writer = csv.writer(response)
 
@@ -32,6 +37,19 @@ def getfile(request, data, attr_names):
     return response
 
 # -------------------common function --------------
+
+
+@login_required
+def DataListView(request, Obj, attr_names, table_name, detail_url, create_url, csv_url):
+    data_list = Obj.objects.order_by('-id')
+    context = {'data_list': data_list,
+               'attr_names': attr_names,
+               'detail_url': detail_url,
+               'create_url': create_url,
+               'table_name': table_name,
+               'csv_url': csv_url}
+    print(data_list, attr_names)
+    return render(request, 'repo/common_table.html', context)
 
 
 @login_required
