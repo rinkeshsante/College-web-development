@@ -1,0 +1,11 @@
+{% load repo_extras %}
+<table>
+  <tbody>
+    {% for name in attr_names %}
+    <tr>
+      <td>{{name}}</td>
+      <td>:</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,42 @@
+<!-- template/repo/lab_detail.html -->
+{% extends '_base.html' %} {% block title %}Lab Detail{% endblock title %}
+<div></div>
+{% load repo_extras %} {% block content %}
+
+<!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
+<h1 class="text-primary">Lab Detail</h1>
+<!-- make good info card/something-->
+<h2><a class="btn btn-secondary" href="{% url 'lab_table' %}">back</a></h2>
+
+<table>
+  <tbody>
+    {% for name in attr_names %}
+    <tr>
+      <td>{{name}}</td>
+      <td>:{{lab|getValue:name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<td><a class="btn btn-info" href="{% url 'lab_update' lab.id %}">update</a></td>
+<td>
+  <a class="btn btn-danger" href="{% url 'lab_delete' lab.id %}">Delete</a>
+</td>
+
+<hr />
+
+<h3>Equipnments Present In Lab</h3>
+<ul>
+  {% for epq in equipments %}
+  <li><a href="{% url 'epq_detail' epq.id %}"> {{epq}}</a></li>
+  {% endfor %}
+</ul>
+
+<h3>Computers Present In Lab</h3>
+<ul>
+  {% for comp in computers %}
+  <li><a href="{% url 'comp_detail' comp.id %}"> {{comp}}</a></li>
+  {% endfor %}
+</ul>
+{% endblock content %}
