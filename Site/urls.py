@@ -5,12 +5,7 @@ from django.urls import path, include
 urlpatterns = [
     # django admin
     path('admin/', admin.site.urls),
-
-    # user managemanet
-    # path('accounts/', include('allauth.urls')),
-
-
-    # local apps
-    # path('', include('pages.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', include('repo.urls')),
 ]
