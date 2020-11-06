@@ -235,7 +235,7 @@ def PurchaseUpdateView(request, num):
 
 
 def PurchaseDeleteView(request, num):
-    return DataDeleteView(request, num, Purchase, 'soft_table')
+    return DataDeleteView(request, num, Purchase, 'purch_table')
 
 # ----------------user dep mapping---------------
 
