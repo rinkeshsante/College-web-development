@@ -8,11 +8,13 @@ urlpatterns = [
     path('not_allowed/', Unauthorized, name='not_allowed'),
 
     # user dep
-    path('user_form/<int:num>/', UserDepartmentMappingCreateView,
+    path('new_user/<int:num>/', UserDepartmentMappingCreateView,
          name='user_dep_create'),
-    path('user_list/', UserDepartmentMappingUnauthList, name='user_unauth_lsi'),
+    path('new_user/', UserDepartmentMappingUnauthList, name='user_unauth_list'),
 
-
+    # issue
+    path('issue/new/', IssueCreateForm, name='issue_create'),
+    path('issue/solved/<int:num>/', IssueSolvedView, name='issue_solved'),
 
 
     # lab

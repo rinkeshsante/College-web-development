@@ -20,16 +20,31 @@ class Department(SafeDeleteModel):
 
 
 class UserDepartmentMapping(SafeDeleteModel):
-    id = models.ForeignKey(
+    user = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        primary_key=True,
+        unique=True
     )
     department = models.ForeignKey(
         'Department',
         null=True,
         on_delete=models.SET_NULL,
     )
+
+
+class Issue(SafeDeleteModel):
+    header = models.CharField(max_length=40)
+    info = models.TextField()
+    date = models.DateField(auto_now_add=True)
+    is_solved = models.BooleanField(default=False)
+    creator = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    def __str__(self):
+        return self.header
 
 
 class Lab(SafeDeleteModel):

@@ -1,0 +1,14 @@
+<!-- labpage.html-->
+
+<div></div>
+{% extends '_base.html' %} {% block title %}new user{% endblock title %}
+<div></div>
+{% load repo_extras %} {% block content %}
+<ul>
+  {% for user in users %}
+
+  <li><a href="{% url 'user_dep_create' user.id %}">{{user}}</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

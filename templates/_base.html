@@ -21,14 +21,11 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
 
-  <body>
+  <body class="container">
+    {% include 'navbar.html' %}
     <div class="row">
-      <div class="col-3 bg-dark text-white" style="min-height: 1000px">
-        {% include 'navbar.html' %}{% include 'repo/slider.html' %}
-      </div>
-      <div class="col-9" style="padding: 20px 20px">
-        {% block content %} {% endblock %}
-      </div>
+      <div class="col-3">{% include 'repo/slider.html' %}</div>
+      <div class="col-9">{% block content %} {% endblock %}</div>
     </div>
   </body>
 </html>

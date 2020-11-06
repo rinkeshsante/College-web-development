@@ -36,3 +36,11 @@ class UserDepartmentMappingForm(ModelForm):
     class Meta:
         model = UserDepartmentMapping
         fields = '__all__'
+
+
+class IssueForm(ModelForm):
+    class Meta:
+        model = Issue
+        fields = [
+            'header', 'info', 'is_solved'
+        ]

@@ -22,15 +22,18 @@ def DashBoardView(request):
     total_soft = Software.objects.count()
     total_comp = Computer.objects.count()
     total_purch = Purchase.objects.count()
-
     dep = get_user_dep(request.user)
+
+    issues = Issue.objects.filter(is_solved=False)
+
     context = {
         'total_lab': total_lab,
         'total_epq': total_epq,
         'total_soft': total_soft,
         'total_comp': total_comp,
         'total_purch': total_purch,
-        'user_dep': dep
+        'user_dep': dep,
+        'issues': issues
 
     }
     return render(request, 'repo/dashboard.html', context)
@@ -240,7 +243,7 @@ def PurchaseDeleteView(request, num):
 @login_required
 def UserDepartmentMappingCreateView(request, num):
     form = UserDepartmentMappingForm(initial={
-        'id': num
+        'user': num
     })
     if request.method == 'POST':
         form = UserDepartmentMappingForm(request.POST)
@@ -255,9 +258,34 @@ def UserDepartmentMappingCreateView(request, num):
 @login_required
 def UserDepartmentMappingUnauthList(request):
     User = get_user_model()
-    # authorized_user = UserDepartmentMapping.objects.exclude(id__in = [x.id for x in request.user.usergallery_set()])
     users = User.objects.exclude(
         id__in=[x.id for x in UserDepartmentMapping.objects.all()])
-    print(users)
-    context = {}
-    return render(request, 'not_found.html', context)
+    context = {'users': users}
+    return render(request, 'repo/new_user.html', context)
+
+
+# ---------------issue-------------------------
+
+
+@login_required
+def IssueCreateForm(request):
+    form = IssueForm
+    if request.method == 'POST':
+        form = IssueForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.creator = request.user
+            form.save()
+            return redirect('dashboard')
+
+    context = {'form': form}
+    return render(request, 'repo/create.html', context)
+
+
+@login_required
+# @user_passes_test(is_sub_admin, login_url='error')
+def IssueSolvedView(request, num):
+    obj = Issue.objects.get(id=num)
+    obj.is_solved = True
+    obj.save()
+    return redirect('dashboard')

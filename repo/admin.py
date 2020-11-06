@@ -45,8 +45,9 @@ class SoftwareAdmin(admin.ModelAdmin):
 class PurchaseAdmin(admin.ModelAdmin):
     list_display = ('bill_no', 'date', 'rate')
 
-# class LabFacultyMappingAdmin(admin.ModelAdmin):
-#     list_display=('lab','faculty')
+
+class IssueAdmin(admin.ModelAdmin):
+    list_display = ('header', 'is_solved', 'creator', 'date')
 
 
 admin.site.register(Department)
@@ -56,6 +57,5 @@ admin.site.register(Equipment, EquipmentAdmin)
 admin.site.register(Software, SoftwareAdmin)
 admin.site.register(Computer, ComputerAdmin)
 admin.site.register(Purchase, PurchaseAdmin)
-
-# admin.site.register(LabEquipmentMapping)
+admin.site.register(Issue, IssueAdmin)
 # admin.site.register(LabFacultyMapping, LabFacultyMappingAdmin)
