@@ -4,9 +4,9 @@
 {% load repo_extras %} {% block content %}
 
 <!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
-<h1 class="text-primary">purch Detail</h1>
+<h1 class="text-primary">Purchase Detail</h1>
 <!-- make good info card/something-->
-<h2><a class="btn btn-secondary" href="{% url 'purch_table' %}">back</a></h2>
+<h2><a class="btn btn-secondary" href="{% url 'purch_table' %}">← back</a></h2>
 
 <table>
   <tbody>
@@ -19,6 +19,7 @@
   </tbody>
 </table>
 
+{% if user|isSubAdmin %}
 <td>
   <a class="btn btn-info" href="{% url 'purch_update' purch.id %}">update</a>
 </td>
@@ -27,5 +28,4 @@
 </td>
 
 <hr />
-
-{% endblock content %}
+{% endif %} {% endblock content %}

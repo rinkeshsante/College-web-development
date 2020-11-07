@@ -6,7 +6,7 @@
 <!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
 <h1 class="text-primary">Lab Detail</h1>
 <!-- make good info card/something-->
-<h2><a class="btn btn-secondary" href="{% url 'lab_table' %}">back</a></h2>
+<h2><a class="btn btn-secondary" href="{% url 'lab_table' %}">← back</a></h2>
 
 <table>
   <tbody>
@@ -19,10 +19,13 @@
   </tbody>
 </table>
 
+{% if user|isSubAdmin %}
+
 <td><a class="btn btn-info" href="{% url 'lab_update' lab.id %}">update</a></td>
 <td>
   <a class="btn btn-danger" href="{% url 'lab_delete' lab.id %}">Delete</a>
 </td>
+{% endif %}
 
 <hr />
 

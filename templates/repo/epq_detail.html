@@ -4,9 +4,9 @@
 {% load repo_extras %} {% block content %}
 
 <!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
-<h1 class="text-primary">epq Detail</h1>
+<h1 class="text-primary">Equipment Detail</h1>
 <!-- make good info card/something-->
-<h2><a class="btn btn-secondary" href="{% url 'epq_table' %}">back</a></h2>
+<h2><a class="btn btn-secondary" href="{% url 'epq_table' %}">← back</a></h2>
 
 <table>
   <tbody>
@@ -19,10 +19,13 @@
   </tbody>
 </table>
 
+{% if user|isSubAdmin %}
+
 <td><a class="btn btn-info" href="{% url 'epq_update' epq.id %}">update</a></td>
 <td>
   <a class="btn btn-danger" href="{% url 'epq_delete' epq.id %}">Delete</a>
 </td>
+{% endif %}
 
 <hr />
 

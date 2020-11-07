@@ -9,8 +9,11 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <h6 class="m-0 font-weight-bold text-primary">
-      <a class="btn btn-success" href="{% url create_url %}">new</a>
-      <a class="btn btn-success" href="{% url csv_url %}">csv</a>
+      {% if user|isSubAdmin %}
+      <a class="btn btn-success" href="{% url create_url %}">+ new</a>
+      {% endif %}
+
+      <a class="btn btn-success" href="{% url csv_url %}"> ⤓ Report</a>
       {{ table_name }}
     </h6>
   </div>

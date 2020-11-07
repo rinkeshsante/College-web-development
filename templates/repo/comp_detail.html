@@ -4,10 +4,10 @@
 {% load repo_extras %} {% block content %}
 
 <!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
-<h1 class="text-primary">comp Detail</h1>
+<h1 class="text-primary">Computer Detail</h1>
 
 <!-- make good info card/something-->
-<h2><a class="btn btn-secondary" href="{% url 'comp_table' %}">back</a></h2>
+<h2><a class="btn btn-secondary" href="{% url 'comp_table' %}">← back</a></h2>
 
 <table>
   <tbody>
@@ -20,6 +20,7 @@
   </tbody>
 </table>
 
+{% if user|isSubAdmin %}
 <td>
   <a class="btn btn-info" href="{% url 'comp_update' comp.id %}">update</a>
 </td>
@@ -27,6 +28,7 @@
   <a class="btn btn-danger" href="{% url 'comp_delete' comp.id %}">Delete</a>
 </td>
 <hr />
+{% endif %}
 
 <h2>Software installed</h2>
 
