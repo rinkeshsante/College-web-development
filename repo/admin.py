@@ -43,7 +43,7 @@ class SoftwareAdmin(admin.ModelAdmin):
 
 
 class PurchaseAdmin(admin.ModelAdmin):
-    list_display = ('bill_no', 'date', 'rate')
+    list_display = ('bill_no', 'date', 'rate_in_Rupee')
 
 
 class IssueAdmin(admin.ModelAdmin):

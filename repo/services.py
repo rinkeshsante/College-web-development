@@ -9,12 +9,12 @@ import csv
 
 
 def is_sub_admin(user):
-    return user.groups.filter(name='sub_admin').exists()
+    return UserDepartmentMapping.objects.get(user=user).is_sub_admin
 
 
 def get_user_dep(user):
     try:
-        return UserDepartmentMapping.objects.get(id=user.id).department
+        return UserDepartmentMapping.objects.get(user=user).department
     except:
         return -1
 
@@ -65,6 +65,7 @@ def DataListView(request, Obj, attr_names, table_name, detail_url, create_url, c
 
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
+@user_passes_test(is_sub_admin, login_url='not_allowed')
 def DataCreateView(request, dataForm, redirect_url):
     form = dataForm()
     if request.method == 'POST':
@@ -79,6 +80,7 @@ def DataCreateView(request, dataForm, redirect_url):
 
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
+@user_passes_test(is_sub_admin, login_url='not_allowed')
 def DataUpdateView(request, num, Obj, dataForm, redirect_url):
     obj = Obj.objects.get(id=num)
     form = dataForm(instance=obj)
@@ -93,7 +95,8 @@ def DataUpdateView(request, num, Obj, dataForm, redirect_url):
 
 
 @login_required
-# @user_passes_test(is_sub_admin, login_url='error')
+@user_passes_test(is_authorized, login_url='not_allowed')
+@user_passes_test(is_sub_admin, login_url='not_allowed')
 def DataDeleteView(request, num, Obj, redirect_url):
     obj = Obj.objects.get(id=num)
     if request.method == 'POST':

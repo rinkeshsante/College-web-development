@@ -35,7 +35,7 @@ class PurchaseForm(ModelForm):
 class UserDepartmentMappingForm(ModelForm):
     class Meta:
         model = UserDepartmentMapping
-        fields = '__all__'
+        fields = ['user', 'department']
 
 
 class IssueForm(ModelForm):

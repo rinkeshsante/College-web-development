@@ -51,12 +51,12 @@ def notFound(request):
 
 # -------------labs-------------------------------
 lab_attr = ['id', 'code', 'name', 'lab_number',
-            'lab_area', 'lab_capacity', 'intercom_no',
+            'lab_area_in_sqft', 'lab_capacity', 'intercom_no',
             'lab_incharge', 'department']
 
 
 @login_required
-# @user_passes_test(is_sub_admin, login_url='error')
+@user_passes_test(is_authorized, login_url='not_allowed')
 def LabDetailView(request, num=1):
     test_lab = Lab.objects.get(id=num)
     eqps = Equipment.objects.filter(lab=test_lab.id)
@@ -99,6 +99,7 @@ epq_attr = ['id',  'name', 'equipment_no',
 
 
 @login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
 def EquipmentDetailView(request, num=1):
     test_epq = Equipment.objects.get(id=num)
     context = {'epq': test_epq, 'attr_names': epq_attr}
@@ -131,10 +132,11 @@ def EquipmentDeleteView(request, num):
 
 comp_attr = ['id',  'name', 'Computer_no',
              'code', 'gi_no', 'Status', 'ram', 'storage',
-             'processor', 'lab', 'purchase']
+             'processor', 'lab', 'purchase_bill_no']
 
 
 @login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
 def ComputerDetailView(request, num=1):
     test_comp = Computer.objects.get(id=num)
     context = {'comp': test_comp, 'attr_names': comp_attr}
@@ -165,11 +167,12 @@ def ComputerDeleteView(request, num):
 # --------------------------Software--------------
 
 
-soft_attr = ['id', 'name', 'software_no', 'code',
+soft_attr = ['id', 'name', 'Licenced_Qty', 'software_no', 'code',
              'gi_no', 'Status', 'purchase', ]
 
 
 @login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
 def SoftwareDetailView(request, num=1):
     test_soft = Software.objects.get(id=num)
     comps = Computer.objects.filter(installed_software=num).all()
@@ -205,8 +208,8 @@ def SoftwareDeleteView(request, num):
 # --------------------------purchase--------------
 
 
-purch_attr = ['id', 'bill_no', 'supplier', 'invoice',
-              'date', 'rate', ]
+purch_attr = ['id', 'bill_no', 'supplier_info', 'invoice_no',
+              'date', 'rate_in_Rupee', ]
 
 
 def PurchaseListView(request):
@@ -220,6 +223,7 @@ def getPurchaseCSV(request):
 
 
 @login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
 def PurchaseDetailView(request, num=1):
     test_purch = Purchase.objects.get(id=num)
     context = {'purch': test_purch, 'attr_names': purch_attr}
@@ -241,6 +245,8 @@ def PurchaseDeleteView(request, num):
 
 
 @login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
+@user_passes_test(is_sub_admin, login_url='not_allowed')
 def UserDepartmentMappingCreateView(request, num):
     form = UserDepartmentMappingForm(initial={
         'user': num
@@ -256,10 +262,12 @@ def UserDepartmentMappingCreateView(request, num):
 
 
 @login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
+@user_passes_test(is_sub_admin, login_url='not_allowed')
 def UserDepartmentMappingUnauthList(request):
     User = get_user_model()
     users = User.objects.exclude(
-        id__in=[x.id for x in UserDepartmentMapping.objects.all()])
+        id__in=[x.user.id for x in UserDepartmentMapping.objects.all()])
     context = {'users': users}
     return render(request, 'repo/new_user.html', context)
 
@@ -283,7 +291,8 @@ def IssueCreateForm(request):
 
 
 @login_required
-# @user_passes_test(is_sub_admin, login_url='error')
+@user_passes_test(is_authorized, login_url='not_allowed')
+@user_passes_test(is_sub_admin, login_url='not_allowed')
 def IssueSolvedView(request, num):
     obj = Issue.objects.get(id=num)
     obj.is_solved = True

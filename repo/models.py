@@ -25,11 +25,15 @@ class UserDepartmentMapping(SafeDeleteModel):
         on_delete=models.CASCADE,
         unique=True
     )
+    is_sub_admin = models.BooleanField(default=False)
     department = models.ForeignKey(
         'Department',
         null=True,
         on_delete=models.SET_NULL,
     )
+
+    def __str__(self):
+        return str(self.user) + str(self.department)
 
 
 class Issue(SafeDeleteModel):
@@ -48,12 +52,13 @@ class Issue(SafeDeleteModel):
 
 
 class Lab(SafeDeleteModel):
-    code = models.CharField(max_length=10, unique=True)
-    name = models.CharField(max_length=50)
-    lab_number = models.IntegerField(default=0)
-    lab_area = models.IntegerField(default=0)  # in sq ft
+    code = models.CharField(max_length=5, unique=True)
+    name = models.CharField(max_length=20, unique=True)
+    lab_number = models.IntegerField(default=0, unique=True)
+    lab_area_in_sqft = models.IntegerField(default=0)  # in sq ft
     lab_capacity = models.IntegerField(default=0)
-    intercom_no = models.IntegerField(default=0)
+    intercom_no = models.IntegerField(
+        default=0, unique=True, null=True, blank=True)
     lab_incharge = models.ForeignKey(
         get_user_model(),
         null=True,
@@ -70,11 +75,11 @@ class Lab(SafeDeleteModel):
 
 
 class Purchase(SafeDeleteModel):
-    bill_no = models.CharField(max_length=10)
-    supplier = models.TextField()
-    invoice = models.CharField(max_length=20, unique=True)
+    bill_no = models.CharField(max_length=10, unique=True)
+    supplier_info = models.TextField()
+    invoice_no = models.CharField(max_length=20, unique=True)
     date = models.DateField(auto_now_add=True)
-    rate = models.FloatField()
+    rate_in_Rupee = models.FloatField()
 
     def __str__(self):
         return self.bill_no
@@ -83,7 +88,7 @@ class Purchase(SafeDeleteModel):
 class Equipment(SafeDeleteModel):
     name = models.CharField(max_length=100)
     equipment_no = models.CharField(max_length=10, unique=True)
-    code = models.CharField(max_length=100)
+    code = models.CharField(max_length=10, unique=True)
     gi_no = models.IntegerField(unique=True)
     Status = models.CharField(max_length=60)
 
@@ -110,7 +115,7 @@ class Equipment(SafeDeleteModel):
 class Computer(SafeDeleteModel):
     name = models.CharField(max_length=100)
     Computer_no = models.CharField(max_length=10, unique=True)
-    code = models.CharField(max_length=100)
+    code = models.CharField(max_length=100, unique=True)
     gi_no = models.IntegerField(unique=True)
     Status = models.CharField(max_length=60)
     ram = models.IntegerField()
@@ -118,14 +123,16 @@ class Computer(SafeDeleteModel):
     processor = models.CharField(max_length=50)
 
     installed_software = models.ManyToManyField(
-        "Software")
-
+        "Software",
+        blank=True,
+        null=True,
+    )
     lab = models.ForeignKey(
         'Lab',
         null=True,
         on_delete=models.SET_NULL,
     )
-    purchase = models.ForeignKey(
+    purchase_bill_no = models.ForeignKey(
         'Purchase',
         null=True,
         on_delete=models.SET_NULL,
@@ -138,8 +145,8 @@ class Computer(SafeDeleteModel):
 class Software(SafeDeleteModel):
     name = models.CharField(max_length=100)
     Licenced_Qty = models.IntegerField(null=True, blank=True)
-    software_no = models.CharField(max_length=10, unique=True)
-    code = models.CharField(max_length=30)
+    software_no = models.IntegerField(unique=True)
+    code = models.CharField(max_length=10, unique=True)
     gi_no = models.IntegerField(unique=True)
     Status = models.CharField(max_length=60, default='Ok')
 

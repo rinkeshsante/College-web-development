@@ -1,0 +1,19 @@
+<!-- template/repo/epq/epq_detail.html -->
+{% extends '_base.html' %} {% block title %}Profile{% endblock title %}
+<div></div>
+{% load repo_extras %} {% block content %}
+
+<!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
+<h1 class="text-primary">User Profile</h1>
+<ul>
+  <li>{{user.username}}</li>
+  <li>{{user.email}}</li>
+  <li>{{user|getUserDep}}</li>
+  <li>other info</li>
+  <li>reset password</li>
+  <li>forget password</li>
+  <li></li>
+  <li></li>
+</ul>
+
+{% endblock content %}

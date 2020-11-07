@@ -1,7 +1,7 @@
 <!-- labpage.html-->
 
 <div></div>
-{% extends '_base.html' %} {% block title %}{{ table_name }}{% endblock title %}
+{% extends 'main.html' %} {% block title %}{{ table_name }}{% endblock title %}
 <div></div>
 {% load repo_extras %} {% block content %}
 
@@ -24,19 +24,16 @@
       >
         <thead>
           <tr>
+            <th>View / Edit</th>
             {% for name in attr_names %}
             <th scope="col">{{ name }}</th>
             {% endfor %}
-            <th>View / Edit</th>
           </tr>
         </thead>
 
         <tbody>
           {% for data_item in data_list %}
           <tr>
-            {% for attr_name in attr_names %}
-            <td>{{ data_item|getValue:attr_name }}</td>
-            {% endfor %}
             <td>
               <a
                 class="btn btn-outline-primary"
@@ -45,6 +42,9 @@
                 >More</a
               >
             </td>
+            {% for attr_name in attr_names %}
+            <td>{{ data_item|getValue:attr_name }}</td>
+            {% endfor %}
           </tr>
           {% endfor %}
         </tbody>

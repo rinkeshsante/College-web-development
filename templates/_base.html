@@ -18,14 +18,30 @@
       crossorigin="anonymous"
     />
 
-    <title>{% block title %}{% endblock %}</title>
+    <style>
+      .dark-mode {
+        filter: invert(100%) hue-rotate(180deg);
+      }
+    </style>
+
+    <title>{% block title %}{% endblock title %}</title>
   </head>
 
   <body class="container">
-    {% include 'navbar.html' %}
-    <div class="row">
-      <div class="col-3">{% include 'repo/slider.html' %}</div>
-      <div class="col-9">{% block content %} {% endblock %}</div>
-    </div>
+    {% block main %} {% endblock main %}
+    <script>
+      let button = document.querySelector(".btn-theme-toggle");
+      if (localStorage.clickcount % 2 == 0) {
+        document.documentElement.classList.toggle("dark-mode");
+      }
+      button.addEventListener("click", () => {
+        if (localStorage.clickcount) {
+          localStorage.clickcount = Number(localStorage.clickcount) + 1;
+        } else {
+          localStorage.clickcount = 1;
+        }
+        document.documentElement.classList.toggle("dark-mode");
+      });
+    </script>
   </body>
 </html>
