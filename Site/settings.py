@@ -26,7 +26,7 @@ SECRET_KEY = '(fbgi29b8)_$=iotb3^9+_en17bhgt_6rhzbin(r0%n%_e+7*_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['6bdad1b92b0f.ngrok.io', '127.0.0.1']
 
 
 # Application definition
@@ -127,6 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
