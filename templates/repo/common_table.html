@@ -13,7 +13,12 @@
       <a class="btn btn-success" href="{% url create_url %}">+ new</a>
       {% endif %}
 
-      <a class="btn btn-success" href="{% url csv_url %}"> ⤓ Report</a>
+      <a class="btn btn-info" href="{% url csv_url %}"> ⤓ Report</a>
+
+      <!-- <button onclick="exportTableToCSV('members.csv')">
+         ⤓ Report
+      </button> -->
+
       {{ table_name }}
     </h6>
   </div>
@@ -25,7 +30,7 @@
         width="100%"
         cellspacing="0"
       >
-        <thead>
+        <thead cl>
           <tr>
             <th>View / Edit</th>
             {% for name in attr_names %}
