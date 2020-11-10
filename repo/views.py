@@ -22,7 +22,6 @@ def DashBoardView(request):
     total_soft = Software.objects.count()
     total_comp = Computer.objects.count()
     total_purch = Purchase.objects.count()
-    dep = get_user_dep(request.user)
 
     issues = Issue.objects.filter(is_solved=False)
 
@@ -32,7 +31,6 @@ def DashBoardView(request):
         'total_soft': total_soft,
         'total_comp': total_comp,
         'total_purch': total_purch,
-        'user_dep': dep,
         'issues': issues
 
     }
