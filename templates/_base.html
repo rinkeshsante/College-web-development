@@ -28,6 +28,12 @@
       }
     </style>
 
+    <title>{% block title %}{% endblock title %}</title>
+  </head>
+
+  <body class="container">
+    {% block main %} {% endblock main %}
+
     <script>
       let button = document.querySelector(".btn-theme-toggle");
       if (localStorage.clickcount % 2 == 0) {
@@ -42,12 +48,6 @@
         document.documentElement.classList.toggle("dark-mode");
       });
     </script>
-
-    <title>{% block title %}{% endblock title %}</title>
-  </head>
-
-  <body class="container">
-    {% block main %} {% endblock main %}
 
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
