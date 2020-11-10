@@ -8,12 +8,13 @@
 <ul>
   <li>{{user.username}}</li>
   <li>{{user.email}}</li>
-  <li>{{user|getUserDep}}</li>
-  <li>other info</li>
-  <li>reset password</li>
-  <li>forget password</li>
-  <li></li>
-  <li></li>
+  <li>
+    {% if user|getUserDep == -1 %} department : not defined {% else %}
+    department : {{user|getUserDep}} {% endif %}
+  </li>
+  <li>is sub admin : {{ user|isSubAdmin }}</li>
+  <li><a href="{% url 'password_change' %}">change password</a></li>
+  <li>in case of forgeting password please contact to admin</li>
 </ul>
 
 {% endblock content %}
