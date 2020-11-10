@@ -3,10 +3,10 @@ from django.db import models
 # Create your models here.
 from django.db import models
 from django.contrib.auth import get_user_model
-from safedelete.models import SafeDeleteModel
+# from safedelete.models import SafeDeleteModel
 
 
-class Department(SafeDeleteModel):
+class Department(models.Model):
     name = models.CharField(max_length=40, unique=True)
     Dep_admin = models.ForeignKey(
         get_user_model(),
@@ -19,7 +19,7 @@ class Department(SafeDeleteModel):
         return self.name
 
 
-class UserDepartmentMapping(SafeDeleteModel):
+class UserDepartmentMapping(models.Model):
     user = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
@@ -36,7 +36,7 @@ class UserDepartmentMapping(SafeDeleteModel):
         return str(self.user) + str(self.department)
 
 
-class Issue(SafeDeleteModel):
+class Issue(models.Model):
     header = models.CharField(max_length=40)
     info = models.TextField()
     date = models.DateField(auto_now_add=True)
@@ -51,7 +51,7 @@ class Issue(SafeDeleteModel):
         return self.header
 
 
-class Lab(SafeDeleteModel):
+class Lab(models.Model):
     code = models.CharField(max_length=5, unique=True)
     name = models.CharField(max_length=20, unique=True)
     lab_number = models.IntegerField(default=0, unique=True)
@@ -74,7 +74,7 @@ class Lab(SafeDeleteModel):
         return self.code
 
 
-class Purchase(SafeDeleteModel):
+class Purchase(models.Model):
     bill_no = models.CharField(max_length=10, unique=True)
     supplier_info = models.TextField()
     invoice_no = models.CharField(max_length=20, unique=True)
@@ -85,7 +85,7 @@ class Purchase(SafeDeleteModel):
         return self.bill_no
 
 
-class Equipment(SafeDeleteModel):
+class Equipment(models.Model):
     name = models.CharField(max_length=100)
     equipment_no = models.CharField(max_length=10, unique=True)
     code = models.CharField(max_length=10, unique=True)
@@ -112,7 +112,7 @@ class Equipment(SafeDeleteModel):
         return self.name
 
 
-class Computer(SafeDeleteModel):
+class Computer(models.Model):
     name = models.CharField(max_length=100)
     Computer_no = models.CharField(max_length=10, unique=True)
     code = models.CharField(max_length=100, unique=True)
@@ -142,7 +142,7 @@ class Computer(SafeDeleteModel):
         return self.name
 
 
-class Software(SafeDeleteModel):
+class Software(models.Model):
     name = models.CharField(max_length=100)
     Licenced_Qty = models.IntegerField(null=True, blank=True)
     software_no = models.IntegerField(unique=True)

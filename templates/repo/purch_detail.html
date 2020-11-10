@@ -27,5 +27,44 @@
   <a class="btn btn-danger" href="{% url 'purch_delete' purch.id %}">Delete</a>
 </td>
 
+{% endif %}
 <hr />
-{% endif %} {% endblock content %}
+
+<h2>Purchase Items:</h2>
+
+<h5>
+  Computers {% if user|isSubAdmin %}
+  <a class="badge badge-success" href="{% url 'comp_create'  %}"> + new</a>
+  {% endif %}
+</h5>
+
+<ul>
+  {% for comp in comps %}
+  <li><a href="{% url 'comp_detail' comp.id %}">{{comp}}</a></li>
+  {% endfor %}
+</ul>
+
+<h5>
+  Software {% if user|isSubAdmin %}
+  <a class="badge badge-success" href="{% url 'soft_create'  %}"> + new</a>
+  {% endif %}
+</h5>
+
+<ul>
+  {% for soft in softs %}
+  <li><a href="{% url 'soft_detail' soft.id %}">{{soft}}</a></li>
+  {% endfor %}
+</ul>
+
+<h5>
+  Equipment {% if user|isSubAdmin %}
+  <a class="badge badge-success" href="{% url 'epq_create'  %}"> + new</a>
+  {% endif %}
+</h5>
+
+<ul>
+  {% for epq in epqs %}
+  <li><a href="{% url 'epq_detail' epq.id %}">{{epq}}</a></li>
+  {% endfor %}
+</ul>
+{% endblock content %}

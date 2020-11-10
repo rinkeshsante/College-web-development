@@ -66,8 +66,8 @@ def DataListView(request, Obj, attr_names, table_name, detail_url, create_url, c
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
 @user_passes_test(is_sub_admin, login_url='not_allowed')
-def DataCreateView(request, dataForm, redirect_url):
-    form = dataForm()
+def DataCreateView(request, dataForm, redirect_url, initial={}):
+    form = dataForm(initial=initial)
     if request.method == 'POST':
         form = dataForm(request.POST)
         if form.is_valid():

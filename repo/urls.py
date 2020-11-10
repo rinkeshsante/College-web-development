@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
     path('', DashBoardView, name='dashboard'),
+    path('about/', AboutView, name='about'),
     path('not_found/', notFound, name='not_found'),
     path('not_allowed/', Unauthorized, name='not_allowed'),
 

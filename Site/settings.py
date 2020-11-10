@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 
     # 3rd
     'crispy_forms',
-    'safedelete',
+    # 'safedelete',
 
     # local
     'repo.apps.RepoConfig',
@@ -131,6 +131,5 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
-
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

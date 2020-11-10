@@ -5,15 +5,14 @@
 >
   <h5 class="my-0 mr-md-auto font-weight-normal">Departmental Repo</h5>
   <nav class="my-2 my-md-0 mr-md-3">
-    <a class="p-2 text-dark" href="{% url 'profile' %}"
-      >{{ user.email }} {{ user.username }}</a
-    >
-
+    <a class="p-2 text-dark" href="{% url 'profile' %}">
+      {{ user.username }}
+    </a>
+    <a class="p-2 text-dark" href="{% url 'about' %}">about</a>
+    <a class="btn-theme-toggle p-2 text-dark">Theme</a>
     {% if user|isAuthorized %}
     <a class="p-2 text-dark" href="#">{{user|getUserDep}} dep</a>
     {% endif %}
-
-    <a class="btn-theme-toggle p-2 text-dark">Toggle Theme</a>
   </nav>
   <a class="btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>
 </div>

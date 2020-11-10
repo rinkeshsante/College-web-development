@@ -38,6 +38,10 @@ def DashBoardView(request):
     }
     return render(request, 'repo/dashboard.html', context)
 
+
+def AboutView(request):
+    return render(request, 'about.html')
+
 # ----------------- unauthorized----------------------
 
 
@@ -153,8 +157,8 @@ def getComputerCSV(request):
     return getfile(request, Computer.objects.all(), comp_attr, filename='Computer.csv')
 
 
-def ComputerCreateView(request):
-    return DataCreateView(request, ComputerForm, 'comp_table')
+def ComputerCreateView(request, num=0):
+    return DataCreateView(request, ComputerForm, 'comp_table', initial={'purchase_bill_no': num})
 
 
 def ComputerUpdateView(request, num):
@@ -225,8 +229,16 @@ def getPurchaseCSV(request):
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
 def PurchaseDetailView(request, num=1):
+    comps = Computer.objects.filter(purchase_bill_no=num)
+    # epqs = Equipment.objects.filter(purchase=num)
+    # softs = Software.objects.filter(purchase=num)
     test_purch = Purchase.objects.get(id=num)
-    context = {'purch': test_purch, 'attr_names': purch_attr}
+    context = {'purch': test_purch,
+               'attr_names': purch_attr,
+               'comps': comps,
+               #    'epqs': epqs,
+               #    'softs': softs,
+               }
     return render(request, 'repo/purch_detail.html', context)
 
 
@@ -244,21 +256,10 @@ def PurchaseDeleteView(request, num):
 # ----------------user dep mapping---------------
 
 
-@login_required
-@user_passes_test(is_authorized, login_url='not_allowed')
-@user_passes_test(is_sub_admin, login_url='not_allowed')
 def UserDepartmentMappingCreateView(request, num):
-    form = UserDepartmentMappingForm(initial={
+    return DataCreateView(request, UserDepartmentMappingForm, 'dashboard', initial={
         'user': num
     })
-    if request.method == 'POST':
-        form = UserDepartmentMappingForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('dashboard')
-
-    context = {'form': form}
-    return render(request, 'repo/create.html', context)
 
 
 @login_required
