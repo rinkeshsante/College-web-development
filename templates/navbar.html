@@ -3,12 +3,12 @@
 <div
   class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
 >
-  <h5 class="my-0 mr-md-auto font-weight-normal">Departmental Repo</h5>
+  <h5 class="my-0 mr-md-auto font-weight-normal">College Repository</h5>
   <nav class="my-2 my-md-0 mr-md-3">
     <a class="p-2 text-dark" href="{% url 'profile' %}">
       {{ user.username }}
     </a>
-    <a class="p-2 text-dark" href="{% url 'about' %}">about</a>
+    <a class="p-2 text-dark" href="{% url 'about' %}">About</a>
     <a class="btn-theme-toggle p-2 text-dark">Theme</a>
     {% if user|isAuthorized %}
     <a class="p-2 text-dark" href="#">{{user|getUserDep}} dep</a>

@@ -9,7 +9,10 @@ import csv
 
 
 def is_sub_admin(user):
-    return UserDepartmentMapping.objects.get(user=user).is_sub_admin
+    try:
+        return UserDepartmentMapping.objects.get(user=user).is_sub_admin
+    except:
+        return False
 
 
 def get_user_dep(user):
