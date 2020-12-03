@@ -48,8 +48,9 @@
               <p class="mb-1">{{issue.info}}</p>
               <small
                 >-{{issue.creator}} {% if user|isSubAdmin %},
-                <a href="{% url 'issue_solved' issue.id %}">clear </a> {% else
-                %} department : {{user|getUserDep}} {% endif %}
+                <a href="{% url 'issue_solved' issue.id %}">clear </a>
+                <div></div>
+                {% else %} department : {{user|getUserDep}} {% endif %}
               </small>
             </li>
             {% endfor %}
