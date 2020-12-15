@@ -57,6 +57,11 @@ lab_attr = ['id', 'code', 'name', 'lab_number',
             'lab_incharge', 'department']
 
 
+lab_attr_csv = ['name',
+                'lab_area_in_sqft', 'lab_capacity', 'intercom_no',
+                'lab_incharge', 'department']
+
+
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
 def LabDetailView(request, num=1):
@@ -78,7 +83,7 @@ def LabListView(request):
 
 
 def getLabCSV(request):
-    return getfile(request, Lab.objects.all(), lab_attr, filename='labs.csv')
+    return getfile(request, Lab.objects.all(), lab_attr_csv, filename='labs.csv')
 
 
 def LabCreateView(request):
@@ -100,6 +105,11 @@ epq_attr = ['id',  'name', 'equipment_no',
             'lab', 'department', 'purchase']
 
 
+epq_attr_csv = ['name',
+                'gi_no', 'Status',
+                'lab', 'department', ]
+
+
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
 def EquipmentDetailView(request, num=1):
@@ -115,7 +125,7 @@ def EquipmentListView(request):
 
 
 def getEquipmentCSV(request):
-    return getfile(request, Equipment.objects.all(), epq_attr, filename='Equipment.csv')
+    return getfile(request, Equipment.objects.all(), epq_attr_csv, filename='Equipment.csv')
 
 
 def EquipmentCreateView(request):
@@ -137,6 +147,11 @@ comp_attr = ['id',  'name', 'Computer_no',
              'processor', 'lab', 'purchase_bill_no']
 
 
+comp_attr_csv = ['name',
+                 'gi_no', 'Status', 'ram', 'storage',
+                 'processor', 'lab']
+
+
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
 def ComputerDetailView(request, num=1):
@@ -152,7 +167,7 @@ def ComputerListView(request):
 
 
 def getComputerCSV(request):
-    return getfile(request, Computer.objects.all(), comp_attr, filename='Computer.csv')
+    return getfile(request, Computer.objects.all(), comp_attr_csv, filename='Computer.csv')
 
 
 def ComputerCreateView(request, num=0):
@@ -171,6 +186,10 @@ def ComputerDeleteView(request, num):
 
 soft_attr = ['id', 'name', 'Licenced_Qty', 'software_no', 'code',
              'gi_no', 'Status', 'purchase', ]
+
+
+soft_attr_csv = ['name', 'Licenced_Qty',
+                 'gi_no', 'Status', ]
 
 
 @login_required
@@ -192,7 +211,7 @@ def SoftwareListView(request):
 
 
 def getSoftwareCSV(request):
-    return getfile(request, Software.objects.all(), soft_attr, filename='Software.csv')
+    return getfile(request, Software.objects.all(), soft_attr_csv, filename='Software.csv')
 
 
 def SoftwareCreateView(request):

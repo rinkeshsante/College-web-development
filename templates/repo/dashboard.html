@@ -5,7 +5,7 @@
 
 <div class="row">
   <div class="col-7">
-    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    <h1 class="h3 mb-0 text-primary">Dashboard</h1>
 
     <table>
       <tr>
@@ -50,7 +50,7 @@
                 >-{{issue.creator}} {% if user|isSubAdmin %},
                 <a href="{% url 'issue_solved' issue.id %}">clear </a>
                 <div></div>
-                {% else %} department : {{user|getUserDep}} {% endif %}
+                {% endif %}
               </small>
             </li>
             {% endfor %}
