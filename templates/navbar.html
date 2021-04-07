@@ -3,7 +3,16 @@
 <div
   class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
 >
-  <h5 class="my-0 mr-md-auto font-weight-normal">College Repository</h5>
+  <img
+    src="https://kjsieit.somaiya.edu.in//assets/kjsieit/images/Logo/kjsieit-logo.svg"
+    alt="somaiya logo"
+    srcset=""
+    width="300"
+  />
+  <h5 class="my-0 mr-md-auto font-weight-normal" style="margin: 20">
+    College Repository
+  </h5>
+
   <nav class="my-2 my-md-0 mr-md-3">
     <a class="p-2 text-dark" href="{% url 'profile' %}">
       {{ user.username }}
@@ -15,4 +24,11 @@
     {% endif %}
   </nav>
   <a class="btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>
+  &nbsp;&nbsp;&nbsp;
+  <img
+    src="https://kjssc.somaiya.edu.in/assets/arigel_general/img/homepage/Trust.svg"
+    alt="trust logo"
+    srcset=""
+    width="70"
+  />
 </div>

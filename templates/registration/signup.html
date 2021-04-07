@@ -5,18 +5,47 @@
 {% block title %}Sign Up{% endblock title %}
 <div></div>
 {% block main %}
-<div class="container">
-  <div class="container">
-    <div class="container">
-      <h1>Sign Up Form</h1>
-      <form method="post">
-        <div>{% csrf_token %} {{ form|crispy }}</div>
-        <button type="submit" class="btn btn-primary">Create</button> Or
-        <a class="small" href="{% url 'login' %}"
-          >Already have an account? Login!
-        </a>
-      </form>
+
+<div class="row" style="margin: 100px">
+  <div class="col-8">
+    <div class="row">
+      <div class="col-10">
+        <img
+          src="https://kjsieit.somaiya.edu.in//assets/kjsieit/images/Logo/kjsieit-logo.svg"
+          alt="somaiya logo"
+          srcset=""
+          width="100%"
+        />
+      </div>
+      <div class="col">
+        <img
+          src="https://kjssc.somaiya.edu.in/assets/arigel_general/img/homepage/Trust.svg"
+          alt="trust logo"
+          srcset=""
+          width="100"
+          style="padding: 20"
+        />
+      </div>
     </div>
+
+    <br />
+    <br />
+    <br />
+
+    <h1 class="my-0 mr-md-auto font-weight-normal" style="margin: 20">
+      College Repository
+    </h1>
+  </div>
+  <div class="col-4">
+    <h1>Sign Up Form</h1>
+    <form method="post">
+      <div>{% csrf_token %} {{ form|crispy }}</div>
+      <button type="submit" class="btn btn-primary">Create</button> Or
+      <a class="small" href="{% url 'login' %}"
+        >Already have an account? Login!
+      </a>
+    </form>
   </div>
 </div>
+
 {% endblock main %}

@@ -3,9 +3,11 @@
 <div></div>
 {% block main %}
 <div></div>
-{% include 'navbar.html' %}
-<div class="row">
-  <div class="col-3">{% include 'repo/slider.html' %}</div>
-  <div class="col-9">{% block content %} {% endblock %}</div>
+<div class="container">
+  {% include 'navbar.html' %}
+  <div class="row">
+    <div class="col-3">{% include 'repo/slider.html' %}</div>
+    <div class="col-9">{% block content %} {% endblock %}</div>
+  </div>
 </div>
 {% endblock main %}

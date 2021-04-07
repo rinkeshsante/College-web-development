@@ -10,7 +10,6 @@ from .forms import *
 from .services import *
 from django.contrib.auth import get_user_model
 
-
 # ----------------dashboard ------------------------
 
 
@@ -32,13 +31,13 @@ def DashBoardView(request):
         'total_comp': total_comp,
         'total_purch': total_purch,
         'issues': issues
-
     }
     return render(request, 'repo/dashboard.html', context)
 
 
 def AboutView(request):
     return render(request, 'about.html')
+
 
 # ----------------- unauthorized----------------------
 
@@ -51,10 +50,68 @@ def notFound(request):
     return render(request, 'not_found.html')
 
 
+# ------------------ attr -----------------------
+
+lab_attr = [
+    'id', 'code', 'name', 'lab_number', 'lab_area_in_sqft', 'lab_capacity',
+    'intercom_no', 'lab_incharge', 'department'
+]
+
+lab_attr_csv = [
+    'name', 'lab_area_in_sqft', 'lab_capacity', 'intercom_no', 'lab_incharge',
+    'department'
+]
+
+epq_attr = [
+    'id', 'name', 'equipment_no', 'code', 'gi_no', 'Status', 'lab',
+    'department', 'purchase'
+]
+
+epq_attr_csv = [
+    'name',
+    'gi_no',
+    'Status',
+    'lab',
+    'department',
+]
+
+comp_attr = [
+    'id', 'name', 'Computer_no', 'code', 'gi_no', 'Status', 'ram', 'storage',
+    'processor', 'lab', 'purchase_bill_no'
+]
+
+comp_attr_csv = [
+    'name', 'gi_no', 'Status', 'ram', 'storage', 'processor', 'lab'
+]
+
+soft_attr = [
+    'id',
+    'name',
+    'Licenced_Qty',
+    'software_no',
+    'code',
+    'gi_no',
+    'Status',
+    'purchase',
+]
+
+soft_attr_csv = [
+    'name',
+    'Licenced_Qty',
+    'gi_no',
+    'Status',
+]
+
+purch_attr = [
+    'id',
+    'bill_no',
+    'supplier_info',
+    'invoice_no',
+    'date',
+    'rate_in_Rupee',
+]
+
 # -------------labs-------------------------------
-lab_attr = ['id', 'code', 'name', 'lab_number',
-            'lab_area_in_sqft', 'lab_capacity', 'intercom_no',
-            'lab_incharge', 'department']
 
 
 @login_required
@@ -67,18 +124,34 @@ def LabDetailView(request, num=1):
         'lab': test_lab,
         'equipments': eqps,
         'computers': comps,
-        'attr_names': lab_attr}
+        'attr_names': lab_attr
+    }
     return render(request, 'repo/lab_detail.html', context)
 
 
 def LabListView(request):
-    return DataListView(request, Lab, lab_attr,
-                        table_name='Lab Table', csv_url='lab_csv',
-                        create_url='lab_create', detail_url='lab_detail')
+    return DataListView(request,
+                        Lab,
+                        lab_attr,
+                        table_name='Lab Table',
+                        csv_url='lab_csv',
+                        create_url='lab_create',
+                        detail_url='lab_detail')
 
 
 def getLabCSV(request):
-    return getfile(request, Lab.objects.all(), lab_attr, filename='labs.csv')
+    return getfile(request,
+                   Lab.objects.all(),
+                   lab_attr_csv,
+                   filename='labs.csv')
+
+
+def getLabReport(request, num=1):
+    test_lab = Lab.objects.get(id=num)
+    epq_in_lab = Equipment.objects.filter(lab=num)
+    comp_in_lab = Computer.objects.filter(lab=num)
+    return getlabRep(request, test_lab, lab_attr, epq_in_lab, epq_attr_csv,
+                     comp_in_lab, comp_attr_csv)
 
 
 def LabCreateView(request):
@@ -95,10 +168,6 @@ def LabDeleteView(request, num):
 
 # -------------epq------------------------
 
-epq_attr = ['id',  'name', 'equipment_no',
-            'code', 'gi_no', 'Status',
-            'lab', 'department', 'purchase']
-
 
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
@@ -109,13 +178,20 @@ def EquipmentDetailView(request, num=1):
 
 
 def EquipmentListView(request):
-    return DataListView(request, Equipment, epq_attr,
-                        table_name='Equipment Table', csv_url='epq_csv',
-                        create_url='epq_create', detail_url='epq_detail')
+    return DataListView(request,
+                        Equipment,
+                        epq_attr,
+                        table_name='Equipment Table',
+                        csv_url='epq_csv',
+                        create_url='epq_create',
+                        detail_url='epq_detail')
 
 
 def getEquipmentCSV(request):
-    return getfile(request, Equipment.objects.all(), epq_attr, filename='Equipment.csv')
+    return getfile(request,
+                   Equipment.objects.all(),
+                   epq_attr_csv,
+                   filename='Equipment.csv')
 
 
 def EquipmentCreateView(request):
@@ -129,12 +205,8 @@ def EquipmentUpdateView(request, num):
 def EquipmentDeleteView(request, num):
     return DataDeleteView(request, num, Equipment, 'epq_table')
 
+
 # ---------------Computer--------------------
-
-
-comp_attr = ['id',  'name', 'Computer_no',
-             'code', 'gi_no', 'Status', 'ram', 'storage',
-             'processor', 'lab', 'purchase_bill_no']
 
 
 @login_required
@@ -146,17 +218,27 @@ def ComputerDetailView(request, num=1):
 
 
 def ComputerListView(request):
-    return DataListView(request, Computer, comp_attr,
-                        table_name='Computer Table', csv_url='comp_csv',
-                        create_url='comp_create', detail_url='comp_detail')
+    return DataListView(request,
+                        Computer,
+                        comp_attr,
+                        table_name='Computer Table',
+                        csv_url='comp_csv',
+                        create_url='comp_create',
+                        detail_url='comp_detail')
 
 
 def getComputerCSV(request):
-    return getfile(request, Computer.objects.all(), comp_attr, filename='Computer.csv')
+    return getfile(request,
+                   Computer.objects.all(),
+                   comp_attr_csv,
+                   filename='Computer.csv')
 
 
 def ComputerCreateView(request, num=0):
-    return DataCreateView(request, ComputerForm, 'comp_table', initial={'purchase_bill_no': num})
+    return DataCreateView(request,
+                          ComputerForm,
+                          'comp_table',
+                          initial={'purchase_bill_no': num})
 
 
 def ComputerUpdateView(request, num):
@@ -166,11 +248,8 @@ def ComputerUpdateView(request, num):
 def ComputerDeleteView(request, num):
     return DataDeleteView(request, num, Computer, 'comp_table')
 
+
 # --------------------------Software--------------
-
-
-soft_attr = ['id', 'name', 'Licenced_Qty', 'software_no', 'code',
-             'gi_no', 'Status', 'purchase', ]
 
 
 @login_required
@@ -181,18 +260,26 @@ def SoftwareDetailView(request, num=1):
     context = {
         'soft': test_soft,
         'attr_names': soft_attr,
-        'installed_on': comps}
+        'installed_on': comps
+    }
     return render(request, 'repo/soft_detail.html', context)
 
 
 def SoftwareListView(request):
-    return DataListView(request, Software, soft_attr,
-                        table_name='Software Table', csv_url='soft_csv',
-                        create_url='soft_create', detail_url='soft_detail')
+    return DataListView(request,
+                        Software,
+                        soft_attr,
+                        table_name='Software Table',
+                        csv_url='soft_csv',
+                        create_url='soft_create',
+                        detail_url='soft_detail')
 
 
 def getSoftwareCSV(request):
-    return getfile(request, Software.objects.all(), soft_attr, filename='Software.csv')
+    return getfile(request,
+                   Software.objects.all(),
+                   soft_attr_csv,
+                   filename='Software.csv')
 
 
 def SoftwareCreateView(request):
@@ -210,18 +297,21 @@ def SoftwareDeleteView(request, num):
 # --------------------------purchase--------------
 
 
-purch_attr = ['id', 'bill_no', 'supplier_info', 'invoice_no',
-              'date', 'rate_in_Rupee', ]
-
-
 def PurchaseListView(request):
-    return DataListView(request, Purchase, purch_attr,
-                        table_name='Purchase Table', csv_url='purch_csv',
-                        create_url='purch_create', detail_url='purch_detail')
+    return DataListView(request,
+                        Purchase,
+                        purch_attr,
+                        table_name='Purchase Table',
+                        csv_url='purch_csv',
+                        create_url='purch_create',
+                        detail_url='purch_detail')
 
 
 def getPurchaseCSV(request):
-    return getfile(request, Purchase.objects.all(), purch_attr, filename='Purchase.csv')
+    return getfile(request,
+                   Purchase.objects.all(),
+                   purch_attr,
+                   filename='Purchase.csv')
 
 
 @login_required
@@ -231,12 +321,13 @@ def PurchaseDetailView(request, num=1):
     # epqs = Equipment.objects.filter(purchase=num)
     # softs = Software.objects.filter(purchase=num)
     test_purch = Purchase.objects.get(id=num)
-    context = {'purch': test_purch,
-               'attr_names': purch_attr,
-               'comps': comps,
-               #    'epqs': epqs,
-               #    'softs': softs,
-               }
+    context = {
+        'purch': test_purch,
+        'attr_names': purch_attr,
+        'comps': comps,
+        #    'epqs': epqs,
+        #    'softs': softs,
+    }
     return render(request, 'repo/purch_detail.html', context)
 
 
@@ -251,13 +342,15 @@ def PurchaseUpdateView(request, num):
 def PurchaseDeleteView(request, num):
     return DataDeleteView(request, num, Purchase, 'purch_table')
 
+
 # ----------------user dep mapping---------------
 
 
 def UserDepartmentMappingCreateView(request, num):
-    return DataCreateView(request, UserDepartmentMappingForm, 'dashboard', initial={
-        'user': num
-    })
+    return DataCreateView(request,
+                          UserDepartmentMappingForm,
+                          'dashboard',
+                          initial={'user': num})
 
 
 @login_required

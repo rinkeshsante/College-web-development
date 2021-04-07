@@ -9,14 +9,15 @@ urlpatterns = [
     path('not_allowed/', Unauthorized, name='not_allowed'),
 
     # user dep
-    path('new_user/<int:num>/', UserDepartmentMappingCreateView,
+    path('new_user/<int:num>/',
+         UserDepartmentMappingCreateView,
          name='user_dep_create'),
-    path('new_user/', UserDepartmentMappingUnauthList, name='user_unauth_list'),
+    path('new_user/', UserDepartmentMappingUnauthList,
+         name='user_unauth_list'),
 
     # issue
     path('issue/new/', IssueCreateForm, name='issue_create'),
     path('issue/solved/<int:num>/', IssueSolvedView, name='issue_solved'),
-
 
     # lab
     path('lab/', LabListView, name='lab_table'),
@@ -25,14 +26,17 @@ urlpatterns = [
     path('lab/new/', LabCreateView, name='lab_create'),
     path('lab/update/<int:num>/', LabUpdateView, name='lab_update'),
     path('lab/delete/<int:num>/', LabDeleteView, name='lab_delete'),
+    path('lab/report/<int:num>/', getLabReport, name='lab_report'),
 
     # epq
     path('equipment/', EquipmentListView, name='epq_table'),
     path('equipment/csv', getEquipmentCSV, name='epq_csv'),
     path('equipment/<int:num>/', EquipmentDetailView, name='epq_detail'),
     path('equipment/new/', EquipmentCreateView, name='epq_create'),
-    path('equipment/update/<int:num>/', EquipmentUpdateView, name='epq_update'),
-    path('equipment/delete/<int:num>/', EquipmentDeleteView, name='epq_delete'),
+    path('equipment/update/<int:num>/', EquipmentUpdateView,
+         name='epq_update'),
+    path('equipment/delete/<int:num>/', EquipmentDeleteView,
+         name='epq_delete'),
 
     # comp
     path('computer/', ComputerListView, name='comp_table'),
@@ -55,8 +59,8 @@ urlpatterns = [
     path('purchase/csv', getPurchaseCSV, name='purch_csv'),
     path('purchase/<int:num>/', PurchaseDetailView, name='purch_detail'),
     path('purchase/new/', PurchaseCreateView, name='purch_create'),
-    path('purchase/update/<int:num>/', PurchaseUpdateView, name='purch_update'),
-    path('purchase/delete/<int:num>/', PurchaseDeleteView, name='purch_delete'),
-
-
+    path('purchase/update/<int:num>/', PurchaseUpdateView,
+         name='purch_update'),
+    path('purchase/delete/<int:num>/', PurchaseDeleteView,
+         name='purch_delete'),
 ]
