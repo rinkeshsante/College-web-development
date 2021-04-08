@@ -113,10 +113,10 @@ purch_attr = [
 
 # -------------labs-------------------------------
 
-
-lab_attr_csv = ['name',
-                'lab_area_in_sqft', 'lab_capacity', 'intercom_no',
-                'lab_incharge', 'department']
+lab_attr_csv = [
+    'name', 'lab_area_in_sqft', 'lab_capacity', 'intercom_no', 'lab_incharge',
+    'department'
+]
 
 
 @login_required
@@ -145,7 +145,7 @@ def LabListView(request):
 
 
 def getLabCSV(request):
-<<<<<<< HEAD
+
     return getfile(request,
                    Lab.objects.all(),
                    lab_attr_csv,
@@ -158,9 +158,6 @@ def getLabReport(request, num=1):
     comp_in_lab = Computer.objects.filter(lab=num)
     return getlabRep(request, test_lab, lab_attr, epq_in_lab, epq_attr_csv,
                      comp_in_lab, comp_attr_csv)
-=======
-    return getfile(request, Lab.objects.all(), lab_attr_csv, filename='labs.csv')
->>>>>>> 7617b105a4a1033475de11877153acef281f7826
 
 
 def LabCreateView(request):
@@ -177,10 +174,13 @@ def LabDeleteView(request, num):
 
 # -------------epq------------------------
 
-
-epq_attr_csv = ['name',
-                'gi_no', 'Status',
-                'lab', 'department', ]
+epq_attr_csv = [
+    'name',
+    'gi_no',
+    'Status',
+    'lab',
+    'department',
+]
 
 
 @login_required
@@ -202,14 +202,11 @@ def EquipmentListView(request):
 
 
 def getEquipmentCSV(request):
-<<<<<<< HEAD
+
     return getfile(request,
                    Equipment.objects.all(),
                    epq_attr_csv,
                    filename='Equipment.csv')
-=======
-    return getfile(request, Equipment.objects.all(), epq_attr_csv, filename='Equipment.csv')
->>>>>>> 7617b105a4a1033475de11877153acef281f7826
 
 
 def EquipmentCreateView(request):
@@ -226,10 +223,9 @@ def EquipmentDeleteView(request, num):
 
 # ---------------Computer--------------------
 
-
-comp_attr_csv = ['name',
-                 'gi_no', 'Status', 'ram', 'storage',
-                 'processor', 'lab']
+comp_attr_csv = [
+    'name', 'gi_no', 'Status', 'ram', 'storage', 'processor', 'lab'
+]
 
 
 @login_required
@@ -251,14 +247,10 @@ def ComputerListView(request):
 
 
 def getComputerCSV(request):
-<<<<<<< HEAD
     return getfile(request,
                    Computer.objects.all(),
                    comp_attr_csv,
                    filename='Computer.csv')
-=======
-    return getfile(request, Computer.objects.all(), comp_attr_csv, filename='Computer.csv')
->>>>>>> 7617b105a4a1033475de11877153acef281f7826
 
 
 def ComputerCreateView(request, num=0):
@@ -278,9 +270,12 @@ def ComputerDeleteView(request, num):
 
 # --------------------------Software--------------
 
-
-soft_attr_csv = ['name', 'Licenced_Qty',
-                 'gi_no', 'Status', ]
+soft_attr_csv = [
+    'name',
+    'Licenced_Qty',
+    'gi_no',
+    'Status',
+]
 
 
 @login_required
@@ -307,14 +302,10 @@ def SoftwareListView(request):
 
 
 def getSoftwareCSV(request):
-<<<<<<< HEAD
     return getfile(request,
                    Software.objects.all(),
                    soft_attr_csv,
                    filename='Software.csv')
-=======
-    return getfile(request, Software.objects.all(), soft_attr_csv, filename='Software.csv')
->>>>>>> 7617b105a4a1033475de11877153acef281f7826
 
 
 def SoftwareCreateView(request):
