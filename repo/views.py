@@ -22,7 +22,7 @@ def DashBoardView(request):
     total_comp = Computer.objects.count()
     total_purch = Purchase.objects.count()
 
-    issues = Issue.objects.filter(is_solved=False)
+    issues = Issue.objects.filter(Is_Solved=False)
 
     context = {
         'total_lab': total_lab,

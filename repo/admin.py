@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from.models import *
+from .models import *
 
 
 class ComputerInline(admin.TabularInline):
@@ -12,27 +12,28 @@ class EquipnmentInline(admin.TabularInline):
 
 
 class LabAdmin(admin.ModelAdmin):
-    inlines = [
-        ComputerInline,
-        EquipnmentInline
-    ]
+    inlines = [ComputerInline, EquipnmentInline]
 
-    list_display = ('code', 'name', 'lab_number',)
+    list_display = (
+        # 'Code',
+        'Name',
+        'Lab_Number',
+    )
 
 
 class EquipmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'gi_no', 'code', 'lab')
+    list_display = ('Name', 'Code', 'Location')
 
 
 class UserDepartmentMappingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'department')
+    list_display = ('id', 'Department')
 
 
 class ComputerAdmin(admin.ModelAdmin):
     # inlines = [
     #     ComputerSoftwareInline,
     # ]
-    list_display = ('name', 'gi_no', 'code', 'lab')
+    list_display = ('Name', 'Code', 'Location')
 
 
 class SoftwareAdmin(admin.ModelAdmin):
@@ -43,11 +44,12 @@ class SoftwareAdmin(admin.ModelAdmin):
 
 
 class PurchaseAdmin(admin.ModelAdmin):
-    list_display = ('bill_no', 'date', 'rate_in_Rupee')
+    list_display = ('Invoice_No', 'Date', 'Rate_With_VAT',
+                    'Total_Cost_With_VAT')
 
 
 class IssueAdmin(admin.ModelAdmin):
-    list_display = ('header', 'is_solved', 'creator', 'date')
+    list_display = ('Header', 'Is_Solved', 'Creator', 'Date')
 
 
 admin.site.register(Department)

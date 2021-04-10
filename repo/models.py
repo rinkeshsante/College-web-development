@@ -7,8 +7,8 @@ from django.contrib.auth import get_user_model
 
 
 class Department(models.Model):
-    name = models.CharField(max_length=40, unique=True)
-    Dep_admin = models.ForeignKey(
+    Name = models.CharField(max_length=40, unique=True)
+    Dep_admin = models.OneToOneField(
         get_user_model(),
         null=True,
         on_delete=models.SET_NULL,
@@ -20,13 +20,12 @@ class Department(models.Model):
 
 
 class UserDepartmentMapping(models.Model):
-    user = models.ForeignKey(
+    User = models.OneToOneField(
         get_user_model(),
         on_delete=models.CASCADE,
-        unique=True
     )
-    is_sub_admin = models.BooleanField(default=False)
-    department = models.ForeignKey(
+    Is_Sub_Admin = models.BooleanField(default=False)
+    Department = models.ForeignKey(
         'Department',
         null=True,
         on_delete=models.SET_NULL,
@@ -37,34 +36,34 @@ class UserDepartmentMapping(models.Model):
 
 
 class Issue(models.Model):
-    header = models.CharField(max_length=40)
-    info = models.TextField()
-    date = models.DateField(auto_now_add=True)
-    is_solved = models.BooleanField(default=False)
-    creator = models.ForeignKey(
-        get_user_model(),
-        on_delete=models.SET_NULL,
-        null=True
-    )
+    Header = models.CharField(max_length=40)
+    Info = models.TextField()
+    Date = models.DateField(auto_now_add=True)
+    Is_Solved = models.BooleanField(default=False)
+    Creator = models.ForeignKey(get_user_model(),
+                                on_delete=models.SET_NULL,
+                                null=True)
 
     def __str__(self):
         return self.header
 
 
 class Lab(models.Model):
-    code = models.CharField(max_length=5, unique=True)
-    name = models.CharField(max_length=20, unique=True)
-    lab_number = models.IntegerField(default=0, unique=True)
-    lab_area_in_sqft = models.IntegerField(default=0)  # in sq ft
-    lab_capacity = models.IntegerField(default=0)
-    intercom_no = models.IntegerField(
-        default=0, unique=True, null=True, blank=True)
-    lab_incharge = models.ForeignKey(
+    # code = models.CharField(max_length=5, unique=True)
+    Lab_Number = models.IntegerField(default=0, unique=True)
+    Name = models.CharField(max_length=20, unique=True)
+    Lab_Area_In_sqft = models.IntegerField(default=0)  # in sq ft
+    Lab_Capacity = models.IntegerField(default=0)
+    Intercom_No = models.IntegerField(default=0,
+                                      unique=True,
+                                      null=True,
+                                      blank=True)
+    Lab_Incharge = models.ForeignKey(
         get_user_model(),
         null=True,
         on_delete=models.SET_NULL,
     )
-    department = models.ForeignKey(
+    Department = models.ForeignKey(
         'Department',
         null=True,
         on_delete=models.SET_NULL,
@@ -75,34 +74,39 @@ class Lab(models.Model):
 
 
 class Purchase(models.Model):
-    bill_no = models.CharField(max_length=10, unique=True)
-    supplier_info = models.TextField()
-    invoice_no = models.CharField(max_length=20, unique=True)
-    date = models.DateField(auto_now_add=True)
-    rate_in_Rupee = models.FloatField()
+    # bill_no = models.CharField(max_length=10, unique=True)
+    Invoice_No = models.CharField(max_length=20, unique=True)
+    Supplier_Info = models.TextField()
+    Date = models.DateField(auto_now_add=True)
+    Rate_With_VAT = models.FloatField()
+    Total_Cost_With_VAT = models.FloatField()
+    GI_No = models.IntegerField(unique=True)
+
+    Remark = models.CharField(max_length=60, default='ok')
 
     def __str__(self):
-        return self.bill_no
+        return self.Invoice_No
 
 
 class Equipment(models.Model):
-    name = models.CharField(max_length=100)
-    equipment_no = models.CharField(max_length=10, unique=True)
-    code = models.CharField(max_length=10, unique=True)
-    gi_no = models.IntegerField(unique=True)
+    Name = models.CharField(max_length=100)
+    Equipment_No = models.CharField(max_length=10, unique=True)
+    Code = models.CharField(max_length=10, unique=True)
+    # gi_no = models.IntegerField(unique=True)
     Status = models.CharField(max_length=60)
 
-    department = models.ForeignKey(
+    Department = models.ForeignKey(
         'Department',
         null=True,
         on_delete=models.SET_NULL,
     )
-    lab = models.ForeignKey(
+
+    Location = models.ForeignKey(
         'Lab',
         null=True,
         on_delete=models.SET_NULL,
     )
-    purchase = models.ForeignKey(
+    Invoice = models.ForeignKey(
         'Purchase',
         null=True,
         on_delete=models.SET_NULL,
@@ -113,26 +117,31 @@ class Equipment(models.Model):
 
 
 class Computer(models.Model):
-    name = models.CharField(max_length=100)
-    Computer_no = models.CharField(max_length=10, unique=True)
-    code = models.CharField(max_length=100, unique=True)
-    gi_no = models.IntegerField(unique=True)
+    Name = models.CharField(max_length=100)
+    Equipment_No = models.CharField(max_length=10, unique=True)
+    Code = models.CharField(max_length=100, unique=True)
+    # gi_no = models.IntegerField(unique=True)
     Status = models.CharField(max_length=60)
-    ram = models.IntegerField()
-    storage = models.IntegerField()
-    processor = models.CharField(max_length=50)
+    RAM = models.IntegerField()
+    Storage_in_GB = models.IntegerField()
+    Other_Info = models.TextField(max_length=200)
 
-    installed_software = models.ManyToManyField(
-        "Software",
-        blank=True,
+    Department = models.ForeignKey(
+        'Department',
         null=True,
+        on_delete=models.SET_NULL,
     )
-    lab = models.ForeignKey(
+
+    Installed_Softwares = models.ManyToManyField("Software",
+                                                 blank=True,
+                                                 null=True)
+
+    Location = models.ForeignKey(
         'Lab',
         null=True,
         on_delete=models.SET_NULL,
     )
-    purchase_bill_no = models.ForeignKey(
+    Invoice = models.ForeignKey(
         'Purchase',
         null=True,
         on_delete=models.SET_NULL,

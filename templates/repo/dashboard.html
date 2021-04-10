@@ -50,10 +50,10 @@
             {% for issue in issues %}
             <li>
               <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{issue.header}}</h5>
-                <small>{{issue.date}}</small>
+                <h5 class="mb-1">{{issue.Header}}</h5>
+                <small>{{issue.Date}}</small>
               </div>
-              <p class="mb-1">{{issue.info}}</p>
+              <p class="mb-1">{{issue.Info}}</p>
               <small
                 >-{{issue.creator}} {% if user|isSubAdmin %},
                 <a href="{% url 'issue_solved' issue.id %}">clear </a>
