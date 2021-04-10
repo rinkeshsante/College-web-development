@@ -56,6 +56,15 @@
           </tr>
           {% endfor %}
         </tbody>
+
+        <tfoot>
+          <tr>
+            <th>View / Edit</th>
+            {% for name in attr_names %}
+            <th scope="col">{{ name }}</th>
+            {% endfor %}
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
