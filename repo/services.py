@@ -9,20 +9,22 @@ import csv
 
 def is_sub_admin(user):
     try:
-        return UserDepartmentMapping.objects.get(user=user).is_sub_admin
+        return UserDepartmentMapping.objects.get(User=user).Is_Sub_Admin
     except:
         return False
 
 
 def get_user_dep(user):
     try:
-        return UserDepartmentMapping.objects.get(user=user).department
+        return UserDepartmentMapping.objects.get(User=user).Department
     except:
         return -1
 
 
 def is_authorized(user):
     dep = get_user_dep(user)
+
+    # print(dep)
 
     if dep == -1:
         return False

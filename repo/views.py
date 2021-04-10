@@ -104,11 +104,13 @@ soft_attr_csv = [
 
 purch_attr = [
     'id',
-    'bill_no',
-    'supplier_info',
-    'invoice_no',
-    'date',
-    'rate_in_Rupee',
+    'Invoice_No',
+    # 'bill_no',
+    'Supplier_Info',
+    'Date',
+    'GI_No',
+    'Rate_With_VAT',
+    'Total_Cost_With_VAT',
 ]
 
 # -------------labs-------------------------------
@@ -385,7 +387,7 @@ def UserDepartmentMappingCreateView(request, num):
 def UserDepartmentMappingUnauthList(request):
     User = get_user_model()
     users = User.objects.exclude(
-        id__in=[x.user.id for x in UserDepartmentMapping.objects.all()])
+        id__in=[x.User.id for x in UserDepartmentMapping.objects.all()])
     context = {'users': users}
     return render(request, 'repo/new_user.html', context)
 

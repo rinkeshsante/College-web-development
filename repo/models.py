@@ -16,7 +16,7 @@ class Department(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return self.Name
 
 
 class UserDepartmentMapping(models.Model):
@@ -32,7 +32,7 @@ class UserDepartmentMapping(models.Model):
     )
 
     def __str__(self):
-        return str(self.user) + str(self.department)
+        return str(self.User) + str(self.Department)
 
 
 class Issue(models.Model):
@@ -45,7 +45,7 @@ class Issue(models.Model):
                                 null=True)
 
     def __str__(self):
-        return self.header
+        return self.Header
 
 
 class Lab(models.Model):
@@ -70,7 +70,7 @@ class Lab(models.Model):
     )
 
     def __str__(self):
-        return self.code
+        return self.Name
 
 
 class Purchase(models.Model):
@@ -113,7 +113,7 @@ class Equipment(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return self.Name
 
 
 class Computer(models.Model):
@@ -148,7 +148,7 @@ class Computer(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return self.Name
 
 
 class Software(models.Model):
