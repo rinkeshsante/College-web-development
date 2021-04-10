@@ -40,7 +40,7 @@ class SoftwareAdmin(admin.ModelAdmin):
     # inlines = [
     #     ComputerSoftwareInline,
     # ]
-    list_display = ('name', 'gi_no', 'code')
+    list_display = ('Name', 'GI_No', 'Code')
 
 
 class PurchaseAdmin(admin.ModelAdmin):

@@ -55,14 +55,14 @@ def getfile(request, data, attr_names, filename='datafile.csv'):
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
 def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs):
-    filename = lab.name + ' detail.csv'
+    filename = lab.Name + ' detail.csv'
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=' + filename
 
     writer = csv.writer(response)
 
-    writer.writerow(['lab :', lab.name])
+    writer.writerow(['lab :', lab.Name])
 
     writer.writerow('')
     writer.writerow(['Lab Detail'])
@@ -99,8 +99,8 @@ def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs):
         ls2 = []
         for j in ls:
             ls2 = ls2 + ['']
-        for i in getattr(comp, 'installed_software').all():
-            writer.writerow(ls2 + [i.code, i.name])
+        for i in getattr(comp, 'Installed_Softwares').all():
+            writer.writerow(ls2 + [i.Code, i.Name])
 
     return response
 

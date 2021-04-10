@@ -53,52 +53,51 @@ def notFound(request):
 # ------------------ attr -----------------------
 
 lab_attr = [
-    'id', 'code', 'name', 'lab_number', 'lab_area_in_sqft', 'lab_capacity',
-    'intercom_no', 'lab_incharge', 'department'
+    'id', 'Name', 'Lab_Number', 'Lab_Area_In_sqft',
+    'Intercom_No', 'Lab_Incharge', 'Department'
 ]
 
 lab_attr_csv = [
-    'name', 'lab_area_in_sqft', 'lab_capacity', 'intercom_no', 'lab_incharge',
-    'department'
+    'Name', 'Lab_Area_In_sqft',  'Intercom_No', 'Lab_Incharge',
+    'Intercom_No'
 ]
 
 epq_attr = [
-    'id', 'name', 'equipment_no', 'code', 'gi_no', 'Status', 'lab',
-    'department', 'purchase'
+    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location',
+    'Department', 'Invoice'
 ]
 
 epq_attr_csv = [
-    'name',
-    'gi_no',
+    'Name',
     'Status',
-    'lab',
-    'department',
+    'Location',
+    'Department',
 ]
 
 comp_attr = [
-    'id', 'name', 'Computer_no', 'code', 'gi_no', 'Status', 'ram', 'storage',
-    'processor', 'lab', 'purchase_bill_no'
+    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'RAM', 'Storage_in_GB',
+    'Other_Info', 'Location', 'Invoice'
 ]
 
 comp_attr_csv = [
-    'name', 'gi_no', 'Status', 'ram', 'storage', 'processor', 'lab'
+    'Name', 'Status', 'RAM', 'Storage_in_GB', 'Other_Info', 'Location'
 ]
 
 soft_attr = [
     'id',
-    'name',
+    'Name',
     'Licenced_Qty',
-    'software_no',
-    'code',
-    'gi_no',
+    'Software_No',
+    'Code',
+    'GI_No',
     'Status',
-    'purchase',
+    'Invoice',
 ]
 
 soft_attr_csv = [
-    'name',
+    'Name',
     'Licenced_Qty',
-    'gi_no',
+    'GI_No',
     'Status',
 ]
 
@@ -116,8 +115,8 @@ purch_attr = [
 # -------------labs-------------------------------
 
 lab_attr_csv = [
-    'name', 'lab_area_in_sqft', 'lab_capacity', 'intercom_no', 'lab_incharge',
-    'department'
+    'Name', 'Lab_Area_In_sqft', 'Lab_Capacity', 'Intercom_No', 'Lab_Incharge',
+    'Department'
 ]
 
 
@@ -125,8 +124,8 @@ lab_attr_csv = [
 @user_passes_test(is_authorized, login_url='not_allowed')
 def LabDetailView(request, num=1):
     test_lab = Lab.objects.get(id=num)
-    eqps = Equipment.objects.filter(lab=test_lab.id)
-    comps = Computer.objects.filter(lab=test_lab.id)
+    eqps = Equipment.objects.filter(Location=test_lab.id)
+    comps = Computer.objects.filter(Location=test_lab.id)
     context = {
         'lab': test_lab,
         'equipments': eqps,
@@ -156,8 +155,8 @@ def getLabCSV(request):
 
 def getLabReport(request, num=1):
     test_lab = Lab.objects.get(id=num)
-    epq_in_lab = Equipment.objects.filter(lab=num)
-    comp_in_lab = Computer.objects.filter(lab=num)
+    epq_in_lab = Equipment.objects.filter(Location=num)
+    comp_in_lab = Computer.objects.filter(Location=num)
     return getlabRep(request, test_lab, lab_attr, epq_in_lab, epq_attr_csv,
                      comp_in_lab, comp_attr_csv)
 
@@ -177,11 +176,10 @@ def LabDeleteView(request, num):
 # -------------epq------------------------
 
 epq_attr_csv = [
-    'name',
-    'gi_no',
+    'Name',
     'Status',
-    'lab',
-    'department',
+    'Location',
+    'Department',
 ]
 
 
@@ -226,7 +224,7 @@ def EquipmentDeleteView(request, num):
 # ---------------Computer--------------------
 
 comp_attr_csv = [
-    'name', 'gi_no', 'Status', 'ram', 'storage', 'processor', 'lab'
+    'Name',  'Status', 'RAM', 'Storage_in_GB', 'Other_Info', 'Location'
 ]
 
 
@@ -259,7 +257,7 @@ def ComputerCreateView(request, num=0):
     return DataCreateView(request,
                           ComputerForm,
                           'comp_table',
-                          initial={'purchase_bill_no': num})
+                          initial={'Invoice': num})
 
 
 def ComputerUpdateView(request, num):
@@ -273,9 +271,9 @@ def ComputerDeleteView(request, num):
 # --------------------------Software--------------
 
 soft_attr_csv = [
-    'name',
+    'Name',
     'Licenced_Qty',
-    'gi_no',
+    'GI_No',
     'Status',
 ]
 
@@ -284,7 +282,7 @@ soft_attr_csv = [
 @user_passes_test(is_authorized, login_url='not_allowed')
 def SoftwareDetailView(request, num=1):
     test_soft = Software.objects.get(id=num)
-    comps = Computer.objects.filter(installed_software=num).all()
+    comps = Computer.objects.filter(Installed_Softwares=num).all()
     context = {
         'soft': test_soft,
         'attr_names': soft_attr,
@@ -345,7 +343,7 @@ def getPurchaseCSV(request):
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
 def PurchaseDetailView(request, num=1):
-    comps = Computer.objects.filter(purchase_bill_no=num)
+    comps = Computer.objects.filter(Invoice=num)
     # epqs = Equipment.objects.filter(purchase=num)
     # softs = Software.objects.filter(purchase=num)
     test_purch = Purchase.objects.get(id=num)
@@ -402,7 +400,7 @@ def IssueCreateForm(request):
         form = IssueForm(request.POST)
         if form.is_valid():
             form = form.save(commit=False)
-            form.creator = request.user
+            form.Creator = request.user
             form.save()
             return redirect('dashboard')
 
@@ -415,6 +413,6 @@ def IssueCreateForm(request):
 @user_passes_test(is_sub_admin, login_url='not_allowed')
 def IssueSolvedView(request, num):
     obj = Issue.objects.get(id=num)
-    obj.is_solved = True
+    obj.Is_Solved = True
     obj.save()
     return redirect('dashboard')

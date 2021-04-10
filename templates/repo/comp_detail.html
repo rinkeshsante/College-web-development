@@ -33,7 +33,7 @@
 <h2>Software installed</h2>
 
 <ul>
-  {% for soft in comp.installed_software.all %}
+  {% for soft in comp.Installed_Softwares.all %}
   <li><a href="{% url 'soft_detail' soft.id %}">{{soft}}</a></li>
   {% endfor %}
 </ul>

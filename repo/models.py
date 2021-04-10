@@ -152,14 +152,14 @@ class Computer(models.Model):
 
 
 class Software(models.Model):
-    name = models.CharField(max_length=100)
+    Name = models.CharField(max_length=100)
     Licenced_Qty = models.IntegerField(null=True, blank=True)
-    software_no = models.IntegerField(unique=True)
-    code = models.CharField(max_length=10, unique=True)
-    gi_no = models.IntegerField(unique=True)
+    Software_No = models.IntegerField(unique=True)
+    Code = models.CharField(max_length=10, unique=True)
+    GI_No = models.IntegerField(unique=True)
     Status = models.CharField(max_length=60, default='Ok')
 
-    purchase = models.ForeignKey(
+    Invoice = models.ForeignKey(
         'Purchase',
         null=True,
         on_delete=models.SET_NULL,
@@ -167,4 +167,4 @@ class Software(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return self.Name

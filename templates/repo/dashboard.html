@@ -55,7 +55,7 @@
               </div>
               <p class="mb-1">{{issue.Info}}</p>
               <small
-                >-{{issue.creator}} {% if user|isSubAdmin %},
+                >-{{issue.Creator}} {% if user|isSubAdmin %},
                 <a href="{% url 'issue_solved' issue.id %}">clear </a>
                 <div></div>
                 {% endif %}
