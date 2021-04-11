@@ -5,9 +5,13 @@
 <div></div>
 <div class="container">
   {% include 'navbar.html' %}
-  <div class="row">
-    <div class="col-3">{% include 'repo/slider.html' %}</div>
-    <div class="col-9">{% block content %} {% endblock %}</div>
+  <hr />
+
+  <div class="main-block">
+    <div class="con-left">{% include 'repo/slider.html' %}</div>
+    <div class="con-right">
+      <div class="content">{% block content %} {% endblock %}</div>
+    </div>
   </div>
 </div>
 {% endblock main %}

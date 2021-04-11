@@ -6,68 +6,49 @@
 {% load repo_extras %} {% block content %}
 
 <!-- DataTales Example -->
-<div class="card shadow mb-4">
-  <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">
-      {% if user|isSubAdmin %}
-      <a class="btn btn-success" href="{% url create_url %}">+ new</a>
-      {% endif %}
 
-      <a class="btn btn-info" href="{% url csv_url %}"> ⤓ Report</a>
+<nav class="table-nav">
+  {% if user|isSubAdmin %}
+  <a class="create-btn btn" href="{% url create_url %}">+ Add</a>
+  {% endif %}
 
-      <!-- <button onclick="exportTableToCSV('members.csv')">
-         ⤓ Report
-      </button> -->
+  <a class="report-btn btn" href="{% url csv_url %}"> ⤓ Report</a>
 
-      {{ table_name }}
-    </h6>
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table
-        class="table table-bordered"
-        id="dataTable"
-        width="100%"
-        cellspacing="0"
-      >
-        <thead cl>
-          <tr>
-            <th>View / Edit</th>
-            {% for name in attr_names %}
-            <th scope="col">{{ name }}</th>
-            {% endfor %}
-          </tr>
-        </thead>
+  <h3 class="table-head">{{ table_name }}</h3>
+</nav>
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+  <thead cl>
+    <tr>
+      <th>View / Edit</th>
+      {% for name in attr_names %}
+      <th scope="col">{{ name }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
 
-        <tbody>
-          {% for data_item in data_list %}
-          <tr>
-            <td>
-              <a
-                class="btn btn-outline-primary"
-                scope="row"
-                href="{% url detail_url data_item.id %}"
-                >More</a
-              >
-            </td>
-            {% for attr_name in attr_names %}
-            <td>{{ data_item|getValue:attr_name }}</td>
-            {% endfor %}
-          </tr>
-          {% endfor %}
-        </tbody>
+  <tbody>
+    {% for data_item in data_list %}
+    <tr>
+      <td>
+        <a class="btn more-btn" href="{% url detail_url data_item.id %}"
+          >More</a
+        >
+      </td>
+      {% for attr_name in attr_names %}
+      <td>{{ data_item|getValue:attr_name }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
 
-        <tfoot>
-          <tr>
-            <th>View / Edit</th>
-            {% for name in attr_names %}
-            <th scope="col">{{ name }}</th>
-            {% endfor %}
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  </div>
-</div>
+  <tfoot>
+    <tr>
+      <th>View / Edit</th>
+      {% for name in attr_names %}
+      <th scope="col">{{ name }}</th>
+      {% endfor %}
+    </tr>
+  </tfoot>
+</table>
 
 {% endblock %}

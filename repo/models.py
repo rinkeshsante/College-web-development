@@ -4,6 +4,7 @@ from django.db import models
 from django.db import models
 from django.contrib.auth import get_user_model
 # from safedelete.models import SafeDeleteModel
+from datetime import date
 
 
 class Department(models.Model):
@@ -77,7 +78,7 @@ class Purchase(models.Model):
     # bill_no = models.CharField(max_length=10, unique=True)
     Invoice_No = models.CharField(max_length=20, unique=True)
     Supplier_Info = models.TextField()
-    Date = models.DateField(auto_now_add=True)
+    Date = models.DateField(default=date.today)
     Rate_With_VAT = models.FloatField()
     Total_Cost_With_VAT = models.FloatField()
     GI_No = models.IntegerField(unique=True)

@@ -1,34 +1,27 @@
 {% load repo_extras %}
 
-<div
-  class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm"
->
+<header class="navbar flex-nav ">
   <img
     src="https://kjsieit.somaiya.edu.in//assets/kjsieit/images/Logo/kjsieit-logo.svg"
     alt="somaiya logo"
-    srcset=""
-    width="300"
+    class="college-logo"
+    
   />
-  <h5 class="my-0 mr-md-auto font-weight-normal" style="margin: 20">
-    College Repository
-  </h5>
+  <h1 class="project-name">College Repository</h5>
 
-  <nav class="my-2 my-md-0 mr-md-3">
-    <a class="p-2 text-dark" href="{% url 'profile' %}">
-      {{ user.username }}
-    </a>
-    <a class="p-2 text-dark" href="{% url 'about' %}">About</a>
-    <a class="btn-theme-toggle p-2 text-dark">Theme</a>
+  
+    <a class="" href="{% url 'profile' %}"> {{ user.username }} </a>
+    <a class="" href="{% url 'about' %}">About</a>
+    <a class="btn-theme-toggle btn">Theme</a>
     {% if user|isAuthorized %}
-    <a class="p-2 text-dark" href="#">{{user|getUserDep}} dep</a>
+    <a class="" href="#">{{user|getUserDep}} dep</a>
     {% endif %}
-  </nav>
-  <a class="btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>
+ 
+  <a class="btn sec-btn" href="{% url 'logout' %}">Logout</a>
   &nbsp;&nbsp;&nbsp;
   <img
     src="https://kjssc.somaiya.edu.in/assets/arigel_general/img/homepage/Trust.svg"
     alt="trust logo"
-    srcset=""
-    width="70"
+    class="trust-logo"
   />
-</div>
+</header>

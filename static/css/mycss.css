@@ -1,3 +1,223 @@
+:root {
+  --primary-color: #ef8354;
+  --gray-color: #bfc0c0;
+  --secondory-color: #4f5d75;
+  --black-color: #2d3142;
+  --white-color: #ffffff;
+  --light-gray: #eef0f2;
+  --dander-color: rgb(224, 91, 67);
+}
+
 .dark-mode {
-  filter: invert(85%) hue-rotate(180deg);
+  filter: invert(100%) hue-rotate(180deg);
+}
+
+body {
+  color: var(--black-color);
+  font-family: Verdana, sans-serif;
+  background-color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--primary-color);
+}
+
+.slider {
+  width: 150px;
+}
+
+.main-block {
+  /* justify-content: flex-start;
+  align-items: flex-start; */
+  overflow: auto;
+  width: 100%;
+  /* align-self: center; */
+  /* border: blueviolet 1px dashed; */
+
+  /* padding: 0px 15%; */
+}
+
+/* .con-right,
+.con-left {
+  padding: 20px;
+} */
+
+.con-left {
+  width: 20%;
+  float: left;
+}
+
+.con-right {
+  float: right;
+  width: 80%;
+  overflow: auto;
+  /* overflow: hidden; */
+}
+
+.slider {
+  width: auto;
+  height: auto;
+  background-color: var(--gray-color);
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.slider a {
+  display: block;
+  border-radius: 4px;
+  /* align-items: center;  */
+  padding: 10px;
+  /* width: 100%; */
+  /* background-color: rebeccapurple; */
+}
+
+.slider a:hover {
+  background-color: var(--primary-color);
+}
+
+img,
+.project-name,
+.nav-list,
+.table-head {
+  display: inline-block;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+header a {
+  color: var(--secondory-color);
+  /* padding: 10px; */
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+.college-logo {
+  width: 300px;
+}
+.trust-logo {
+  width: 70px;
+}
+
+input,
+select {
+  border-radius: 6px;
+  margin: 5px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form select {
+  border: 2px solid var(--secondory-color);
+  /* border-radius: 4px; */
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+.btn {
+  align-content: center;
+  border-radius: 4px;
+  padding: 5px;
+  margin: 10px;
+  box-sizing: border-box;
+  color: var(--white-color);
+  min-width: 70px;
+  transition-duration: 0.4s;
+
+  background-color: yellowgreen;
+}
+
+.danger-btn {
+  border: 2px solid var(--dander-color);
+  background-color: var(--dander-color);
+}
+
+.sec-btn {
+  border: 2px solid var(--secondory-color);
+  background-color: var(--secondory-color);
+}
+.prime-btn {
+  border: 2px solid var(--primary-color);
+  background-color: var(--primary-color);
+}
+.gray-btn {
+  border: 2px solid var(--gray-color);
+  background-color: var(--gray-color);
+}
+
+.submit-btn {
+  border: 2px solid var(--primary-color);
+  background-color: var(--primary-color);
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+.btn:hover {
+  background-color: var(--white-color);
+  color: var(--black-color);
+}
+
+form {
+  background-color: var(--light-gray);
+  padding: 20px;
+}
+
+.flex-nav {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.table-nav {
+  display: flex;
+  /* justify-content: space-around; */
+}
+
+.table-head {
+  padding-right: 0px;
+}
+
+th,
+td {
+  padding: 5px;
+  text-align: left;
+}
+
+/* tr {
+  border-bottom: var(--secondory-color) 1px solid;
+} */
+/* not working */
+/* tr:nth-child(even) {
+  background-color: #f2f2f2;
+} */
+
+th {
+  background-color: var(--primary-color);
+  color: white;
+  margin: 2px;
 }

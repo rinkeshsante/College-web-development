@@ -1,3 +1,4 @@
+// toggle button
 let button = document.querySelector(".btn-theme-toggle");
 if (localStorage.clickcount % 2 == 0) {
   document.documentElement.classList.toggle("dark-mode");
@@ -11,6 +12,7 @@ button.addEventListener("click", () => {
   document.documentElement.classList.toggle("dark-mode");
 });
 
+// for datatables
 $(document).ready(function () {
   $("#dataTable").DataTable({
     initComplete: function () {
