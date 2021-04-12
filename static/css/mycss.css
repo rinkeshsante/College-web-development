@@ -1,11 +1,11 @@
 :root {
-  --primary-color: #ef8354;
-  --gray-color: #bfc0c0;
-  --secondory-color: #4f5d75;
-  --black-color: #2d3142;
-  --white-color: #ffffff;
-  --light-gray: #eef0f2;
-  --dander-color: rgb(224, 91, 67);
+  --black: #03045e;
+  --primary: #0096c7;
+  --sec0: #48cae4;
+  --sec1: #90e0ef;
+  --sec2: #ade8f4;
+  --sec3: #caf0f8;
+  --white: white;
 }
 
 .dark-mode {
@@ -13,9 +13,11 @@
 }
 
 body {
-  color: var(--black-color);
+  margin: 0px;
+  color: var(--black);
   font-family: Verdana, sans-serif;
-  background-color: white;
+  background-image: linear-gradient(to right, var(--white), var(--sec3));
+  padding: 10px;
 }
 
 h1,
@@ -24,77 +26,11 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--primary-color);
+  color: var(--primary);
 }
 
-.slider {
-  width: 150px;
-}
-
-.main-block {
-  /* justify-content: flex-start;
-  align-items: flex-start; */
-  overflow: auto;
-  width: 100%;
-  /* align-self: center; */
-  /* border: blueviolet 1px dashed; */
-
-  /* padding: 0px 15%; */
-}
-
-/* .con-right,
-.con-left {
-  padding: 20px;
-} */
-
-.con-left {
-  width: 20%;
-  float: left;
-}
-
-.con-right {
-  float: right;
-  width: 80%;
-  overflow: auto;
-  /* overflow: hidden; */
-}
-
-.slider {
-  width: auto;
-  height: auto;
-  background-color: var(--gray-color);
-  border-radius: 4px;
-  margin: 10px;
-}
-
-.slider a {
-  display: block;
-  border-radius: 4px;
-  /* align-items: center;  */
-  padding: 10px;
-  /* width: 100%; */
-  /* background-color: rebeccapurple; */
-}
-
-.slider a:hover {
-  background-color: var(--primary-color);
-}
-
-img,
-.project-name,
-.nav-list,
-.table-head {
-  display: inline-block;
-}
-
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-header a {
-  color: var(--secondory-color);
+a {
+  color: var(--black);
   /* padding: 10px; */
 }
 
@@ -114,29 +50,17 @@ a:active {
   text-decoration: none;
 }
 
-.college-logo {
-  width: 300px;
-}
-.trust-logo {
-  width: 70px;
-}
-
 input,
 select {
   border-radius: 6px;
   margin: 5px;
 }
 
-form input[type="text"],
-form input[type="number"],
-form textarea,
-form select {
-  border: 2px solid var(--secondory-color);
-  /* border-radius: 4px; */
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
+img,
+.project-name,
+.nav-list,
+.table-head {
+  display: inline-block;
 }
 
 .btn {
@@ -145,37 +69,21 @@ form select {
   padding: 5px;
   margin: 10px;
   box-sizing: border-box;
-  color: var(--white-color);
+  color: var(--white);
   min-width: 70px;
   transition-duration: 0.4s;
 
-  background-color: yellowgreen;
+  background-color: greenyellow;
 }
 
-.danger-btn {
-  border: 2px solid var(--dander-color);
-  background-color: var(--dander-color);
+.btn1 {
+  border: 2px solid var(--sec0);
+  background-color: var(--sec0);
 }
 
-.sec-btn {
-  border: 2px solid var(--secondory-color);
-  background-color: var(--secondory-color);
-}
-.prime-btn {
-  border: 2px solid var(--primary-color);
-  background-color: var(--primary-color);
-}
-.gray-btn {
-  border: 2px solid var(--gray-color);
-  background-color: var(--gray-color);
-}
-
-.submit-btn {
-  border: 2px solid var(--primary-color);
-  background-color: var(--primary-color);
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
+.btn2 {
+  border: 2px solid var(--sec1);
+  background-color: var(--sec1);
 }
 
 .btn:hover {
@@ -183,14 +91,99 @@ form select {
   color: var(--black-color);
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /* background-image: linear-gradient(
+    to right,
+    var(--secondory-color),
+    var(--primary-color)
+  ); */
+  flex-wrap: wrap;
+}
+
+header a {
+  margin: 5px;
+}
+
+.college-logo {
+  width: 300px;
+  margin: 5px;
+}
+.trust-logo {
+  width: 70px;
+  margin: 5px;
+}
+
+/* .main-block {
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: auto;
+  width: 100%;
+  align-self: center;
+  border: blueviolet 1px dashed;
+
+  padding: 0px 15%;
+} */
+
+/* .con-right,
+.con-left {
+  padding: 20px;
+} */
+
+/* .con-left {
+  width: clamp(100px, 20%, 100%);
+  float: left;
+
+  flex-grow: 1;
+} */
+
+.con-right {
+  /* float: right;
+  width: clamp(500px, 80%, 100%); */
+  overflow: auto;
+  margin: 0px clamp(2px, 5%, 100px);
+  /* overflow: hidden; */
+
+  /* flex-grow: 2; */
+}
+
+.slider {
+  background-color: var(--sec2);
+  border-radius: 4px;
+  /* margin: 10px; */
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.slider a {
+  border-radius: 4px;
+  padding: 15px;
+}
+
+.slider a:hover {
+  /* background-color: var(--sec1); */
+  color: var(--primary);
+}
+
 form {
   background-color: var(--light-gray);
   padding: 20px;
 }
 
-.flex-nav {
-  display: flex;
-  flex-wrap: wrap;
+form input[type="text"],
+form input[type="number"],
+form textarea,
+form select {
+  border: 2px solid var(--sec1);
+  background-color: rgb(256, 256, 256, 0.3);
+  /* border-radius: 4px; */
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
 }
 
 .table-nav {
@@ -198,26 +191,16 @@ form {
   /* justify-content: space-around; */
 }
 
-.table-head {
-  padding-right: 0px;
-}
-
-th,
-td {
-  padding: 5px;
+#dataTable th,
+#dataTable td {
+  padding: 15px;
+  margin: 5px;
   text-align: left;
+  border-bottom: var(--primary) 1px solid;
 }
 
-/* tr {
-  border-bottom: var(--secondory-color) 1px solid;
-} */
-/* not working */
-/* tr:nth-child(even) {
-  background-color: #f2f2f2;
-} */
-
-th {
-  background-color: var(--primary-color);
-  color: white;
+#dataTable th {
+  background-color: var(--primary);
+  color: var(--white);
   margin: 2px;
 }

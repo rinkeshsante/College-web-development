@@ -7,53 +7,55 @@
   <div class="col-7">
     <h1 class="h3 mb-0 text-primary">Dashboard</h1>
 
+    <div class="main-block"></div>
+
     <ol>
       <li><a href="">dowload report for lab</a></li>
       <li><a href="">dowload reports for computers</a></li>
       <li><a href="">dowload reports for equipment</a></li>
       <li><a href="">dowload reports for software</a></li>
-      <li><a href=""></a></li>
+      <!-- <li><a href=""></a></li> -->
+
+      <table>
+        <tr>
+          <td>total labs</td>
+          <td>:{{total_lab}}</td>
+        </tr>
+        <tr>
+          <td>total soft</td>
+          <td>:{{total_soft}}</td>
+        </tr>
+        <tr>
+          <td>total epq</td>
+          <td>:{{total_epq}}</td>
+        </tr>
+        <tr>
+          <td>total purchase</td>
+          <td>:{{total_purch}}</td>
+        </tr>
+        <tr>
+          <td>total comp</td>
+          <td>:{{total_comp}}</td>
+        </tr>
+      </table>
     </ol>
 
-    <table>
-      <tr>
-        <td>total labs</td>
-        <td>:{{total_lab}}</td>
-      </tr>
-      <tr>
-        <td>total soft</td>
-        <td>:{{total_soft}}</td>
-      </tr>
-      <tr>
-        <td>total epq</td>
-        <td>:{{total_epq}}</td>
-      </tr>
-      <tr>
-        <td>total purchase</td>
-        <td>:{{total_purch}}</td>
-      </tr>
-      <tr>
-        <td>total comp</td>
-        <td>:{{total_comp}}</td>
-      </tr>
-    </table>
-  </div>
-  <div class="col">
-    <div class="card">
-      <div class="card-header">
-        {{issues.count}} Issues !! <a href="{% url 'issue_create' %}">new</a>
-      </div>
-      <div class="card-body">
+    <div class="issues-panel">
+      <h2>
+        {{issues.count}} Issues !!
         <a href="{% url 'issue_create' %}">new</a>
+      </h2>
+
+      <div class="issue-list">
         <ul>
-          <div class="list-group">
+          <div class="issue-item">
             {% for issue in issues %}
             <li>
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{issue.Header}}</h5>
+              <div>
+                <h5>{{issue.Header}}</h5>
                 <small>{{issue.Date}}</small>
               </div>
-              <p class="mb-1">{{issue.Info}}</p>
+              <p>{{issue.Info}}</p>
               <small
                 >-{{issue.Creator}} {% if user|isSubAdmin %},
                 <a href="{% url 'issue_solved' issue.id %}">clear </a>

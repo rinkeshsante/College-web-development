@@ -9,10 +9,10 @@
 
 <nav class="table-nav">
   {% if user|isSubAdmin %}
-  <a class="create-btn btn" href="{% url create_url %}">+ Add</a>
+  <a class="btn1 btn" href="{% url create_url %}">+ Add</a>
   {% endif %}
 
-  <a class="report-btn btn" href="{% url csv_url %}"> ⤓ Report</a>
+  <a class="btn2 btn" href="{% url csv_url %}"> ⤓ Report</a>
 
   <h3 class="table-head">{{ table_name }}</h3>
 </nav>

@@ -12,13 +12,12 @@
   
     <a class="" href="{% url 'profile' %}"> {{ user.username }} </a>
     <a class="" href="{% url 'about' %}">About</a>
-    <a class="btn-theme-toggle btn">Theme</a>
+    <a class="btn-theme-toggle ">Theme</a>
     {% if user|isAuthorized %}
     <a class="" href="#">{{user|getUserDep}} dep</a>
     {% endif %}
  
-  <a class="btn sec-btn" href="{% url 'logout' %}">Logout</a>
-  &nbsp;&nbsp;&nbsp;
+  <a class="btn " href="{% url 'logout' %}">Logout</a>
   <img
     src="https://kjssc.somaiya.edu.in/assets/arigel_general/img/homepage/Trust.svg"
     alt="trust logo"
