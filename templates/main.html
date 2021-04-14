@@ -3,13 +3,10 @@
 <div></div>
 {% block main %}
 <div></div>
-<div class="container">
-  {% include 'navbar.html' %}
-  <div class="main-block">
-    <div class="con-left">{% include 'repo/slider.html' %}</div>
-    <div class="con-right">
-      <div class="content">{% block content %} {% endblock %}</div>
-    </div>
-  </div>
+{% include 'navbar.html' %}
+<div class="main-block">
+  {% include 'repo/slider.html' %}
+  <div class="content">{% block content %} {% endblock %}</div>
 </div>
+
 {% endblock main %}

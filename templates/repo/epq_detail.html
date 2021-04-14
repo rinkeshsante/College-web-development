@@ -8,12 +8,13 @@
 <!-- make good info card/something-->
 <a class="btn sec-btn" href="{% url 'epq_table' %}">← back</a>
 
-<table>
+<table class="data-table">
   <tbody>
     {% for name in attr_names %}
     <tr>
-      <td>{{name}}</td>
-      <td>:{{epq|getValue:name}}</td>
+      <td class="data-attr">{{name}}</td>
+      <td>:</td>
+      <td class="data-data">{{epq|getValue:name}}</td>
     </tr>
     {% endfor %}
   </tbody>

@@ -1,11 +1,41 @@
 :root {
   --black: #03045e;
-  --primary: #0096c7;
-  --sec0: #48cae4;
-  --sec1: #90e0ef;
-  --sec2: #ade8f4;
-  --sec3: #caf0f8;
-  --white: white;
+  --primary: #2ec4b6;
+  --sec: #2ec4b6;
+  --white: #fdfffc;
+  --link: #00b4d8;
+
+  /* --black: #05668d;
+  --primary: #028090;
+  --sec0: #00a896;
+  --sec1: #02c39a;
+  --sec2: #02c39a;
+  --sec3: #f0f3bd;
+  --white: #f5f5f5; */
+
+  /* --black: #022b3a;
+  --primary: #1f7a8c;
+  --sec0: #bfdbf7;
+  --sec1: #e1e5f2;
+  --sec2: #02c39a;
+  --sec3: #ffffff;
+  --white: #ffffff; */
+
+  /* --black: #202020;
+  --primary: #ffee32;
+  --sec0: #ffd100;
+  --sec1: #ffd100;
+  --sec2: #ffd100;
+  --sec3: #d6d6d6;
+  --white: #d6d6d6; */
+
+  /* --black: #202020;
+  --primary: #ffee32;
+  --sec0: #ffd100;
+  --sec1: #ffd100;
+  --sec2: #ffd100;
+  --sec3: #d6d6d6;
+  --white: #d6d6d6; */
 }
 
 .dark-mode {
@@ -26,11 +56,11 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--primary);
+  color: var(--black);
 }
 
 a {
-  color: var(--black);
+  color: var(--link);
   /* padding: 10px; */
 }
 
@@ -73,22 +103,13 @@ img,
   min-width: 70px;
   transition-duration: 0.4s;
 
-  background-color: greenyellow;
-}
-
-.btn1 {
-  border: 2px solid var(--sec0);
-  background-color: var(--sec0);
-}
-
-.btn2 {
-  border: 2px solid var(--sec1);
-  background-color: var(--sec1);
+  border: 2px solid var(--sec);
+  background-color: var(--sec);
 }
 
 .btn:hover {
-  background-color: var(--white-color);
-  color: var(--black-color);
+  background-color: var(--white);
+  color: var(--black);
 }
 
 header {
@@ -105,12 +126,14 @@ header {
 
 header a {
   margin: 5px;
+  color: var(--black);
 }
 
 .college-logo {
   width: 300px;
   margin: 5px;
 }
+
 .trust-logo {
   width: 70px;
   margin: 5px;
@@ -139,10 +162,10 @@ header a {
   flex-grow: 1;
 } */
 
-.con-right {
+.content {
   /* float: right;
   width: clamp(500px, 80%, 100%); */
-  overflow: auto;
+  /* overflow-y: scroll; */
   margin: 0px clamp(2px, 5%, 100px);
   /* overflow: hidden; */
 
@@ -150,7 +173,7 @@ header a {
 }
 
 .slider {
-  background-color: var(--sec2);
+  background-color: var(--sec);
   border-radius: 4px;
   /* margin: 10px; */
   display: flex;
@@ -161,11 +184,12 @@ header a {
 .slider a {
   border-radius: 4px;
   padding: 15px;
+  color: var(--black);
 }
 
 .slider a:hover {
   /* background-color: var(--sec1); */
-  color: var(--primary);
+  color: var(--white);
 }
 
 form {
@@ -175,9 +199,10 @@ form {
 
 form input[type="text"],
 form input[type="number"],
+form input[type="password"],
 form textarea,
 form select {
-  border: 2px solid var(--sec1);
+  border: 2px solid var(--sec);
   background-color: rgb(256, 256, 256, 0.3);
   /* border-radius: 4px; */
   width: 100%;
@@ -199,8 +224,94 @@ form select {
   border-bottom: var(--primary) 1px solid;
 }
 
-#dataTable th {
+#dataTable thead th {
   background-color: var(--primary);
   color: var(--white);
   margin: 2px;
+}
+
+.data-attr {
+  /* background-color: var(--primary); */
+  /* border-radius: 2px; */
+  width: max-content;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.data-data {
+  text-align: end;
+}
+
+.data-table {
+  margin: 20px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.col-1 {
+  display: inline-block;
+  width: 50%;
+}
+
+.col-2 {
+  display: inline-block;
+  width: 50%;
+}
+
+.issue-panel,
+.issue-list {
+  border: 2px solid var(--sec);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.issue-head {
+  font-weight: bold;
+}
+
+.issue-foot {
+  padding-left: 20px;
+  font-size: small;
+}
+
+.issue-data {
+  padding-left: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .slider a,
+  .col-1,
+  .col-2,
+  .login-logos,
+  .college-logo,
+  header h1 {
+    width: 100%;
+  }
+  h1,
+  h2,
+  h3 {
+    text-align: center;
+  }
+}
+
+.login-logos {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+.c-logo {
+  grid-column: 1 / span 3;
+}
+
+.paginate_button {
+  padding: 5px;
+}
+
+table {
+  padding: 10px;
 }

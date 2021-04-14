@@ -3,69 +3,60 @@
 <div></div>
 {% load repo_extras %} {% load crispy_forms_tags %} {% block content %}
 
+<h1 class="h3 mb-0 text-primary">Dashboard</h1>
+
 <div class="row">
-  <div class="col-7">
-    <h1 class="h3 mb-0 text-primary">Dashboard</h1>
-
-    <div class="main-block"></div>
-
-    <ol>
+  <div class="col-2">
+    <!-- <ol>
       <li><a href="">dowload report for lab</a></li>
       <li><a href="">dowload reports for computers</a></li>
       <li><a href="">dowload reports for equipment</a></li>
       <li><a href="">dowload reports for software</a></li>
-      <!-- <li><a href=""></a></li> -->
+    </ol> -->
+    <table>
+      <tr>
+        <td>total labs</td>
+        <td>:{{total_lab}}</td>
+      </tr>
+      <tr>
+        <td>total soft</td>
+        <td>:{{total_soft}}</td>
+      </tr>
+      <tr>
+        <td>total epq</td>
+        <td>:{{total_epq}}</td>
+      </tr>
+      <tr>
+        <td>total purchase</td>
+        <td>:{{total_purch}}</td>
+      </tr>
+      <tr>
+        <td>total comp</td>
+        <td>:{{total_comp}}</td>
+      </tr>
+    </table>
+  </div>
 
-      <table>
-        <tr>
-          <td>total labs</td>
-          <td>:{{total_lab}}</td>
-        </tr>
-        <tr>
-          <td>total soft</td>
-          <td>:{{total_soft}}</td>
-        </tr>
-        <tr>
-          <td>total epq</td>
-          <td>:{{total_epq}}</td>
-        </tr>
-        <tr>
-          <td>total purchase</td>
-          <td>:{{total_purch}}</td>
-        </tr>
-        <tr>
-          <td>total comp</td>
-          <td>:{{total_comp}}</td>
-        </tr>
-      </table>
-    </ol>
-
-    <div class="issues-panel">
+  <div class="col-1">
+    <div class="issue-panel">
       <h2>
         {{issues.count}} Issues !!
         <a href="{% url 'issue_create' %}">new</a>
       </h2>
 
       <div class="issue-list">
-        <ul>
-          <div class="issue-item">
-            {% for issue in issues %}
-            <li>
-              <div>
-                <h5>{{issue.Header}}</h5>
-                <small>{{issue.Date}}</small>
-              </div>
-              <p>{{issue.Info}}</p>
-              <small
-                >-{{issue.Creator}} {% if user|isSubAdmin %},
-                <a href="{% url 'issue_solved' issue.id %}">clear </a>
-                <div></div>
-                {% endif %}
-              </small>
-            </li>
-            {% endfor %}
-          </div>
-        </ul>
+        {% for issue in issues %}
+
+        <article class="issue-item">
+          <p class="issue-head">{{issue.Header}}</p>
+          <p class="issue-data">{{issue.Info}}</p>
+          <p class="issue-foot">
+            - {{issue.Creator}} {{issue.Date}} {% if user|isSubAdmin %},
+            <a href="{% url 'issue_solved' issue.id %}">clear </a>
+            {% endif %}
+          </p>
+        </article>
+        {% endfor %}
       </div>
     </div>
   </div>

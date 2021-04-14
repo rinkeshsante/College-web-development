@@ -6,10 +6,10 @@
 <div></div>
 {% block main %}
 
-<div class="row" style="margin: 100px">
-  <div class="col-8">
+<div class="row">
+  <div class="col-2">
     <div class="row">
-      <div class="col-10">
+      <div class="col-2">
         <img
           src="https://kjsieit.somaiya.edu.in//assets/kjsieit/images/Logo/kjsieit-logo.svg"
           alt="somaiya logo"
@@ -17,7 +17,7 @@
           width="100%"
         />
       </div>
-      <div class="col">
+      <div class="col-1">
         <img
           src="https://kjssc.somaiya.edu.in/assets/arigel_general/img/homepage/Trust.svg"
           alt="trust logo"
@@ -28,21 +28,15 @@
       </div>
     </div>
 
-    <br />
-    <br />
-    <br />
-
-    <h1 class="my-0 mr-md-auto font-weight-normal" style="margin: 20">
-      College Repository
-    </h1>
+    <h1>College Repository</h1>
   </div>
-  <div class="col-4">
-    <h1>Sign Up Form</h1>
-    <form method="post">
+  <div class="col-1">
+    <form class="signup-form" method="post">
+      <h1>Sign Up Form</h1>
       <div>{% csrf_token %} {{ form|crispy }}</div>
       <button type="submit" class="btn btn-primary">Create</button> Or
-      <a class="small" href="{% url 'login' %}"
-        >Already have an account? Login!
+      <a class="small" href="{% url 'login' %}">
+        Already have an account? Login!
       </a>
     </form>
   </div>

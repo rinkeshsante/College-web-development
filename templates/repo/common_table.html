@@ -12,14 +12,13 @@
   <a class="btn1 btn" href="{% url create_url %}">+ Add</a>
   {% endif %}
 
-  <a class="btn2 btn" href="{% url csv_url %}"> ⤓ Report</a>
+  <!-- <a class="btn2 btn" href="{% url csv_url %}"> ⤓ Report</a> -->
 
   <h3 class="table-head">{{ table_name }}</h3>
 </nav>
 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
   <thead cl>
     <tr>
-      <th>View / Edit</th>
       {% for name in attr_names %}
       <th scope="col">{{ name }}</th>
       {% endfor %}
@@ -29,21 +28,22 @@
   <tbody>
     {% for data_item in data_list %}
     <tr>
+      {% for attr_name in attr_names %} {% if attr_name == 'id' %}
+
       <td>
         <a class="btn more-btn" href="{% url detail_url data_item.id %}"
-          >More</a
+          >{{ data_item|getValue:attr_name }}</a
         >
       </td>
-      {% for attr_name in attr_names %}
+      {% else %}
       <td>{{ data_item|getValue:attr_name }}</td>
-      {% endfor %}
+      {% endif %} {% endfor %}
     </tr>
     {% endfor %}
   </tbody>
 
   <tfoot>
     <tr>
-      <th>View / Edit</th>
       {% for name in attr_names %}
       <th scope="col">{{ name }}</th>
       {% endfor %}

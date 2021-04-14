@@ -64,6 +64,11 @@ class Lab(models.Model):
         null=True,
         on_delete=models.SET_NULL,
     )
+    Seating_Capacity = models.IntegerField(default=0)
+    Total_Lab_cost = models.FloatField(default=0)
+    Practicals_conducted_Odd_SEM = models.CharField(max_length=300)
+    Practicals_conducted_Even_SEM = models.CharField(max_length=300)
+    Other_Data = models.TextField(null=True, blank=True)
     Department = models.ForeignKey(
         'Department',
         null=True,

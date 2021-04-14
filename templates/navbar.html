@@ -12,7 +12,7 @@
   
     <a class="" href="{% url 'profile' %}"> {{ user.username }} </a>
     <a class="" href="{% url 'about' %}">About</a>
-    <a class="btn-theme-toggle ">Theme</a>
+    <!-- <a class="btn-theme-toggle ">Theme</a> -->
     {% if user|isAuthorized %}
     <a class="" href="#">{{user|getUserDep}} dep</a>
     {% endif %}

@@ -54,13 +54,16 @@ def notFound(request):
 
 lab_attr = [
     'id', 'Name', 'Lab_Number', 'Lab_Area_In_sqft',
-    'Intercom_No', 'Lab_Incharge', 'Department'
+    'Intercom_No', 'Lab_Incharge', 'Department', 'Seating_Capacity', 'Total_Lab_cost',
+    'Practicals_conducted_Odd_SEM', 'Practicals_conducted_Even_SEM',
 ]
 
 lab_attr_csv = [
-    'Name', 'Lab_Area_In_sqft',  'Intercom_No', 'Lab_Incharge',
-    'Intercom_No'
+    'Name', 'Lab_Area_In_sqft', 'Lab_Capacity', 'Intercom_No', 'Lab_Incharge',
+    'Seating_Capacity', 'Total_Lab_cost', 'Practicals_conducted_Odd_SEM', 'Practicals_conducted_Even_SEM',
+    'Department'
 ]
+
 
 epq_attr = [
     'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location',
@@ -113,11 +116,6 @@ purch_attr = [
 ]
 
 # -------------labs-------------------------------
-
-lab_attr_csv = [
-    'Name', 'Lab_Area_In_sqft', 'Lab_Capacity', 'Intercom_No', 'Lab_Incharge',
-    'Department'
-]
 
 
 @login_required
@@ -175,13 +173,6 @@ def LabDeleteView(request, num):
 
 # -------------epq------------------------
 
-epq_attr_csv = [
-    'Name',
-    'Status',
-    'Location',
-    'Department',
-]
-
 
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
@@ -222,10 +213,6 @@ def EquipmentDeleteView(request, num):
 
 
 # ---------------Computer--------------------
-
-comp_attr_csv = [
-    'Name',  'Status', 'RAM', 'Storage_in_GB', 'Other_Info', 'Location'
-]
 
 
 @login_required
@@ -269,13 +256,6 @@ def ComputerDeleteView(request, num):
 
 
 # --------------------------Software--------------
-
-soft_attr_csv = [
-    'Name',
-    'Licenced_Qty',
-    'GI_No',
-    'Status',
-]
 
 
 @login_required

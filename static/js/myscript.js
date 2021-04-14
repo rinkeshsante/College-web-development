@@ -1,20 +1,36 @@
-// toggle button
-let button = document.querySelector(".btn-theme-toggle");
-if (localStorage.clickcount % 2 == 0) {
-  document.documentElement.classList.toggle("dark-mode");
-}
-button.addEventListener("click", () => {
-  if (localStorage.clickcount) {
-    localStorage.clickcount = Number(localStorage.clickcount) + 1;
-  } else {
-    localStorage.clickcount = 1;
-  }
-  document.documentElement.classList.toggle("dark-mode");
-});
+// // toggle button
+// let button = document.querySelector(".btn-theme-toggle");
+// if (localStorage.clickcount % 2 == 0) {
+//   document.documentElement.classList.toggle("dark-mode");
+// }
+// button.addEventListener("click", () => {
+//   if (localStorage.clickcount) {
+//     localStorage.clickcount = Number(localStorage.clickcount) + 1;
+//   } else {
+//     localStorage.clickcount = 1;
+//   }
+//   document.documentElement.classList.toggle("dark-mode");
+// });
 
 // for datatables
 $(document).ready(function () {
   $("#dataTable").DataTable({
+    // paging: false,
+    // info: false,
+    scrollX: true,
+    dom: "Bfrtip",
+    buttons: [
+      {
+        extend: "csv",
+        filename: "data",
+        text: "⤓ Report",
+        exportOptions: {
+          modifier: {
+            // search: "none",
+          },
+        },
+      },
+    ],
     initComplete: function () {
       this.api()
         .columns()
