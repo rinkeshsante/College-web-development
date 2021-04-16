@@ -112,7 +112,13 @@ def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs):
 @user_passes_test(is_authorized, login_url='not_allowed')
 def DataListView(request, Obj, attr_names, table_name, detail_url, create_url,
                  csv_url):
-    data_list = Obj.objects.order_by('-id')
+
+    dep = get_user_dep(request.user)
+    try:
+        data_list = Obj.objects.filter(Department=dep).order_by('-id')
+    except:
+        data_list = Obj.objects.order_by('-id')
+
     context = {
         'data_list': data_list,
         'attr_names': attr_names,
