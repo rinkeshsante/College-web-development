@@ -4,11 +4,11 @@
 {% block content %}
 
 <h3>are you sure you wanna delete {{item}} ?</h3>
-<form method="post">
-  {% csrf_token %}
+<form method="POST">
+  {% csrf_token %} {{form|crispy}}
 
   <a href="{% url 'dashboard' %}" class="btn">Cancel</a>
-  <a class="btn" type="submit" name="submit">Confirm</a>
+  <button class="submit-btn btn" type="submit" name="submit">Confirm</button>
 </form>
 
 {% endblock content %}
