@@ -183,6 +183,7 @@ def EquipmentDetailView(request, num=1):
 
 
 def EquipmentListView(request):
+
     return DataListView(request,
                         Equipment,
                         epq_attr,
@@ -324,15 +325,15 @@ def getPurchaseCSV(request):
 @user_passes_test(is_authorized, login_url='not_allowed')
 def PurchaseDetailView(request, num=1):
     comps = Computer.objects.filter(Invoice=num)
-    # epqs = Equipment.objects.filter(purchase=num)
-    # softs = Software.objects.filter(purchase=num)
+    epqs = Equipment.objects.filter(Invoice=num)
+    softs = Software.objects.filter(Invoice=num)
     test_purch = Purchase.objects.get(id=num)
     context = {
         'purch': test_purch,
         'attr_names': purch_attr,
         'comps': comps,
-        #    'epqs': epqs,
-        #    'softs': softs,
+        'epqs': epqs,
+        'softs': softs,
     }
     return render(request, 'repo/purch_detail.html', context)
 
