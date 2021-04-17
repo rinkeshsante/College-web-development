@@ -8,7 +8,7 @@ from datetime import date
 
 
 class Department(models.Model):
-    Name = models.CharField(max_length=40, unique=True)
+    Name = models.CharField(max_length=100, unique=True)
     Dep_admin = models.OneToOneField(
         get_user_model(),
         null=True,
@@ -53,8 +53,9 @@ class Lab(models.Model):
     # code = models.CharField(max_length=5, unique=True)
     Lab_Number = models.IntegerField(default=0, unique=True)
     Name = models.CharField(max_length=20, unique=True)
+    Extension_No = models.IntegerField(default=0, null=True, blank=True)
     Lab_Area_In_sqft = models.IntegerField(default=0)  # in sq ft
-    Lab_Capacity = models.IntegerField(default=0)
+    # Lab_Capacity = models.IntegerField(default=0)
     Intercom_No = models.IntegerField(default=0,
                                       unique=True,
                                       null=True,
@@ -62,12 +63,33 @@ class Lab(models.Model):
     Lab_Incharge = models.ForeignKey(
         get_user_model(),
         null=True,
+        blank=True,
         on_delete=models.SET_NULL,
+        related_name='lab_incharge'
     )
+
+    Lab_Assistant_1 = models.ForeignKey(
+        get_user_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='lab_assistant_1'
+    )
+
+    Lab_Assistant_2 = models.ForeignKey(
+        get_user_model(),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='lab_assistant_2'
+    )
+
     Seating_Capacity = models.IntegerField(default=0)
     Total_Lab_cost = models.FloatField(default=0)
-    Practicals_conducted_Odd_SEM = models.CharField(max_length=300)
-    Practicals_conducted_Even_SEM = models.CharField(max_length=300)
+    Practicals_conducted_Odd_SEM = models.CharField(
+        max_length=300, default='None')
+    Practicals_conducted_Even_SEM = models.CharField(
+        max_length=300, default='None')
     Other_Data = models.TextField(null=True, blank=True)
     Department = models.ForeignKey(
         'Department',
@@ -81,7 +103,7 @@ class Lab(models.Model):
 
 class Purchase(models.Model):
     # bill_no = models.CharField(max_length=10, unique=True)
-    Invoice_No = models.CharField(max_length=20, unique=True)
+    Invoice_No = models.CharField(max_length=30, unique=True)
     Supplier_Info = models.TextField()
     Date = models.DateField(default=date.today)
     Rate_With_VAT = models.FloatField()
@@ -95,8 +117,8 @@ class Purchase(models.Model):
 
 
 class Equipment(models.Model):
-    Name = models.CharField(max_length=100)
-    Equipment_No = models.CharField(max_length=10, unique=True)
+    Name = models.TextField()
+    Equipment_No = models.CharField(max_length=30, unique=True)
     Code = models.CharField(max_length=10, unique=True)
     # gi_no = models.IntegerField(unique=True)
     Status = models.CharField(max_length=60)
@@ -123,7 +145,7 @@ class Equipment(models.Model):
 
 
 class Computer(models.Model):
-    Name = models.CharField(max_length=100)
+    Name = models.TextField()
     Equipment_No = models.CharField(max_length=10, unique=True)
     Code = models.CharField(max_length=100, unique=True)
     # gi_no = models.IntegerField(unique=True)
@@ -138,9 +160,7 @@ class Computer(models.Model):
         on_delete=models.SET_NULL,
     )
 
-    Installed_Softwares = models.ManyToManyField("Software",
-                                                 blank=True,
-                                                 null=True)
+    Installed_Softwares = models.ManyToManyField("Software")
 
     Location = models.ForeignKey(
         'Lab',
@@ -158,7 +178,7 @@ class Computer(models.Model):
 
 
 class Software(models.Model):
-    Name = models.CharField(max_length=100)
+    Name = models.TextField()
     Licenced_Qty = models.IntegerField(null=True, blank=True)
     Software_No = models.IntegerField(unique=True)
     Code = models.CharField(max_length=10, unique=True)
