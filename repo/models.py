@@ -123,10 +123,10 @@ class Purchase(models.Model):
     # bill_no = models.CharField(max_length=10, unique=True)
     Invoice_No = models.CharField(max_length=100, unique=True)
     Supplier_Info = models.TextField()
-    Date_YYYYMMDD = models.DateField(default=date.today)
+    Date_YYYYMMDD = models.DateField(default=date.today, null=True, blank=True)
     Rate_With_VAT = models.FloatField()
     Total_Cost_With_VAT = models.FloatField()
-    GI_No = models.IntegerField(unique=True)
+    GI_No = models.IntegerField(null=True, blank=True)
 
     Remark = models.CharField(max_length=100, default='ok')
 
