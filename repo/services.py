@@ -57,7 +57,7 @@ def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs):
         writer.writerow(ls)
 
     writer.writerow('')
-    writer.writerow(['epuipmets in lab'])
+    writer.writerow(['Epuipmets in Lab'])
     writer.writerow('')
 
     writer.writerow(epq_attrs)
@@ -68,10 +68,10 @@ def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs):
         writer.writerow(ls)
 
     writer.writerow('')
-    writer.writerow(['computers in lab'])
+    writer.writerow(['Computers in Lab'])
     writer.writerow('')
 
-    writer.writerow(comp_attrs + ['software installed'])
+    writer.writerow(comp_attrs + ['Software installed'])
     for comp in comp_l:
         ls = []
 
@@ -87,6 +87,62 @@ def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs):
 
     return response
 
+
+@login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
+def getPurchaseRep(request, purch, purch_attrs, epq_l, epq_attrs, comp_l, comp_attrs, soft_l, soft_attrs):
+    filename = purch.Invoice_No + ' detail.csv'
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=' + filename
+
+    writer = csv.writer(response)
+
+    writer.writerow(['Invoice_No :', purch.Invoice_No])
+
+    writer.writerow('')
+    writer.writerow(['Invoice Detail'])
+    writer.writerow('')
+
+    for purch_attr in purch_attrs:
+        ls = [purch_attr]
+        ls.append(getattr(purch, purch_attr))
+        writer.writerow(ls)
+
+    writer.writerow('')
+    writer.writerow(['Epuipmets in Invoice'])
+    writer.writerow('')
+
+    writer.writerow(epq_attrs)
+    for epq in epq_l:
+        ls = []
+        for epq_attr in epq_attrs:
+            ls.append(getattr(epq, epq_attr))
+        writer.writerow(ls)
+
+    writer.writerow('')
+    writer.writerow(['Computers in Invoice'])
+    writer.writerow('')
+
+    writer.writerow(comp_attrs)
+    for comp in comp_l:
+        ls = []
+        for comp_attr in comp_attrs:
+            ls.append(getattr(comp, comp_attr))
+        writer.writerow(ls)
+
+    writer.writerow('')
+    writer.writerow(['Software in Invoice'])
+    writer.writerow('')
+
+    writer.writerow(soft_attrs)
+    for soft in soft_l:
+        ls = []
+        for soft_attr in soft_attrs:
+            ls.append(getattr(soft, soft_attr))
+        writer.writerow(ls)
+
+    return response
 
 # -------------------common function --------------
 

@@ -363,6 +363,14 @@ def PurchaseUpdateView(request, num):
 def PurchaseDeleteView(request, num):
     return DataDeleteView(request, num, Purchase, 'purch_table')
 
+def getPurchaseReport(request, num=1):
+    test_purch = Purchase.objects.get(id=num)
+    epq_in_lab = Equipment.objects.filter(Invoice=num)
+    comp_in_lab = Computer.objects.filter(Invoice=num)
+    soft_in_lab = Software.objects.filter(Invoice=num)
+    return getPurchaseRep(request, test_purch, purch_attr, epq_in_lab, epq_attr,
+                     comp_in_lab, comp_attr ,soft_in_lab, soft_attr)
+
 
 # ----------------user dep mapping---------------
 

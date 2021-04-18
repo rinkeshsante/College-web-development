@@ -72,4 +72,5 @@ urlpatterns = [
          name='purch_update'),
     path('purchase/delete/<int:num>/', PurchaseDeleteView,
          name='purch_delete'),
+    path('purchase/report/<int:num>/', getPurchaseReport, name='purch_report'),
 ]
