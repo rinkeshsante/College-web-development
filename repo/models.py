@@ -158,7 +158,7 @@ class Item(models.Model):
         on_delete=models.SET_NULL,
     )
 
-    Other_Info = models.TextField()
+    Other_Info = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.Name
