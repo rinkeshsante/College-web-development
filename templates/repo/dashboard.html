@@ -51,8 +51,9 @@
           <p class="issue-head">{{issue.Header}}</p>
           <p class="issue-data">{{issue.Info}}</p>
           <p class="issue-foot">
-            - {{issue.Creator}} {{issue.Date_YYYYMMDD}} {% if user|isSubAdmin
-            %},
+            - {{issue.Creator}} {{issue.Date_YYYYMMDD}}
+            <!-- <div></div> -->
+            {% if user|isSubAdmin %},
             <a href="{% url 'issue_solved' issue.id %}">clear </a>
             {% endif %}
           </p>
