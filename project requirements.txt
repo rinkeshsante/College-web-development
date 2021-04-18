@@ -1,0 +1,3 @@
+report with invoice number , ( soft , hard) // add filter for hard and soft
+
+individal filters and then report of avialable data
