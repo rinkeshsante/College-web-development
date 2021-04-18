@@ -37,7 +37,7 @@ class UserDepartmentMapping(models.Model):
 
 
 class Issue(models.Model):
-    Header = models.CharField(max_length=40)
+    Header = models.CharField(max_length=100)
     Info = models.TextField()
     Date = models.DateField(auto_now_add=True)
     Is_Solved = models.BooleanField(default=False)
@@ -51,7 +51,7 @@ class Issue(models.Model):
 
 class Room(models.Model):
     Room_no = models.IntegerField(default=0, unique=True)
-    Name = models.CharField(max_length=20)
+    Name = models.CharField(max_length=100)
     Area_In_sqft = models.IntegerField(default=0)  # in sq ft
     Seating_Capacity = models.IntegerField(default=0)
     Total_cost = models.FloatField(default=0)
@@ -123,14 +123,14 @@ class Laboratory(Room):
 
 class Purchase(models.Model):
     # bill_no = models.CharField(max_length=10, unique=True)
-    Invoice_No = models.CharField(max_length=30, unique=True)
+    Invoice_No = models.CharField(max_length=100, unique=True)
     Supplier_Info = models.TextField()
     Date = models.DateField(default=date.today)
     Rate_With_VAT = models.FloatField()
     Total_Cost_With_VAT = models.FloatField()
     GI_No = models.IntegerField(unique=True)
 
-    Remark = models.CharField(max_length=60, default='ok')
+    Remark = models.CharField(max_length=100, default='ok')
 
     def __str__(self):
         return self.Invoice_No
@@ -138,9 +138,9 @@ class Purchase(models.Model):
 
 class Item(models.Model):
     Name = models.TextField()
-    Equipment_No = models.CharField(max_length=30, unique=True)
-    Code = models.CharField(max_length=10, unique=True)
-    Status = models.CharField(max_length=60)
+    Equipment_No = models.CharField(max_length=100, unique=True)
+    Code = models.CharField(max_length=100, unique=True)
+    Status = models.CharField(max_length=100)
 
     Department = models.ForeignKey(
         'Department',
@@ -176,7 +176,7 @@ class Equipment(Item):
 class Computer(Item):
     RAM = models.IntegerField()
     Storage_in_GB = models.IntegerField()
-    Processor = models.CharField(max_length=30)
+    Processor = models.CharField(max_length=100)
 
     Installed_Softwares = models.ManyToManyField("Software", blank=True)
 
@@ -188,9 +188,9 @@ class Software(models.Model):
     Name = models.TextField()
     Licenced_Qty = models.IntegerField(null=True, blank=True)
     Software_No = models.IntegerField(unique=True)
-    Code = models.CharField(max_length=10, unique=True)
+    Code = models.CharField(max_length=100, unique=True)
     GI_No = models.IntegerField(unique=True)
-    Status = models.CharField(max_length=60, default='Ok')
+    Status = models.CharField(max_length=100, default='Ok')
 
     Invoice = models.ForeignKey(
         'Purchase',
