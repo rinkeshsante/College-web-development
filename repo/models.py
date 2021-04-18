@@ -50,7 +50,7 @@ class Issue(models.Model):
 
 
 class Room(models.Model):
-    Room_no = models.IntegerField(default=0)
+    Room_no = models.CharField(max_length=10)
     Name = models.CharField(max_length=100)
     Area_In_sq_m = models.IntegerField(default=0)  # in sq ft
     Seating_Capacity = models.IntegerField(default=0)
