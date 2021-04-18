@@ -17,7 +17,7 @@ $(document).ready(function () {
   $("#dataTable").DataTable({
     // paging: false,
     // info: false,
-    scrollX: true,
+    // scrollX: true,
     dom: "Bfrtip",
     buttons: [
       {

@@ -225,7 +225,9 @@ form select {
   padding: 15px;
   margin: 5px;
   text-align: left;
-  border-bottom: var(--primary) 1px solid;
+  border: var(--primary) 1px solid;
+  /* border-left: var(--primary) 1px solid; */
+  border-collapse: collapse;
 }
 
 #dataTable thead th {
@@ -328,4 +330,8 @@ table {
 
 .makecenter h1 {
   text-align: center;
+}
+
+.table-wrapper {
+  overflow-x: scroll;
 }
