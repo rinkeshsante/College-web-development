@@ -4,7 +4,19 @@ from .models import *
 
 class LabForm(ModelForm):
     class Meta:
-        model = Lab
+        model = Laboratory
+        fields = '__all__'
+
+
+class ClassRoomForm(ModelForm):
+    class Meta:
+        model = ClassRoom
+        fields = '__all__'
+
+
+class CabinForm(ModelForm):
+    class Meta:
+        model = Cabin
         fields = '__all__'
 
 

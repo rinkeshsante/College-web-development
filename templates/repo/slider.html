@@ -4,18 +4,22 @@
   <a href="{% url 'dashboard' %}"> Dashboard </a>
   {% if user|isAuthorized %}
 
-  <a href="{% url 'comp_table' %}"> Computer </a>
+  <a href="{% url 'lab_table' %}"> Labs </a>
+
+  <a href="{% url 'class_table' %}"> ClassRooms </a>
+
+  <a href="{% url 'cabin_table' %}"> Cabins </a>
+
+  <a href="{% url 'comp_table' %}"> Computers </a>
+
+  <a href="{% url 'soft_table' %}"> Softwares </a>
 
   <a href="{% url 'epq_table' %}">Equipnments </a>
 
-  <a href="{% url 'soft_table' %}"> Software </a>
-
-  <a href="{% url 'purch_table' %}"> Purchase </a>
-
-  <a href="{% url 'lab_table' %}"> Lab </a>
+  <a href="{% url 'purch_table' %}"> Purchases </a>
 
   {% if user|isSubAdmin %}
-  <a href="{% url 'user_unauth_list' %}"> New User List </a>
+  <a href="{% url 'user_unauth_list' %}"> New Users </a>
   {% endif %}
   <div></div>
   {% else %}

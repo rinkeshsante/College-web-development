@@ -49,17 +49,53 @@ class Issue(models.Model):
         return self.Header
 
 
-class Lab(models.Model):
-    # code = models.CharField(max_length=5, unique=True)
-    Lab_Number = models.IntegerField(default=0, unique=True)
-    Name = models.CharField(max_length=20, unique=True)
-    Extension_No = models.IntegerField(default=0, null=True, blank=True)
-    Lab_Area_In_sqft = models.IntegerField(default=0)  # in sq ft
-    # Lab_Capacity = models.IntegerField(default=0)
+class Room(models.Model):
+    Room_no = models.IntegerField(default=0, unique=True)
+    Name = models.CharField(max_length=20)
+    Area_In_sqft = models.IntegerField(default=0)  # in sq ft
+    Seating_Capacity = models.IntegerField(default=0)
+    Total_cost = models.FloatField(default=0)
+    Other_Data = models.TextField(null=True, blank=True)
+    Department = models.ForeignKey(
+        'Department',
+        null=True,
+        on_delete=models.SET_NULL,
+    )
+
+    No_of_Fans = models.IntegerField(default=0)
+    No_of_AC = models.IntegerField(default=0)
+    No_of_Light_Sounce = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.Name
+
+
+class ClassRoom(Room):
+    Teaching_Tools = models.TextField()
+    is_stepped_Room = models.BooleanField(default=False)
+    No_of_benches = models.IntegerField(default=0)
+
+
+class Cabin(Room):
+    Details = models.TextField(null=True, blank=True)
+    No_of_Tables = models.IntegerField(default=0)
     Intercom_No = models.IntegerField(default=0,
                                       unique=True,
                                       null=True,
                                       blank=True)
+
+
+class Laboratory(Room):
+    Extension_No = models.IntegerField(default=0, null=True, blank=True)
+    Intercom_No = models.IntegerField(default=0,
+                                      unique=True,
+                                      null=True,
+                                      blank=True)
+    Practicals_conducted_Odd_SEM = models.CharField(
+        max_length=300, default='None')
+    Practicals_conducted_Even_SEM = models.CharField(
+        max_length=300, default='None')
+
     Lab_Incharge = models.ForeignKey(
         get_user_model(),
         null=True,
@@ -84,22 +120,6 @@ class Lab(models.Model):
         related_name='lab_assistant_2'
     )
 
-    Seating_Capacity = models.IntegerField(default=0)
-    Total_Lab_cost = models.FloatField(default=0)
-    Practicals_conducted_Odd_SEM = models.CharField(
-        max_length=300, default='None')
-    Practicals_conducted_Even_SEM = models.CharField(
-        max_length=300, default='None')
-    Other_Data = models.TextField(null=True, blank=True)
-    Department = models.ForeignKey(
-        'Department',
-        null=True,
-        on_delete=models.SET_NULL,
-    )
-
-    def __str__(self):
-        return self.Name
-
 
 class Purchase(models.Model):
     # bill_no = models.CharField(max_length=10, unique=True)
@@ -116,11 +136,10 @@ class Purchase(models.Model):
         return self.Invoice_No
 
 
-class Equipment(models.Model):
+class Item(models.Model):
     Name = models.TextField()
     Equipment_No = models.CharField(max_length=30, unique=True)
     Code = models.CharField(max_length=10, unique=True)
-    # gi_no = models.IntegerField(unique=True)
     Status = models.CharField(max_length=60)
 
     Department = models.ForeignKey(
@@ -130,48 +149,36 @@ class Equipment(models.Model):
     )
 
     Location = models.ForeignKey(
-        'Lab',
+        'Laboratory',
         null=True,
         on_delete=models.SET_NULL,
     )
+
     Invoice = models.ForeignKey(
         'Purchase',
         null=True,
         on_delete=models.SET_NULL,
     )
+
+    Other_Info = models.TextField()
 
     def __str__(self):
         return self.Name
 
 
-class Computer(models.Model):
-    Name = models.TextField()
-    Equipment_No = models.CharField(max_length=10, unique=True)
-    Code = models.CharField(max_length=100, unique=True)
-    # gi_no = models.IntegerField(unique=True)
-    Status = models.CharField(max_length=60)
+class Equipment(Item):
+    pass
+
+    def __str__(self):
+        return self.Name
+
+
+class Computer(Item):
     RAM = models.IntegerField()
     Storage_in_GB = models.IntegerField()
-    Other_Info = models.TextField(max_length=200)
+    Processor = models.CharField(max_length=30)
 
-    Department = models.ForeignKey(
-        'Department',
-        null=True,
-        on_delete=models.SET_NULL,
-    )
-
-    Installed_Softwares = models.ManyToManyField("Software")
-
-    Location = models.ForeignKey(
-        'Lab',
-        null=True,
-        on_delete=models.SET_NULL,
-    )
-    Invoice = models.ForeignKey(
-        'Purchase',
-        null=True,
-        on_delete=models.SET_NULL,
-    )
+    Installed_Softwares = models.ManyToManyField("Software", blank=True)
 
     def __str__(self):
         return self.Name

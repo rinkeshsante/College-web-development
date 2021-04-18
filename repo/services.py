@@ -37,23 +37,6 @@ def is_authorized(user):
 
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
-def getfile(request, data, attr_names, filename='datafile.csv'):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=' + filename
-
-    writer = csv.writer(response)
-
-    writer.writerow(attr_names)
-    for data_item in data:
-        ls = []
-        for attr_name in attr_names:
-            ls.append(getattr(data_item, attr_name))
-        writer.writerow(ls)
-    return response
-
-
-@login_required
-@user_passes_test(is_authorized, login_url='not_allowed')
 def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs):
     filename = lab.Name + ' detail.csv'
 
@@ -111,7 +94,7 @@ def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs):
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
 def DataListView(request, Obj, attr_names, table_name, detail_url, create_url,
-                 csv_url):
+                 ):
 
     dep = get_user_dep(request.user)
     try:
@@ -119,13 +102,15 @@ def DataListView(request, Obj, attr_names, table_name, detail_url, create_url,
     except:
         data_list = Obj.objects.order_by('-id')
 
+    for i in data_list:
+        print(i)
+
     context = {
         'data_list': data_list,
         'attr_names': attr_names,
         'detail_url': detail_url,
         'create_url': create_url,
         'table_name': table_name,
-        'csv_url': csv_url
     }
     return render(request, 'repo/common_table.html', context)
 

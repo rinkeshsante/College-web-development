@@ -1,0 +1,31 @@
+<!-- template/repo/epq/Cabin_detail.html -->
+{% extends 'main.html' %} {% block title %}Cabin Detail{% endblock title %}
+<div></div>
+{% load repo_extras %} {% block content %}
+
+<!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
+<h1 class="">Cabin Detail</h1>
+<!-- make good info card/something-->
+<a class="btn sec-btn" href="{% url 'cabin_table' %}">← back</a>
+
+<table class="data-table">
+  <tbody>
+    {% for name in attr_names %}
+    <tr>
+      <td class="data-attr">{{name}}</td>
+      <td>:</td>
+      <td class="data-data">{{cabin|getValue:name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br />
+{% if user|isSubAdmin %}
+
+<td>
+  <a class="btn prime-btn" href="{% url 'class_update' cabin.id %}">update</a>
+</td>
+<td>
+  <a class="btn danger-btn" href="{% url 'class_delete' cabin.id %}">Delete</a>
+</td>
+{% endif %} {% endblock content %}

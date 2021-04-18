@@ -16,7 +16,7 @@ from django.contrib.auth import get_user_model
 @login_required
 def DashBoardView(request):
 
-    total_lab = Lab.objects.count()
+    total_lab = Laboratory.objects.count()
     total_epq = Equipment.objects.count()
     total_soft = Software.objects.count()
     total_comp = Computer.objects.count()
@@ -53,66 +53,55 @@ def notFound(request):
 # ------------------ attr -----------------------
 
 lab_attr = [
-    'id', 'Name', 'Lab_Number', 'Lab_Area_In_sqft',
-    'Intercom_No', 'Lab_Incharge', 'Department', 'Seating_Capacity', 'Total_Lab_cost',
-    'Practicals_conducted_Odd_SEM', 'Practicals_conducted_Even_SEM',
+    'id', 'Name', 'Room_no', 'Lab_Incharge', 'Seating_Capacity',
+
+    'Intercom_No', 'Lab_Assistant_1', 'Lab_Assistant_2',
+    'Practicals_conducted_Odd_SEM', 'Practicals_conducted_Even_SEM', 'Other_Data',
+
+    'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sqft', 'Total_cost'
 ]
 
-lab_attr_csv = [
-    'Name', 'Lab_Area_In_sqft', 'Lab_Capacity', 'Intercom_No', 'Lab_Incharge',
-    'Seating_Capacity', 'Total_Lab_cost', 'Practicals_conducted_Odd_SEM', 'Practicals_conducted_Even_SEM',
-    'Department'
+classroom_attr = [
+    'id', 'Name', 'Room_no', 'Seating_Capacity',
+
+    'Teaching_Tools', 'is_stepped_Room', 'No_of_benches',
+
+    'Department', 'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sqft', 'Total_cost',
+]
+
+cabin_attr = [
+    'id', 'Name', 'Room_no', 'Seating_Capacity',
+
+    'Intercom_No', 'Details', 'No_of_Tables',
+
+    'Department', 'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sqft', 'Total_cost',
 ]
 
 
 epq_attr = [
     'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location',
-    'Department', 'Invoice'
+
+    'Department', 'Invoice', 'Other_Info'
 ]
 
-epq_attr_csv = [
-    'Name',
-    'Status',
-    'Location',
-    'Department',
-]
 
 comp_attr = [
-    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'RAM', 'Storage_in_GB',
-    'Other_Info', 'Location', 'Invoice'
+    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location',
+
+    'RAM', 'Storage_in_GB', 'Processor',
+
+    'Department', 'Invoice', 'Other_Info'
 ]
 
-comp_attr_csv = [
-    'Name', 'Status', 'RAM', 'Storage_in_GB', 'Other_Info', 'Location'
-]
 
 soft_attr = [
-    'id',
-    'Name',
-    'Licenced_Qty',
-    'Software_No',
-    'Code',
-    'GI_No',
-    'Status',
-    'Invoice',
-]
+    'id', 'Name', 'Software_No', 'Code', 'Status',
 
-soft_attr_csv = [
-    'Name',
-    'Licenced_Qty',
-    'GI_No',
-    'Status',
+    'Invoice', 'GI_No', 'Licenced_Qty',
 ]
 
 purch_attr = [
-    'id',
-    'Invoice_No',
-    # 'bill_no',
-    'Supplier_Info',
-    'Date',
-    'GI_No',
-    'Rate_With_VAT',
-    'Total_Cost_With_VAT',
+    'id', 'Invoice_No', 'Supplier_Info', 'Date', 'GI_No', 'Rate_With_VAT', 'Total_Cost_With_VAT',
 ]
 
 # -------------labs-------------------------------
@@ -121,7 +110,7 @@ purch_attr = [
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
 def LabDetailView(request, num=1):
-    test_lab = Lab.objects.get(id=num)
+    test_lab = Laboratory.objects.get(id=num)
     eqps = Equipment.objects.filter(Location=test_lab.id)
     comps = Computer.objects.filter(Location=test_lab.id)
     context = {
@@ -135,28 +124,19 @@ def LabDetailView(request, num=1):
 
 def LabListView(request):
     return DataListView(request,
-                        Lab,
+                        Laboratory,
                         lab_attr,
                         table_name='Lab Table',
-                        csv_url='lab_csv',
                         create_url='lab_create',
                         detail_url='lab_detail')
 
 
-def getLabCSV(request):
-
-    return getfile(request,
-                   Lab.objects.all(),
-                   lab_attr_csv,
-                   filename='labs.csv')
-
-
 def getLabReport(request, num=1):
-    test_lab = Lab.objects.get(id=num)
+    test_lab = Laboratory.objects.get(id=num)
     epq_in_lab = Equipment.objects.filter(Location=num)
     comp_in_lab = Computer.objects.filter(Location=num)
-    return getlabRep(request, test_lab, lab_attr, epq_in_lab, epq_attr_csv,
-                     comp_in_lab, comp_attr_csv)
+    return getlabRep(request, test_lab, lab_attr, epq_in_lab, epq_attr,
+                     comp_in_lab, comp_attr)
 
 
 def LabCreateView(request):
@@ -164,11 +144,79 @@ def LabCreateView(request):
 
 
 def LabUpdateView(request, num):
-    return DataUpdateView(request, num, Lab, LabForm, 'lab_detail')
+    return DataUpdateView(request, num, Laboratory, LabForm, 'lab_detail')
 
 
 def LabDeleteView(request, num):
-    return DataDeleteView(request, num, Lab, 'lab_table')
+    return DataDeleteView(request, num, Laboratory, 'lab_table')
+
+
+# ---------------class room-----------------
+
+@login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
+def ClassRoomDetailView(request, num=1):
+    test_room = ClassRoom.objects.get(id=num)
+    context = {'classroom': test_room, 'attr_names': classroom_attr}
+    return render(request, 'repo/class_detail.html', context)
+
+
+def ClassRoomListView(request):
+    return DataListView(request,
+                        ClassRoom,
+                        classroom_attr,
+                        table_name='ClassRoom Table',
+                        create_url='class_create',
+                        detail_url='class_detail')
+
+
+def ClassRoomCreateView(request, num=0):
+    return DataCreateView(request,
+                          ClassRoomForm,
+                          'class_table',
+                          initial={'Invoice': num})
+
+
+def ClassRoomUpdateView(request, num):
+    return DataUpdateView(request, num, ClassRoom, ClassRoomForm, 'class_detail')
+
+
+def ClassRoomDeleteView(request, num):
+    return DataDeleteView(request, num, ClassRoom, 'class_table')
+
+# ---------------cabin room-----------------
+
+
+@login_required
+@user_passes_test(is_authorized, login_url='not_allowed')
+def CabinDetailView(request, num=1):
+    test_cabin = Cabin.objects.get(id=num)
+    context = {'cabin': test_cabin, 'attr_names': cabin_attr}
+    return render(request, 'repo/cabin_detail.html', context)
+
+
+def CabinListView(request):
+    return DataListView(request,
+                        Cabin,
+                        cabin_attr,
+                        table_name='Cabin Table',
+                        create_url='cabin_create',
+                        detail_url='cabin_detail')
+
+
+def CabinCreateView(request, num=0):
+    return DataCreateView(request,
+                          CabinForm,
+                          'cabin_table',
+                          initial={'Invoice': num})
+
+
+def CabinUpdateView(request, num):
+    return DataUpdateView(request, num, Cabin, CabinForm, 'cabin_detail')
+
+
+def CabinDeleteView(request, num):
+    return DataDeleteView(request, num, Cabin, 'cabin_table')
 
 
 # -------------epq------------------------
@@ -183,22 +231,12 @@ def EquipmentDetailView(request, num=1):
 
 
 def EquipmentListView(request):
-
     return DataListView(request,
                         Equipment,
                         epq_attr,
                         table_name='Equipment Table',
-                        csv_url='epq_csv',
                         create_url='epq_create',
                         detail_url='epq_detail')
-
-
-def getEquipmentCSV(request):
-
-    return getfile(request,
-                   Equipment.objects.all(),
-                   epq_attr_csv,
-                   filename='Equipment.csv')
 
 
 def EquipmentCreateView(request):
@@ -229,16 +267,8 @@ def ComputerListView(request):
                         Computer,
                         comp_attr,
                         table_name='Computer Table',
-                        csv_url='comp_csv',
                         create_url='comp_create',
                         detail_url='comp_detail')
-
-
-def getComputerCSV(request):
-    return getfile(request,
-                   Computer.objects.all(),
-                   comp_attr_csv,
-                   filename='Computer.csv')
 
 
 def ComputerCreateView(request, num=0):
@@ -277,16 +307,8 @@ def SoftwareListView(request):
                         Software,
                         soft_attr,
                         table_name='Software Table',
-                        csv_url='soft_csv',
                         create_url='soft_create',
                         detail_url='soft_detail')
-
-
-def getSoftwareCSV(request):
-    return getfile(request,
-                   Software.objects.all(),
-                   soft_attr_csv,
-                   filename='Software.csv')
 
 
 def SoftwareCreateView(request):
@@ -309,16 +331,8 @@ def PurchaseListView(request):
                         Purchase,
                         purch_attr,
                         table_name='Purchase Table',
-                        csv_url='purch_csv',
                         create_url='purch_create',
                         detail_url='purch_detail')
-
-
-def getPurchaseCSV(request):
-    return getfile(request,
-                   Purchase.objects.all(),
-                   purch_attr,
-                   filename='Purchase.csv')
 
 
 @login_required

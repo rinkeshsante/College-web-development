@@ -1,0 +1,35 @@
+<!-- template/repo/epq/class_detail.html -->
+{% extends 'main.html' %} {% block title %}ClassRoom Detail{% endblock title %}
+<div></div>
+{% load repo_extras %} {% block content %}
+
+<!--<a class="btn btn-primary" href="{% url 'dashboard' %}">back</a>-->
+<h1 class="">ClassRoom Detail</h1>
+<!-- make good info card/something-->
+<a class="btn sec-btn" href="{% url 'class_table' %}">← back</a>
+
+<table class="data-table">
+  <tbody>
+    {% for name in attr_names %}
+    <tr>
+      <td class="data-attr">{{name}}</td>
+      <td>:</td>
+      <td class="data-data">{{classroom|getValue:name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br />
+{% if user|isSubAdmin %}
+
+<td>
+  <a class="btn prime-btn" href="{% url 'class_update' classroom.id %}"
+    >update</a
+  >
+</td>
+<td>
+  <a class="btn danger-btn" href="{% url 'class_delete' classroom.id %}"
+    >Delete</a
+  >
+</td>
+{% endif %} {% endblock content %}
