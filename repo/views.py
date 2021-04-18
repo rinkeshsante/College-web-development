@@ -17,6 +17,8 @@ from django.contrib.auth import get_user_model
 def DashBoardView(request):
 
     total_lab = Laboratory.objects.count()
+    total_class = ClassRoom.objects.count()
+    total_cabin = Cabin.objects.count()
     total_epq = Equipment.objects.count()
     total_soft = Software.objects.count()
     total_comp = Computer.objects.count()
@@ -26,11 +28,13 @@ def DashBoardView(request):
 
     context = {
         'total_lab': total_lab,
+        'total_class': total_class,
+        'total_cabin': total_cabin,
         'total_epq': total_epq,
         'total_soft': total_soft,
         'total_comp': total_comp,
         'total_purch': total_purch,
-        'issues': issues
+        'issues': issues,
     }
     return render(request, 'repo/dashboard.html', context)
 
@@ -363,13 +367,14 @@ def PurchaseUpdateView(request, num):
 def PurchaseDeleteView(request, num):
     return DataDeleteView(request, num, Purchase, 'purch_table')
 
+
 def getPurchaseReport(request, num=1):
     test_purch = Purchase.objects.get(id=num)
     epq_in_lab = Equipment.objects.filter(Invoice=num)
     comp_in_lab = Computer.objects.filter(Invoice=num)
     soft_in_lab = Software.objects.filter(Invoice=num)
     return getPurchaseRep(request, test_purch, purch_attr, epq_in_lab, epq_attr,
-                     comp_in_lab, comp_attr ,soft_in_lab, soft_attr)
+                          comp_in_lab, comp_attr, soft_in_lab, soft_attr)
 
 
 # ----------------user dep mapping---------------
