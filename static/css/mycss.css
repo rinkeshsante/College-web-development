@@ -64,6 +64,10 @@ a {
   /* padding: 10px; */
 }
 
+.dark-a {
+  color: var(--black);
+}
+
 a:link {
   text-decoration: none;
 }
@@ -300,12 +304,8 @@ form select {
 }
 
 .login-logos {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-}
-
-.c-logo {
-  grid-column: 1 / span 3;
+  display: flex;
+  justify-content: space-around;
 }
 
 .paginate_button {
@@ -314,4 +314,18 @@ form select {
 
 table {
   padding: 10px;
+}
+
+.makecenter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  background-image: linear-gradient(var(--white), var(--primary), var(--white));
+  height: 100%;
+}
+
+.makecenter h1 {
+  text-align: center;
 }
