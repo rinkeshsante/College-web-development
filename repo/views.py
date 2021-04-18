@@ -58,7 +58,7 @@ lab_attr = [
     'Intercom_No', 'Lab_Assistant_1', 'Lab_Assistant_2',
     'Practicals_conducted_Odd_SEM', 'Practicals_conducted_Even_SEM', 'Other_Data',
 
-    'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sqft', 'Total_cost'
+    'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sq_m', 'Total_cost'
 ]
 
 classroom_attr = [
@@ -66,7 +66,7 @@ classroom_attr = [
 
     'Teaching_Tools', 'is_stepped_Room', 'No_of_benches',
 
-    'Department', 'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sqft', 'Total_cost',
+    'Department', 'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sq_m', 'Total_cost',
 ]
 
 cabin_attr = [
@@ -74,7 +74,7 @@ cabin_attr = [
 
     'Intercom_No', 'Details', 'No_of_Tables',
 
-    'Department', 'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sqft', 'Total_cost',
+    'Department', 'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sq_m', 'Total_cost',
 ]
 
 
@@ -101,7 +101,7 @@ soft_attr = [
 ]
 
 purch_attr = [
-    'id', 'Invoice_No', 'Supplier_Info', 'Date', 'GI_No', 'Rate_With_VAT', 'Total_Cost_With_VAT',
+    'id', 'Invoice_No', 'Supplier_Info', 'Date_YYYYMMDD', 'GI_No', 'Rate_With_VAT', 'Total_Cost_With_VAT',
 ]
 
 # -------------labs-------------------------------

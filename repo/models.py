@@ -39,7 +39,7 @@ class UserDepartmentMapping(models.Model):
 class Issue(models.Model):
     Header = models.CharField(max_length=100)
     Info = models.TextField()
-    Date = models.DateField(auto_now_add=True)
+    Date_YYYYMMDD = models.DateField(auto_now_add=True)
     Is_Solved = models.BooleanField(default=False)
     Creator = models.ForeignKey(get_user_model(),
                                 on_delete=models.SET_NULL,
@@ -50,9 +50,9 @@ class Issue(models.Model):
 
 
 class Room(models.Model):
-    Room_no = models.IntegerField(default=0, unique=True)
+    Room_no = models.IntegerField(default=0)
     Name = models.CharField(max_length=100)
-    Area_In_sqft = models.IntegerField(default=0)  # in sq ft
+    Area_In_sq_m = models.IntegerField(default=0)  # in sq ft
     Seating_Capacity = models.IntegerField(default=0)
     Total_cost = models.FloatField(default=0)
     Other_Data = models.TextField(null=True, blank=True)
@@ -80,7 +80,6 @@ class Cabin(Room):
     Details = models.TextField(null=True, blank=True)
     No_of_Tables = models.IntegerField(default=0)
     Intercom_No = models.IntegerField(default=0,
-                                      unique=True,
                                       null=True,
                                       blank=True)
 
@@ -88,7 +87,6 @@ class Cabin(Room):
 class Laboratory(Room):
     Extension_No = models.IntegerField(default=0, null=True, blank=True)
     Intercom_No = models.IntegerField(default=0,
-                                      unique=True,
                                       null=True,
                                       blank=True)
     Practicals_conducted_Odd_SEM = models.CharField(
@@ -125,7 +123,7 @@ class Purchase(models.Model):
     # bill_no = models.CharField(max_length=10, unique=True)
     Invoice_No = models.CharField(max_length=100, unique=True)
     Supplier_Info = models.TextField()
-    Date = models.DateField(default=date.today)
+    Date_YYYYMMDD = models.DateField(default=date.today)
     Rate_With_VAT = models.FloatField()
     Total_Cost_With_VAT = models.FloatField()
     GI_No = models.IntegerField(unique=True)

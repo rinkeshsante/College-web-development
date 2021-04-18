@@ -69,12 +69,12 @@ class SoftwareAdmin(admin.ModelAdmin):
 
 class PurchaseAdmin(admin.ModelAdmin):
     inlines = [ComputerInline, SoftwareInline, EquipnmentInline]
-    list_display = ('Invoice_No', 'Date', 'Rate_With_VAT',
+    list_display = ('Invoice_No', 'Date_YYYYMMDD', 'Rate_With_VAT',
                     'Total_Cost_With_VAT')
 
 
 class IssueAdmin(admin.ModelAdmin):
-    list_display = ('Header', 'Is_Solved', 'Creator', 'Date')
+    list_display = ('Header', 'Is_Solved', 'Creator', 'Date_YYYYMMDD')
 
 
 admin.site.register(Department)
