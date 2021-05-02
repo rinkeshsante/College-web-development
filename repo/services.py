@@ -158,8 +158,8 @@ def DataListView(request, Obj, attr_names, table_name, detail_url, create_url,
     except:
         data_list = Obj.objects.order_by('-id')
 
-    for i in data_list:
-        print(i)
+    # for i in data_list:
+    #     print(i)
 
     context = {
         'data_list': data_list,
