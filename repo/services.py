@@ -37,7 +37,7 @@ def is_authorized(user):
 
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
-def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs):
+def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs , extra):
     filename = lab.Name + ' detail.csv'
 
     response = HttpResponse(content_type='text/csv')
@@ -55,6 +55,13 @@ def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs):
         ls = [lab_attr]
         ls.append(getattr(lab, lab_attr))
         writer.writerow(ls)
+    
+    for lab_attr in extra:
+        ls = [lab_attr]
+        ls.append(extra[lab_attr])
+        writer.writerow(ls)
+
+    
 
     writer.writerow('')
     writer.writerow(['Epuipmets in Lab'])

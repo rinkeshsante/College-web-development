@@ -16,6 +16,13 @@
       <td>:{{lab|getValue:name}}</td>
     </tr>
     {% endfor %}
+
+    {% for i,j in extra.items %}
+    <tr>
+      <td>{{i}}</td>
+      <td>:{{j}}</td>
+    </tr>
+    {% endfor %}
   </tbody>
 </table>
 
@@ -36,14 +43,14 @@
 <h3>Equipnments Present In Lab</h3>
 <ul>
   {% for epq in equipments %}
-  <li><a href="{% url 'epq_detail' epq.id %}"> {{epq}}</a></li>
+  <li><a href="{% url 'epq_detail' epq.id %}"> {{epq}}</a>  - from {{epq.Located_since}}</li>
   {% endfor %}
 </ul>
 
 <h3>Computers Present In Lab</h3>
 <ul>
   {% for comp in computers %}
-  <li><a href="{% url 'comp_detail' comp.id %}"> {{comp}}</a></li>
+  <li><a href="{% url 'comp_detail' comp.id %}"> {{comp}}</a>   - from {{comp.Located_since}}</li>
   {% endfor %}
 </ul>
 {% endblock content %}

@@ -83,18 +83,18 @@ cabin_attr = [
 
 
 epq_attr = [
-    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location',
+    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location','Located_since',
 
-    'Department', 'Invoice', 'Other_Info'
+    'Department', 'Invoice', 'Remarks'
 ]
 
 
 comp_attr = [
-    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location',
+    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location','Located_since',
 
     'RAM', 'Storage_in_GB', 'Processor',
 
-    'Department', 'Invoice', 'Other_Info'
+    'Department', 'Invoice', 'Remarks'
 ]
 
 
@@ -121,8 +121,14 @@ def LabDetailView(request, num=1):
         'lab': test_lab,
         'equipments': eqps,
         'computers': comps,
-        'attr_names': lab_attr
+        'attr_names': lab_attr,
+        'extra':{
+            'No of Equipments':len(eqps),
+            'No of Computers':len(comps)
+            }
     }
+
+    print(context)
     return render(request, 'repo/lab_detail.html', context)
 
 
@@ -139,8 +145,12 @@ def getLabReport(request, num=1):
     test_lab = Laboratory.objects.get(id=num)
     epq_in_lab = Equipment.objects.filter(Location=num)
     comp_in_lab = Computer.objects.filter(Location=num)
+    extra = {
+        'No of Equipments':len(epq_in_lab),
+        'No of Computers':len(comp_in_lab)
+    }
     return getlabRep(request, test_lab, lab_attr, epq_in_lab, epq_attr,
-                     comp_in_lab, comp_attr)
+                     comp_in_lab, comp_attr,extra)
 
 
 def LabCreateView(request):

@@ -151,6 +151,7 @@ class Item(models.Model):
         null=True,
         on_delete=models.SET_NULL,
     )
+    Located_since = models.DateField(default=date.today)
 
     Invoice = models.ForeignKey(
         'Purchase',
@@ -158,7 +159,7 @@ class Item(models.Model):
         on_delete=models.SET_NULL,
     )
 
-    Other_Info = models.TextField(null=True, blank=True)
+    Remarks = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.Name
