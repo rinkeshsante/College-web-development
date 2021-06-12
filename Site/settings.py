@@ -26,15 +26,12 @@ SECRET_KEY = '(fbgi29b8)_$=iotb3^9+_en17bhgt_6rhzbin(r0%n%_e+7*_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['college-repo.herokuapp.com', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['college-repo.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
