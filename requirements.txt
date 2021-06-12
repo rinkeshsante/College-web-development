@@ -1,0 +1,6 @@
+django
+django-crispy-forms
+
+gunicorn
+django-heroku
+dj-database-url
