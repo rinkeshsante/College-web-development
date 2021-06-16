@@ -1,9 +1,9 @@
 :root {
-  --black: #03045e;
-  --primary: #2ec4b6;
-  --sec: #2ec4b6;
-  --white: #fdfffc;
-  --link: #00b4d8;
+  --black: #000000;
+  --primary: #db6363;
+  --sec: #911717;
+  --white: #ffffff;
+  --link: #db6363;
 
   /* --black: #05668d;
   --primary: #028090;
@@ -46,7 +46,7 @@ body {
   margin: 0px;
   color: var(--black);
   font-family: Verdana, sans-serif;
-  background-image: linear-gradient(to right, var(--white), var(--sec3));
+  /* background-image: linear-gradient(to right, var(--white), var(--sec3)); */
   padding: 10px;
 }
 
@@ -188,12 +188,12 @@ header a {
 .slider a {
   border-radius: 4px;
   padding: 15px;
-  color: var(--black);
+  color: var(--white);
 }
 
 .slider a:hover {
   /* background-color: var(--sec1); */
-  color: var(--white);
+  color: var(--black);
 }
 
 form {
@@ -324,7 +324,7 @@ table {
   top: 50%;
   transform: translate(-50%, -50%);
   align-items: center;
-  background-image: linear-gradient(var(--white), var(--primary), var(--white));
+  /* background-image: linear-gradient(var(--white), var(--primary), var(--white)); */
   height: 100%;
 }
 

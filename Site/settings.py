@@ -26,7 +26,10 @@ SECRET_KEY = '(fbgi29b8)_$=iotb3^9+_en17bhgt_6rhzbin(r0%n%_e+7*_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['college-repo.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
+
+# ALLOWED_HOSTS = ['college-repo.herokuapp.com',
+#                  '127.0.0.1, 6f0fb6b28fde.ngrok.io']
 
 
 # Application definition
