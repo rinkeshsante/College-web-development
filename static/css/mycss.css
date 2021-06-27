@@ -37,6 +37,39 @@
   --sec3: #d6d6d6;
   --white: #d6d6d6; */
 }
+.loginPage {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+  /* position: fixed; */
+  width: 100%;
+
+  background-color: #e8e6e6;
+}
+
+.loginPage h1,
+.loginPage h6 {
+  text-align: center;
+}
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  /* height: 70vh; */
+  width: 55vw;
+  /* border: 1px solid black; */
+  box-shadow: 5px 10px 18px #888888;
+  border-radius: 8px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: white;
+}
+
+.form {
+  width: 70%;
+  align-self: center;
+}
 
 .dark-mode {
   filter: invert(100%) hue-rotate(180deg);
@@ -303,6 +336,19 @@ form select {
   h3 {
     text-align: center;
   }
+
+  .form {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+  }
+  .loginContainer {
+    text-align: center;
+    height: auto;
+  }
+  .loginPage h1 {
+    padding-left: 0px;
+  }
 }
 
 .login-logos {
@@ -330,6 +376,7 @@ table {
 
 .makecenter h1 {
   text-align: center;
+  padding-left: 100px;
 }
 
 .table-wrapper {
