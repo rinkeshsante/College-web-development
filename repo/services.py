@@ -65,7 +65,9 @@ def writeRow(obj,  last_row, row):
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
 def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs, extra):
-    # filename = lab.Name + ' detail.csv'
+    extra_attrs = ['Invoice', 'Supplier_Info', 'Date_YYYYMMDD',
+                   'GI_No', 'Rate_With_VAT', 'Total_Cost_With_VAT']
+    epq_attrs = epq_attrs[:-1]
 
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -76,110 +78,76 @@ def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs, ext
 
     # sheet.write(0, 0, 'Hello, world!')
 
+    cell_format = book.add_format({'bold': True})
+    cell_format.set_align('center')
+    cell_format.set_valign('center')
+
     c = 0
 
     sheet.merge_range(
-        'A1:J1', 'K. J. SOMAIYA INSTITUTE OF ENGINEERING AND INFORMATION TECHNOLOGY Sion, Mumbai - 400022.')
+        'A1:O1', 'K. J. SOMAIYA INSTITUTE OF ENGINEERING AND INFORMATION TECHNOLOGY Sion, Mumbai - 400022.', cell_format)
+    sheet.merge_range(
+        'A2:O2', str(lab.Department), cell_format)
+    sheet.merge_range(
+        'A3:O3', 'lab :' + lab.Name, cell_format)
+    sheet.merge_range(
+        'A4:O4', 'Epuipmets in Lab', cell_format)
 
-    writeRow(sheet, 2, ['lab :', lab.Name])
-    writeRow(sheet, 3, ['Epuipmets in Lab'])
-    writeRow(sheet, 4, epq_attrs)
+    writeRow(sheet, 4, epq_attrs + extra_attrs)
     c = 5
 
-    last = None
-    for epq in epq_l:
-        ls = []
-        for epq_attr in epq_attrs:
-            ls.append(getattr(epq, epq_attr))
-        if last == epq.Invoice:
-            writeRow(sheet, c, [str(i) for i in ls[:-1]+['---']])
-        else:
-            writeRow(sheet, c, [str(i) for i in ls])
-        c += 1
+    # looping for both comp and epq
+    for one_ls in [comp_l, epq_l]:
+        last = None
+        for epq in one_ls:
+            # create the data row
+            ls = []
+            for epq_attr in epq_attrs:
+                ls.append(getattr(epq, epq_attr))
 
-    # writeRow(sheet, 2, ['hi ', 'thre'])
-    # writeRow(sheet, 2, ['hi ', 'thre'])
+            # print data row
+            if last == epq.Invoice:
+                writeRow(sheet, c, [str(i) for i in ls])
+                col = 9
+                for e in [getattr(epq.Invoice, attr) for attr in extra_attrs]:
+                    sheet.merge_range(last_empty, col, c, col, e)
+                    col += 1
+            else:
+                last_empty = c
+                writeRow(sheet, c, [
+                         str(i) for i in ls + [getattr(epq.Invoice, attr) for attr in extra_attrs]])
+            c += 1
+            last = epq.Invoice
+
+    c += 1
+
+    # printing infoat bottom
+
+    for row in [
+        ['Total Rs:', get_lab_cost(lab.id)],
+        ['Lab Incharge :', lab.Lab_Incharge],
+        ['Lab Assistant 1 :', lab.Lab_Assistant_1],
+        ['Lab Assistant 2 :', lab.Lab_Assistant_2]
+    ]:
+        writeRow(sheet, c, row)
+        c += 1
 
     book.close()
 
     return response
 
-    writer = csv.writer(response)
 
-    writer.writerow(['lab :', lab.Name])
-
-    # writer.writerow('')
-    # writer.writerow(['Lab Detail'])
-    # writer.writerow('')
-
-    # for lab_attr in lab_attrs:
-    #     ls = [lab_attr]
-    #     ls.append(getattr(lab, lab_attr))
-    #     writer.writerow(ls)
-
-    # for lab_attr in extra:
-    #     ls = [lab_attr]
-    #     ls.append(extra[lab_attr])
-    #     writer.writerow(ls)
-
-    writer.writerow('')
-    writer.writerow(['Epuipmets in Lab'])
-    writer.writerow('')
-
-    writer.writerow(epq_attrs)
-    last = None
-    for epq in epq_l:
-        ls = []
-        for epq_attr in epq_attrs:
-            ls.append(getattr(epq, epq_attr))
-        if last == epq.Invoice:
-            writer.writerow(ls[:-1]+['---'])
-        else:
-            writer.writerow(ls)
-
-    for comp in comp_l:
-        ls = []
-        for epq_attr in epq_attrs:
-            ls.append(getattr(comp, epq_attr))
-        writer.writerow(ls)
-
-    writer.writerow(['Total Rs:', get_lab_cost(lab.id)])
-    writer.writerow(['Lab Incharge :', lab.Lab_Incharge])
-    writer.writerow(['Lab Assistant 1 :', lab.Lab_Assistant_1])
-    writer.writerow(['Lab Assistant 2 :', lab.Lab_Assistant_2])
-
-    # writer.writerow('')
-    # writer.writerow(['Computers in Lab'])
-    # writer.writerow('')
-
-    # writer.writerow(comp_attrs + ['Software installed'])
-    # for comp in comp_l:
-    #     ls = []
-
-    #     for comp_attr in comp_attrs:
-    #         ls.append(getattr(comp, epq))
-
-    #     writer.writerow(ls)
-    #     ls2 = []
-    #     for j in ls:
-    #         ls2 = ls2 + ['']
-    #     for i in getattr(comp, 'Installed_Softwares').all():
-    #         writer.writerow(ls2 + [i.Code, i.Name])
-
-    return response
-
-
-@login_required
-@user_passes_test(is_authorized, login_url='not_allowed')
+@ login_required
+@ user_passes_test(is_authorized, login_url='not_allowed')
 def getPurchaseRep(request, purch, purch_attrs, epq_l, epq_attrs, comp_l, comp_attrs, soft_l, soft_attrs):
-    filename = purch.Invoice_No + ' detail.csv'
+    filename = purch.Invoice + ' detail.csv'
 
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=' + filename
 
     writer = csv.writer(response)
 
-    writer.writerow(['Invoice_No :', purch.Invoice_No])
+    writer.writerow(['Invoice :', purch.Invoice])
 
     writer.writerow('')
     writer.writerow(['Invoice Detail'])
@@ -228,8 +196,8 @@ def getPurchaseRep(request, purch, purch_attrs, epq_l, epq_attrs, comp_l, comp_a
 # -------------------common function --------------
 
 
-@login_required
-@user_passes_test(is_authorized, login_url='not_allowed')
+@ login_required
+@ user_passes_test(is_authorized, login_url='not_allowed')
 def DataListView(request, Obj, attr_names, table_name, detail_url, create_url,
                  ):
 
@@ -239,8 +207,8 @@ def DataListView(request, Obj, attr_names, table_name, detail_url, create_url,
     except:
         data_list = Obj.objects.order_by('-id')
 
-    # for i in data_list:
-    #     print(i)
+    for i in data_list:
+        print(i)
 
     context = {
         'data_list': data_list,
@@ -252,9 +220,9 @@ def DataListView(request, Obj, attr_names, table_name, detail_url, create_url,
     return render(request, 'repo/common_table.html', context)
 
 
-@login_required
-@user_passes_test(is_authorized, login_url='not_allowed')
-@user_passes_test(is_sub_admin, login_url='not_allowed')
+@ login_required
+@ user_passes_test(is_authorized, login_url='not_allowed')
+@ user_passes_test(is_sub_admin, login_url='not_allowed')
 def DataCreateView(request, dataForm, redirect_url, initial={}):
     form = dataForm(initial=initial)
     if request.method == 'POST':
@@ -267,9 +235,9 @@ def DataCreateView(request, dataForm, redirect_url, initial={}):
     return render(request, 'repo/create.html', context)
 
 
-@login_required
-@user_passes_test(is_authorized, login_url='not_allowed')
-@user_passes_test(is_sub_admin, login_url='not_allowed')
+@ login_required
+@ user_passes_test(is_authorized, login_url='not_allowed')
+@ user_passes_test(is_sub_admin, login_url='not_allowed')
 def DataUpdateView(request, num, Obj, dataForm, redirect_url):
     obj = Obj.objects.get(id=num)
     form = dataForm(instance=obj)
@@ -283,9 +251,9 @@ def DataUpdateView(request, num, Obj, dataForm, redirect_url):
     return render(request, 'repo/create.html', context)
 
 
-@login_required
-@user_passes_test(is_authorized, login_url='not_allowed')
-@user_passes_test(is_sub_admin, login_url='not_allowed')
+@ login_required
+@ user_passes_test(is_authorized, login_url='not_allowed')
+@ user_passes_test(is_sub_admin, login_url='not_allowed')
 def DataDeleteView(request, num, Obj, redirect_url):
     obj = Obj.objects.get(id=num)
     if request.method == 'POST':
