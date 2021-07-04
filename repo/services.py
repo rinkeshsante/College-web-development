@@ -1,7 +1,7 @@
 from django.shortcuts import HttpResponse, redirect, render
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import UserDepartmentMapping
-
+from .models import *
+from xlsxwriter.workbook import Workbook
 import csv
 
 # -------------- user functions---------------------
@@ -32,65 +32,139 @@ def is_authorized(user):
         return True
 
 
+def get_lab_cost(lab):
+    cost = 0
+
+    lab = Laboratory.objects.get(id=lab)
+    comps = Computer.objects.filter(Location=lab.id)
+    epq = Equipment.objects.filter(Location=lab.id)
+
+    for ls in [comps, epq]:
+
+        for item in ls:
+            purch = item.Invoice
+
+            total = purch.Total_Cost_With_VAT
+
+            total_comp = len(Computer.objects.filter(Invoice=purch.id))
+            total_epq = len(Equipment.objects.filter(Invoice=purch.id))
+            total_soft = len(Software.objects.filter(Invoice=purch.id))
+
+            cost += total / (total_comp+total_epq+total_soft)
+
+    return cost
+
+
 # --------------csv---------------------
+
+def writeRow(obj,  last_row, row):
+    for i in range(len(row)):
+        obj.write(last_row, i, row[i])
 
 
 @login_required
 @user_passes_test(is_authorized, login_url='not_allowed')
-def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs , extra):
-    filename = lab.Name + ' detail.csv'
+def getlabRep(request, lab, lab_attrs, epq_l, epq_attrs, comp_l, comp_attrs, extra):
+    # filename = lab.Name + ' detail.csv'
 
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=' + filename
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = "attachment; filename=lab Details.xlsx"
+
+    book = Workbook(response, {'in_memory': True})
+    sheet = book.add_worksheet('test')
+
+    # sheet.write(0, 0, 'Hello, world!')
+
+    c = 0
+
+    sheet.merge_range(
+        'A1:J1', 'K. J. SOMAIYA INSTITUTE OF ENGINEERING AND INFORMATION TECHNOLOGY Sion, Mumbai - 400022.')
+
+    writeRow(sheet, 2, ['lab :', lab.Name])
+    writeRow(sheet, 3, ['Epuipmets in Lab'])
+    writeRow(sheet, 4, epq_attrs)
+    c = 5
+
+    last = None
+    for epq in epq_l:
+        ls = []
+        for epq_attr in epq_attrs:
+            ls.append(getattr(epq, epq_attr))
+        if last == epq.Invoice:
+            writeRow(sheet, c, [str(i) for i in ls[:-1]+['---']])
+        else:
+            writeRow(sheet, c, [str(i) for i in ls])
+        c += 1
+
+    # writeRow(sheet, 2, ['hi ', 'thre'])
+    # writeRow(sheet, 2, ['hi ', 'thre'])
+
+    book.close()
+
+    return response
 
     writer = csv.writer(response)
 
     writer.writerow(['lab :', lab.Name])
 
-    writer.writerow('')
-    writer.writerow(['Lab Detail'])
-    writer.writerow('')
+    # writer.writerow('')
+    # writer.writerow(['Lab Detail'])
+    # writer.writerow('')
 
-    for lab_attr in lab_attrs:
-        ls = [lab_attr]
-        ls.append(getattr(lab, lab_attr))
-        writer.writerow(ls)
-    
-    for lab_attr in extra:
-        ls = [lab_attr]
-        ls.append(extra[lab_attr])
-        writer.writerow(ls)
+    # for lab_attr in lab_attrs:
+    #     ls = [lab_attr]
+    #     ls.append(getattr(lab, lab_attr))
+    #     writer.writerow(ls)
 
-    
+    # for lab_attr in extra:
+    #     ls = [lab_attr]
+    #     ls.append(extra[lab_attr])
+    #     writer.writerow(ls)
 
     writer.writerow('')
     writer.writerow(['Epuipmets in Lab'])
     writer.writerow('')
 
     writer.writerow(epq_attrs)
+    last = None
     for epq in epq_l:
         ls = []
         for epq_attr in epq_attrs:
             ls.append(getattr(epq, epq_attr))
-        writer.writerow(ls)
+        if last == epq.Invoice:
+            writer.writerow(ls[:-1]+['---'])
+        else:
+            writer.writerow(ls)
 
-    writer.writerow('')
-    writer.writerow(['Computers in Lab'])
-    writer.writerow('')
-
-    writer.writerow(comp_attrs + ['Software installed'])
     for comp in comp_l:
         ls = []
-
-        for comp_attr in comp_attrs:
-            ls.append(getattr(comp, comp_attr))
-
+        for epq_attr in epq_attrs:
+            ls.append(getattr(comp, epq_attr))
         writer.writerow(ls)
-        ls2 = []
-        for j in ls:
-            ls2 = ls2 + ['']
-        for i in getattr(comp, 'Installed_Softwares').all():
-            writer.writerow(ls2 + [i.Code, i.Name])
+
+    writer.writerow(['Total Rs:', get_lab_cost(lab.id)])
+    writer.writerow(['Lab Incharge :', lab.Lab_Incharge])
+    writer.writerow(['Lab Assistant 1 :', lab.Lab_Assistant_1])
+    writer.writerow(['Lab Assistant 2 :', lab.Lab_Assistant_2])
+
+    # writer.writerow('')
+    # writer.writerow(['Computers in Lab'])
+    # writer.writerow('')
+
+    # writer.writerow(comp_attrs + ['Software installed'])
+    # for comp in comp_l:
+    #     ls = []
+
+    #     for comp_attr in comp_attrs:
+    #         ls.append(getattr(comp, epq))
+
+    #     writer.writerow(ls)
+    #     ls2 = []
+    #     for j in ls:
+    #         ls2 = ls2 + ['']
+    #     for i in getattr(comp, 'Installed_Softwares').all():
+    #         writer.writerow(ls2 + [i.Code, i.Name])
 
     return response
 

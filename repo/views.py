@@ -62,7 +62,7 @@ lab_attr = [
     'Intercom_No', 'Lab_Assistant_1', 'Lab_Assistant_2',
     'Practicals_conducted_Odd_SEM', 'Practicals_conducted_Even_SEM', 'Other_Data',
 
-    'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sq_m', 'Total_cost'
+    'No_of_Fans', 'No_of_AC', 'No_of_Light_Sounce', 'Area_In_sq_m'
 ]
 
 classroom_attr = [
@@ -83,14 +83,14 @@ cabin_attr = [
 
 
 epq_attr = [
-    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location','Located_since',
+    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location', 'Located_since',
 
     'Department', 'Invoice', 'Remarks'
 ]
 
 
 comp_attr = [
-    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location','Located_since',
+    'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location', 'Located_since',
 
     'RAM', 'Storage_in_GB', 'Processor',
 
@@ -105,7 +105,7 @@ soft_attr = [
 ]
 
 purch_attr = [
-    'id', 'Invoice_No', 'Supplier_Info', 'Date_YYYYMMDD', 'GI_No', 'Rate_With_VAT', 'Total_Cost_With_VAT',
+    'id', 'Invoice', 'Supplier_Info', 'Date_YYYYMMDD', 'GI_No', 'Rate_With_VAT', 'Total_Cost_With_VAT',
 ]
 
 # -------------labs-------------------------------
@@ -122,13 +122,14 @@ def LabDetailView(request, num=1):
         'equipments': eqps,
         'computers': comps,
         'attr_names': lab_attr,
-        'extra':{
-            'No of Equipments':len(eqps),
-            'No of Computers':len(comps)
-            }
+        'extra': {
+            'No of Equipments': len(eqps),
+            'No of Computers': len(comps),
+            'Total Lab Cost': get_lab_cost(num)
+        }
     }
 
-    print(context)
+    # print(context)
     return render(request, 'repo/lab_detail.html', context)
 
 
@@ -146,11 +147,11 @@ def getLabReport(request, num=1):
     epq_in_lab = Equipment.objects.filter(Location=num)
     comp_in_lab = Computer.objects.filter(Location=num)
     extra = {
-        'No of Equipments':len(epq_in_lab),
-        'No of Computers':len(comp_in_lab)
+        'No of Equipments': len(epq_in_lab),
+        'No of Computers': len(comp_in_lab)
     }
     return getlabRep(request, test_lab, lab_attr, epq_in_lab, epq_attr,
-                     comp_in_lab, comp_attr,extra)
+                     comp_in_lab, comp_attr, extra)
 
 
 def LabCreateView(request):
