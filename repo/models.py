@@ -54,7 +54,7 @@ class Room(models.Model):
     Name = models.CharField(max_length=100)
     Area_In_sq_m = models.IntegerField(default=0)  # in sq ft
     Seating_Capacity = models.IntegerField(default=0)
-    Total_cost = models.FloatField(default=0)
+    # Total_cost = models.FloatField(default=0)
     Other_Data = models.TextField(null=True, blank=True)
     Department = models.ForeignKey(
         'Department',

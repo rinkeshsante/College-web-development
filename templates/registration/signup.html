@@ -4,10 +4,14 @@
 <div></div>
 {% block title %}Sign Up{% endblock title %}
 <div></div>
-{% block main %}
 
-<div class="row makecenter">
-  <div class="col-2">
+
+
+{% block main %}
+<div class="loginPage">
+  <div class="loginContainer">
+    <!-- <div class="row makecenter">
+      <div class="col-2"> -->
     <div class="row login-logos">
       <img
         src="https://kjsieit.somaiya.edu.in//assets/kjsieit/images/Logo/kjsieit-logo.svg"
@@ -24,10 +28,20 @@
       />
     </div>
 
-    <h1>College Repository</h1>
-  </div>
-  <div class="col-1">
-    <form class="signup-form" method="post">
+    
+
+    <h6>
+      Accredited with 'A' Grade by NAAC (3.21 CGPA) </br> Three Programs Accredited by
+      National Board of Accrediation  </br>  Best College Award by University of Mumbai
+      (Urban Region), ISTE (MH), CSI (Mumbai)
+    </h6>
+
+    <h1>Department Repository</h1>
+
+    <!-- <div class="col-1"> -->
+    <div class="form">
+     
+    <form class="login-form" method="post">
       <h1>Sign Up Form</h1>
       <div>{% csrf_token %} {{ form|crispy }}</div>
       <button type="submit" class="btn btn-primary">Create</button> Or
@@ -36,6 +50,9 @@
       </a>
     </form>
   </div>
+    
+  </div>
 </div>
+<!-- </div> -->
 
 {% endblock main %}
