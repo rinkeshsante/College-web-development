@@ -69,7 +69,7 @@ class SoftwareAdmin(admin.ModelAdmin):
 
 class PurchaseAdmin(admin.ModelAdmin):
     inlines = [ComputerInline, SoftwareInline, EquipnmentInline]
-    list_display = ('Invoice_No', 'Date_YYYYMMDD', 'Rate_With_VAT',
+    list_display = ('Invoice', 'Date_YYYYMMDD', 'Rate_With_VAT',
                     'Total_Cost_With_VAT')
 
 

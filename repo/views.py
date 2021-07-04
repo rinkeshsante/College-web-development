@@ -85,7 +85,7 @@ cabin_attr = [
 epq_attr = [
     'id', 'Name', 'Equipment_No', 'Code',  'Status', 'Location', 'Located_since',
 
-    'Department', 'Invoice', 'Remarks'
+    'Department', 'Remarks', 'Invoice'
 ]
 
 
@@ -94,7 +94,7 @@ comp_attr = [
 
     'RAM', 'Storage_in_GB', 'Processor',
 
-    'Department', 'Invoice', 'Remarks'
+    'Department',  'Remarks', 'Invoice'
 ]
 
 
@@ -144,8 +144,8 @@ def LabListView(request):
 
 def getLabReport(request, num=1):
     test_lab = Laboratory.objects.get(id=num)
-    epq_in_lab = Equipment.objects.filter(Location=num)
-    comp_in_lab = Computer.objects.filter(Location=num)
+    epq_in_lab = Equipment.objects.filter(Location=num).order_by('Invoice')
+    comp_in_lab = Computer.objects.filter(Location=num).order_by('Invoice')
     extra = {
         'No of Equipments': len(epq_in_lab),
         'No of Computers': len(comp_in_lab)

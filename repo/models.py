@@ -121,7 +121,7 @@ class Laboratory(Room):
 
 class Purchase(models.Model):
     # bill_no = models.CharField(max_length=10, unique=True)
-    Invoice_No = models.CharField(max_length=100, unique=True)
+    Invoice = models.CharField(max_length=100, unique=True)
     Supplier_Info = models.TextField()
     Date_YYYYMMDD = models.DateField(default=date.today, null=True, blank=True)
     Rate_With_VAT = models.FloatField()
@@ -131,7 +131,7 @@ class Purchase(models.Model):
     Remark = models.CharField(max_length=100, default='ok')
 
     def __str__(self):
-        return self.Invoice_No
+        return self.Invoice
 
 
 class Item(models.Model):
